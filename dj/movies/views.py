@@ -1,13 +1,18 @@
 import django.http
 from .models import Movie
 from .serializers import MovieSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+
 
 # Create your views here.
 
 
 
 
-
+@api_view(['GET','POST'])
 def list_movie(req: django.http.HttpRequest):
     # Request
 
@@ -29,14 +34,21 @@ def list_movie(req: django.http.HttpRequest):
         get the list of movies by request filters
         default order by: release_date
     """
+    if req.method == 'GET':
+        Movies = Movie.objects.all()
+        serializer = MovieSerializer(Movies, many = True)
+        return django.http.JsonResponse({'Movie Details':serializer.data}, status=200)
 
-    Movies = Movie.objects.all()
-    serializer = MovieSerializer(Movies, many = True)
+    if req.method == 'POST':
+        serializer = MovieSerializer(Movies, many = True)
+        if serializer.is_valid():
+            serializer.save()
+            return django.http.JsonResponse({serializer.data}, status=status.HTTP_201_CREATED)
 
-    return django.http.JsonResponse({'Movie Details':serializer.data}, status=200, safe =False)
 
 
 
+@api_view(['GET','POST'])
 def add_movie(req: django.http.HttpRequest):
 
     # Request
@@ -48,6 +60,27 @@ def add_movie(req: django.http.HttpRequest):
     """
     Create a row in Movie model
     """
+    try:
+        Movies = Movie.objects.get()
+    except Movie.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if req.method == 'GET':
+        serializer = MovieSerializer(Movie)
+        return Response(serializer.data)
+
+    elif req.method == 'PUT':
+        serializer = MovieSerializer(Movies, data=req.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
+
+    elif req.method == 'DELETE':
+        Movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
     return django.http.JsonResponse("{redirect to movie page}", status=200)
 
@@ -66,6 +99,7 @@ def add_review(req: django.http.HttpRequest):
     Check if movie_id present or not
     Create a row in Review Model
     """
+
 
     return django.http.JsonResponse("redirect to movie page", status=200)
 
