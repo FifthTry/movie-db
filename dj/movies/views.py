@@ -50,12 +50,17 @@ def add_review(req: django.http.HttpRequest):
     reviewer: token
     optional rating
     """
+    body = json.loads(req.body.decode('utf-8'))
+    try:
+        movie = Movie.objects.get(body["movie_id"])
+    except Exception as e:
+        print(e)
+        # Redirect to error page with 404 error
 
-    """
-    Check if movie_id present or not
-    Create a row in Review Model
-    """
-
+    review = Review.objects.create(
+        movie=movie, title=body["title"], descrption=body.get("description"),
+        reviewer=body["reviewer"], rating=body["rating"]
+    )
     return django.http.JsonResponse("redirect to movie page", status=200)
 
 
