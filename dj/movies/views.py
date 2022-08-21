@@ -1,4 +1,6 @@
 import django.http
+from models import Movie, Review
+import json
 
 # Create your views here.
 
@@ -30,17 +32,12 @@ def list_movie(req: django.http.HttpRequest):
 
 
 def add_movie(req: django.http.HttpRequest):
-
-    # Request
-    """
-    get from request body
-    title, release_date, poster, director, description, rating, review_count
-    """
-
-    """
-    Create a row in Movie model
-    """
-
+    body = json.loads(req.body.decode('utf-8'))
+    movie = Movie.objects.create(
+        title=body['title'], release_date=body['release_date'],
+        poster=body['poster'], director=body['director'],
+        description=body.get('description')
+    )
     return django.http.JsonResponse("{redirect to movie page}", status=200)
 
 
