@@ -14,6 +14,23 @@ def list_movie(req: django.http.HttpRequest):
     order by: release_date, rating, updated_on
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
+    page_number = req.GET.get("p_no", 0)
+    count = req.GET.get("p_count", 0)
+    """
+    Pagination Logic
+    E.g.: 10 items at every page
+    1: 1 10
+    2: 11 20
+    3: 21 30
+    
+    st = (pno - 1) * items + 1 to
+    end = pno * items    
+    """
+
+    order_by = req.GET.get("p_no", 0)
+
+    movies = Movie.objects.filter()
+
 
     # Response
 
