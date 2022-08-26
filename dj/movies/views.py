@@ -82,28 +82,41 @@ curl -X POST http://127.0.0.1:8001/add-movie/ \
 """
 
 
+@csrf_exempt
 def add_review(req: django.http.HttpRequest):
     # Request
     """
-    movie_id:
-    title:
-    optional description:
-    reviewer: token
-    optional rating
+    movie_id, title, optional description, reviewer: token, optional rating
     """
+    if req.method == "GET":
+        return django.http.HttpResponse("Wrong Method GET", status=405)
+
     body = json.loads(req.body.decode('utf-8'))
     try:
-        movie = Movie.objects.get(body["movie_id"])
+        movie = Movie.objects.get(id=body["movie"])
     except Exception as e:
         print(e)
-        # Redirect to error page with 404 error
+        # TODO: Redirect to error page with 404 error
+        return django.http.HttpResponse("redirect to movie page", status=404)
 
     review = Review.objects.create(
-        movie=movie, title=body["title"], descrption=body.get("description"),
+        movie=movie, title=body["title"], description=body.get("description"),
         reviewer=body["reviewer"], rating=body["rating"]
     )
-    return django.http.JsonResponse("redirect to movie page", status=200)
+    # TODO: redirect to movie page
+    return django.http.JsonResponse(
+        {"review": review.id, "movie": movie.id}, status=200)
 
+"""
+curl -X POST http://127.0.0.1:8001/add-review/ \
+--data-raw '{
+    "movie": 1, 
+    "title": "Review Title", 
+    "description": "Review Description", 
+    "reviewer": "Movie Reviewer",
+    "rating": 8
+}'
+"""
 
 # Movie list should come from Database
 
