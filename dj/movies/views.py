@@ -33,25 +33,14 @@ def list_movie(req: django.http.HttpRequest):
     movies = Movie.objects.all()[
              (page_number - 1)*items + 1: page_number * items]
 
-    # Response
-
-    """
-    page_number
-    count: default value: 3, or from request
-    previous: /movie/?p_no=<page_number-1>&count=<count>
-    next: /movie/?p_no=<page_number>&count=<count>
-    movies
-        get the list of movies by request filters
-        default order by: release_date
-    """
-
-    d = {
-        "name": "Aditi Rai",
+    return django.http.JsonResponse({
         "p_no": page_number,
+        # TODO: Next And Previous both are optional
+        "next": "/movies/p_no=1&items=10",
+        "previous": "/movies/p_no=1&items=10",
         "items": items,
-        "movies": serializers.serialize('json', movies)
-    }
-    return django.http.JsonResponse(d, status=200)
+        "movies": json.loads(serializers.serialize('json', movies))
+    }, status=200)
 
 
 @csrf_exempt
