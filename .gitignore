@@ -130,5 +130,5 @@ dmypy.json
 
 .idea/
 
-.build
-.packages
+**/.build
+**/.packages
