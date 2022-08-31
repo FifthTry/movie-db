@@ -1,0 +1,272 @@
+-- import: fpm
+-- import: fifthtry.github.io/button
+
+-- ds.page: ADD NEW MOVIE
+
+
+-- list1:
+list-desc1: $l1
+list-desc2: $l2
+list-desc3: $l3
+list-desc4: $l4
+list-desc5: $l5
+list-desc6: $l6
+
+
+
+
+
+-- string l1:
+
+Movie Title
+
+
+-- string l2:
+
+Release-date
+
+
+-- string l3:
+
+Director
+
+
+-- string l4:
+
+Poster
+
+
+-- string l5:
+
+Rating
+
+
+-- string l6:
+
+Description
+
+
+
+
+
+
+
+
+-- ftd.column list1:
+optional caption title:
+optional string label:
+optional string list-desc1:
+optional string list-desc2:
+optional string list-desc3:
+optional string list-desc4:
+optional string list-desc5:
+optional string list-desc6:
+min-width: percent 50
+margin-bottom: $fpm.space.space-8
+padding-vertical: $fpm.space.space-4
+width: percent 100
+height: 560
+align: left
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-4
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc1
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+align: left
+padding-vertical: $fpm.space.space-10
+
+
+
+--- ftd.text:
+text: $list-desc2
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-9
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc3
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-11
+padding-top: $fpm.space.space-10
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc4
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-11
+padding-top: $fpm.space.space-10
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc5
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-4
+padding-top: $fpm.space.space-10
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc6
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+--- ftd.input:
+placeholder: Add a short description
+multiline: true
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 200
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+-- container: ftd.main
+
+
+
+
+-- ftd.row:
+padding-left: $fpm.space.space-4
+align: center
+
+-- button.button: Add Movie
+role: primary
+large: true
+align: center

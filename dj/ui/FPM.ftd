@@ -1,0 +1,10 @@
+-- import: fpm
+
+-- fpm.package: movie-db
+base: https://raw.githubusercontent.com/FifthTry/movie-db
+
+-- fpm.dependency: fifthtry.github.io/doc-site as ds
+-- fpm.dependency: fifthtry.github.io/button
+
+-- fpm.auto-import: ds
+
