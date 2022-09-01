@@ -30,17 +30,19 @@ def list_movie(req: django.http.HttpRequest):
     """
 
     order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[
-             (page_number - 1)*items + 1: page_number * items]
+    movies = Movie.objects.all()[(page_number - 1) * items + 1 : page_number * items]
 
-    return django.http.JsonResponse({
-        "p_no": page_number,
-        # TODO: Next And Previous both are optional
-        "next": "/movies/p_no=1&items=10",
-        "previous": "/movies/p_no=1&items=10",
-        "items": items,
-        "movies": json.loads(serializers.serialize('json', movies))
-    }, status=200)
+    return django.http.JsonResponse(
+        {
+            "p_no": page_number,
+            # TODO: Next And Previous both are optional
+            "next": "/movies/p_no=1&items=10",
+            "previous": "/movies/p_no=1&items=10",
+            "items": items,
+            "movies": json.loads(serializers.serialize("json", movies)),
+        },
+        status=200,
+    )
 
 
 @csrf_exempt
@@ -49,16 +51,19 @@ def add_movie(req: django.http.HttpRequest):
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
-    body = json.loads(req.body.decode('utf-8'))
+    body = json.loads(req.body.decode("utf-8"))
     movie = Movie.objects.create(
-        title=body['title'], release_date=body['release_date'],
-        poster=body['poster'], director=body['director'],
-        description=body.get('description')
+        title=body["title"],
+        release_date=body["release_date"],
+        poster=body["poster"],
+        director=body["director"],
+        description=body.get("description"),
     )
 
     print(movie)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.id}, status=200)
+
 
 """
 curl -X POST http://127.0.0.1:8001/add-movie/ \
@@ -80,7 +85,7 @@ def add_review(req: django.http.HttpRequest):
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
-    body = json.loads(req.body.decode('utf-8'))
+    body = json.loads(req.body.decode("utf-8"))
     try:
         movie = Movie.objects.get(id=body["movie"])
     except Exception as e:
@@ -89,12 +94,17 @@ def add_review(req: django.http.HttpRequest):
         return django.http.HttpResponse("redirect to movie page", status=404)
 
     review = Review.objects.create(
-        movie=movie, title=body["title"], description=body.get("description"),
-        reviewer=body["reviewer"], rating=body["rating"]
+        movie=movie,
+        title=body["title"],
+        description=body.get("description"),
+        reviewer=body["reviewer"],
+        rating=body["rating"],
     )
     # TODO: redirect to movie page
     return django.http.JsonResponse(
-        {"review": review.id, "movie": movie.id}, status=200)
+        {"review": review.id, "movie": movie.id}, status=200
+    )
+
 
 """
 curl -X POST http://127.0.0.1:8001/add-review/ \
