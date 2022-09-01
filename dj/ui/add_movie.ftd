@@ -1,7 +1,19 @@
 -- import: fpm
 -- import: fifthtry.github.io/button
 
--- ds.page: ADD NEW MOVIE
+
+
+
+
+-- ftd.text: ADD NEW MOVIE
+role: $fpm.type.heading-large
+text-align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 30
+
+
+
 
 
 -- list1:
@@ -43,7 +55,7 @@ Release-date
 
 -- string l5:
 
-Director Name
+Directed By
 
 
 -- string l6:
@@ -85,6 +97,11 @@ Description
 
 
 
+
+
+
+
+
 -- ftd.column list1:
 optional caption title:
 optional string label:
@@ -102,6 +119,7 @@ optional string list-desc11:
 optional string list-desc12:
 min-width: percent 50
 margin-bottom: $fpm.space.space-8
+margin-top: $fpm.space.space-8
 padding-vertical: $fpm.space.space-4
 width: percent 100
 height: 560
@@ -112,14 +130,13 @@ align: left
 
 
 --- ftd.row:
-padding-left: $fpm.space.space-4
+padding-left: $fpm.space.space-7
 align: left
-
 
 
 --- ftd.text:
 text: $list-desc1
-padding-horizontal: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-2
 color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
@@ -142,13 +159,11 @@ width:50
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
-
---- container: ftd.main
 
 
 
@@ -156,14 +171,13 @@ border-radius: 8
 
 --- ftd.row:
 align: left
-padding-vertical: $fpm.space.space-10
-
+padding-left: $fpm.space.space-15
 
 
 --- ftd.text:
 text: $list-desc3
 padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-2
 color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
@@ -186,11 +200,12 @@ width:50
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
+
 
 --- container: ftd.main
 
@@ -199,15 +214,15 @@ border-radius: 8
 
 
 --- ftd.row:
-padding-left: $fpm.space.space-9
+padding-left: $fpm.space.space-4
+padding-top: $fpm.space.space-10
 align: left
-
 
 
 --- ftd.text:
 text: $list-desc5
 padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-3
 color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
@@ -217,6 +232,10 @@ style: bold
 
 --- ftd.row:
 align: left
+padding-right: $fpm.space.space-10
+
+
+
 
 
 --- ftd.text:
@@ -230,22 +249,19 @@ width:50
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
 
 
---- container: ftd.main
-
 
 
 
 
 --- ftd.row:
-padding-left: $fpm.space.space-11
-padding-top: $fpm.space.space-10
+padding-left: 167
 align: left
 
 
@@ -275,7 +291,7 @@ width:50
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
@@ -292,7 +308,6 @@ border-radius: 8
 padding-left: $fpm.space.space-11
 padding-top: $fpm.space.space-10
 align: left
-
 
 
 --- ftd.text:
@@ -321,24 +336,19 @@ width:50
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
 
 
---- container: ftd.main
-
-
 
 
 
 --- ftd.row:
-padding-left: $fpm.space.space-4
-padding-top: $fpm.space.space-10
+padding-left: $fpm.space.space-15
 align: left
-
 
 
 --- ftd.text:
@@ -369,7 +379,7 @@ placeholder: Add a short description
 multiline: true
 padding-horizontal: 16
 padding-vertical: 8
-width: 500
+width: 400
 height: 200
 border-width: 3
 border-color: $fpm.color.main.background.step-2
@@ -381,17 +391,14 @@ border-radius: 8
 
 
 
+
 -- ftd.row:
 padding-left: $fpm.space.space-4
+padding bottom: 10
 align: center
+
 
 -- button.button: Add Movie
 role: primary
 large: true
 align: center
-
-
-
-
-
-
