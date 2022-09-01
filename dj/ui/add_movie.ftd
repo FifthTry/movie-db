@@ -11,6 +11,12 @@ list-desc3: $l3
 list-desc4: $l4
 list-desc5: $l5
 list-desc6: $l6
+list-desc7: $l7
+list-desc8: $l8
+list-desc9: $l9
+list-desc10: $l10
+list-desc11: $l11
+list-desc12: $l12
 
 
 
@@ -23,30 +29,57 @@ Movie Title
 
 -- string l2:
 
-Release-date
-
+\*
 
 -- string l3:
 
-Director
+Release-date
 
 
 -- string l4:
 
-Poster
+\*
 
 
 -- string l5:
 
-Rating
+Director Name
 
 
 -- string l6:
 
+\*
+
+
+-- string l7:
+
+Poster
+
+
+-- string l8:
+
+\*
+
+
+-- string l9:
+
+Rating
+
+
+
+-- string l10:
+
+\*
+
+
+-- string l11:
+
 Description
 
 
+-- string l12:
 
+\*
 
 
 
@@ -61,6 +94,12 @@ optional string list-desc3:
 optional string list-desc4:
 optional string list-desc5:
 optional string list-desc6:
+optional string list-desc7:
+optional string list-desc8:
+optional string list-desc9:
+optional string list-desc10:
+optional string list-desc11:
+optional string list-desc12:
 min-width: percent 50
 margin-bottom: $fpm.space.space-8
 padding-vertical: $fpm.space.space-4
@@ -88,6 +127,18 @@ text-align: left
 style: bold
 
 
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc2
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
+
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
@@ -110,7 +161,7 @@ padding-vertical: $fpm.space.space-10
 
 
 --- ftd.text:
-text: $list-desc2
+text: $list-desc3
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
 color: $fpm.color.main.text-strong
@@ -118,6 +169,19 @@ role: $fpm.type.copy-large
 align: left
 text-align: left
 style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc4
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
 
 --- ftd.input:
 padding-horizontal: 16
@@ -141,70 +205,6 @@ align: left
 
 
 --- ftd.text:
-text: $list-desc3
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 500
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-11
-padding-top: $fpm.space.space-10
-align: left
-
-
-
---- ftd.text:
-text: $list-desc4
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 500
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-11
-padding-top: $fpm.space.space-10
-align: left
-
-
-
---- ftd.text:
 text: $list-desc5
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
@@ -214,6 +214,19 @@ align: left
 text-align: left
 style: bold
 
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc6
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
+
 --- ftd.input:
 padding-horizontal: 16
 padding-vertical: 8
@@ -222,6 +235,98 @@ height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
+
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-11
+padding-top: $fpm.space.space-10
+align: left
+
+
+--- ftd.text:
+text: $list-desc7
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc8
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-11
+padding-top: $fpm.space.space-10
+align: left
+
+
+
+--- ftd.text:
+text: $list-desc9
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc10
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
+
+--- ftd.input:
+padding-horizontal: 16
+padding-vertical: 8
+width: 500
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+
 
 --- container: ftd.main
 
@@ -237,7 +342,7 @@ align: left
 
 
 --- ftd.text:
-text: $list-desc6
+text: $list-desc11
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
 color: $fpm.color.main.text-strong
@@ -245,6 +350,19 @@ role: $fpm.type.copy-large
 align: left
 text-align: left
 style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $list-desc12
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
 
 --- ftd.input:
 placeholder: Add a short description
@@ -256,6 +374,7 @@ height: 200
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
+
 
 -- container: ftd.main
 
@@ -270,3 +389,9 @@ align: center
 role: primary
 large: true
 align: center
+
+
+
+
+
+
