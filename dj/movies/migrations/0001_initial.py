@@ -8,33 +8,53 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Movie',
+            name="Movie",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=1024)),
-                ('release_date', models.DateField()),
-                ('poster', models.URLField(max_length=1024)),
-                ('director', models.CharField(max_length=1024)),
-                ('description', models.TextField(blank=True, null=True)),
-                ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('updated_on', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=1024)),
+                ("release_date", models.DateField()),
+                ("poster", models.URLField(max_length=1024)),
+                ("director", models.CharField(max_length=1024)),
+                ("description", models.TextField(blank=True, null=True)),
+                ("created_on", models.DateTimeField(auto_now_add=True)),
+                ("updated_on", models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=1024)),
-                ('description', models.TextField()),
-                ('reviewer', models.CharField(max_length=1024)),
-                ('rating', models.IntegerField(null=True)),
-                ('created_on', models.DateTimeField(auto_now_add=True)),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='movies.movie')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=1024)),
+                ("description", models.TextField()),
+                ("reviewer", models.CharField(max_length=1024)),
+                ("rating", models.IntegerField(null=True)),
+                ("created_on", models.DateTimeField(auto_now_add=True)),
+                (
+                    "movie",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="movies.movie"
+                    ),
+                ),
             ],
         ),
     ]
