@@ -147,7 +147,7 @@ poster: true
 -- fields: $l11
 description: true
 
-
+;;we can make the placeText optional as well
 -- ftd.row A:
 caption title:
 string placeText: Default
