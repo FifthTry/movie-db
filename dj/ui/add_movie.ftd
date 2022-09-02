@@ -15,7 +15,7 @@ $processor$: toc
 -- h.header:
 site-logo: $hassets.files.static.header.logo.png
 site-url: /
-site-name: FTIFTHTRY
+site-name: FIFTHTRY
 current-url: /
 link-style: bold
 toc: $empty-toc
