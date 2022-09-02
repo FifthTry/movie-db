@@ -3,8 +3,12 @@
 -- fpm.package: movie-db
 base: https://raw.githubusercontent.com/FifthTry/movie-db
 
--- fpm.dependency: fifthtry.github.io/doc-site as ds
 -- fpm.dependency: fifthtry.github.io/button
+-- fpm.dependency: fifthtry.github.io/header
 
--- fpm.auto-import: ds
+
+-- fpm.auto-import: fpm
+-- fpm.auto-import: fifthtry.github.io/movie-db/assets
+-- fpm.auto-import: fifthtry.github.io/header/assets as hassets
+-- fpm.auto-import: fifthtry.github.io/header as h
 
