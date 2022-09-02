@@ -23,12 +23,31 @@ toc: $empty-toc
 
 
 
--- string input_status: None
+-- optional string input_title:
+$always-include$: true
 
--- ftd.text: $input_status
+-- optional string input_release_date:
+$always-include$: true
+
+-- optional string input_director:
+$always-include$: true
+
+-- optional string input_poster:
+$always-include$: true
+
+-- optional string input_description:
+$always-include$: true
+
+;;to check if the fields are taking input
+/-- ftd.text: $input_title
 color: $black
 padding-horizontal: 10
-padding-vertical: 5
+padding-vertical: 12
+
+/-- ftd.text: $input_poster
+color: $black
+padding-horizontal: 10
+padding-vertical: 12
 
 -- ftd.color black:
 light: black
@@ -41,111 +60,135 @@ style: bold
 margin-top: $fpm.space.space-8
 padding-left: 30
 
+-- record list1:
+caption name: 
+boolean movie: false
+boolean date: false
+boolean director: false
+boolean poster: false
+boolean desc: false
 
 
+--- ftd.input meow:
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
 
+-- list1 list fields:
 
--- list1:
-list-desc1: $l1
-list-desc2: $l2
-list-desc3: $l3
-list-desc4: $l4
-list-desc5: $l5
-list-desc6: $l6
-list-desc7: $l7
-list-desc8: $l8
-list-desc9: $l9
-list-desc10: $l10
-list-desc11: $l11
-list-desc12: $l12
-
-
-
-
-
--- string l1:
-
-Movie Title
-
-
+-- string l1: Movie Title
 -- string l2:
 
 \*
 
--- string l3:
-
-Release-date
-
+-- string l3: Release-date
 
 -- string l4:
 
 \*
 
+-- string l5:Directed By
 
--- string l5:
-
-Directed By
-
-
--- string l6:
-
-\*
+-- string l6:\*
 
 
--- string l7:
+-- string l7:Poster
 
-Poster
-
-
--- string l8:
-
-\*
+-- string l8:\*
 
 
--- string l9:
+-- string l10:\*
 
-Rating
+-- string l11:Description
 
+-- string l12:\*
 
-
--- string l10:
-
-\*
-
-
--- string l11:
-
-Description
+--- ftd.row:
+padding-left: $fpm.space.space-7
+align: left
 
 
--- string l12:
-
-\*
-
-
-
-
-
-
+--- ftd.text:
+text: $l1
+padding-horizontal: $fpm.space.space-2
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
 
 
+--- ftd.row:
+align: left
 
 
--- ftd.column list1:
-optional caption title:
+--- ftd.text:
+text: $l2
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
+-- fields: $l1
+movie: true
+
+-- fields: $l3
+date: true
+
+-- fields: $l5
+director: true
+
+-- fields: $l7
+poster: true
+
+-- fields: $l11
+desc: true
+
+
+-- ftd.row A:
+caption title:
+string placeText: Default
+boolean movie:
+boolean release_date:
+boolean director:
+boolean poster:
+boolean description:
+
+/--- ftd.boolean: $movie
+
+--- ftd.text: $title
+
+--- ftd.input:
+placeholder: $placeText
+if: $movie
+$on-input$: $input_title=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $release_date
+$on-input$: $input_release_date=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $director
+$on-input$: $input_director=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $poster
+$on-input$: $input_poster=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $description
+$on-input$: $input_description=$VALUE
+
+-- ftd.column foo:
+optional caption name:
 optional string label:
-optional string list-desc1:
-optional string list-desc2:
-optional string list-desc3:
-optional string list-desc4:
-optional string list-desc5:
-optional string list-desc6:
-optional string list-desc7:
-optional string list-desc8:
-optional string list-desc9:
-optional string list-desc10:
-optional string list-desc11:
-optional string list-desc12:
 min-width: percent 50
 margin-bottom: $fpm.space.space-8
 margin-top: $fpm.space.space-8
@@ -154,265 +197,19 @@ width: percent 100
 height: 560
 align: left
 
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-7
-align: left
-
-
---- ftd.text:
-text: $list-desc1
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc2
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-$on-input$: $input_status=$VALUE
-placeholder: Enter Status
-
-
-
-
-
---- ftd.row:
-align: left
-padding-left: $fpm.space.space-15
-
-
---- ftd.text:
-text: $list-desc3
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc4
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-4
-padding-top: $fpm.space.space-10
-align: left
-
-
---- ftd.text:
-text: $list-desc5
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-3
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-padding-right: $fpm.space.space-10
-
-
-
-
-
---- ftd.text:
-text: $list-desc6
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
-
-
-
-
---- ftd.row:
-padding-left: 167
-align: left
-
-
---- ftd.text:
-text: $list-desc7
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc8
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-11
-padding-top: $fpm.space.space-10
-align: left
-
-
---- ftd.text:
-text: $list-desc9
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc10
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-15
-align: left
-
-
---- ftd.text:
-text: $list-desc11
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc12
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-placeholder: Add a short description
-multiline: true
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 200
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
--- container: ftd.main
-
+--- A: $obj.name
+$loop$: $fields as $obj
+movie: $obj.movie
+release_date: $obj.date
+director: $obj.director
+poster: $obj.poster
+description: $obj.desc
+
+
+/-- foo: $obj.name
+$loop$: $fields as $obj
+
+-- foo:
 
 
 
@@ -433,4 +230,8 @@ $on-click$: message-host $add-movie-api
 function: http
 method: post
 url: add-movie
-title: $input_status
+title: $input_title
+release_date: $input_release_date
+director: $input_director
+poster: $input_poster
+description: $input_description
