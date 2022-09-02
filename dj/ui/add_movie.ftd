@@ -1,5 +1,6 @@
 -- import: fpm
 -- import: fifthtry.github.io/button
+-- import: movie-db/assets
 
 
 -- fpm.toc-item list empty-toc:
@@ -13,7 +14,7 @@ $processor$: toc
 
 
 -- h.header:
-site-logo: $hassets.files.static.header.logo.png
+site-logo: $assets.files.logo.png
 site-url: /
 site-name: FIFTHTRY
 current-url: /
@@ -22,7 +23,16 @@ toc: $empty-toc
 
 
 
+-- string input_status: None
 
+-- ftd.text: $input_status
+color: $black
+padding-horizontal: 10
+padding-vertical: 5
+
+-- ftd.color black:
+light: black
+dark: black
 
 -- ftd.text: ADD NEW MOVIE
 role: $fpm.type.heading-large
@@ -182,6 +192,8 @@ height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
+$on-input$: $input_status=$VALUE
+placeholder: Enter Status
 
 
 
@@ -415,3 +427,10 @@ align: center
 role: primary
 large: true
 align: center
+$on-click$: message-host $add-movie-api
+
+-- object add-movie-api:
+function: http
+method: post
+url: add-movie
+title: $input_status
