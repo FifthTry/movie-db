@@ -156,7 +156,6 @@ align: left
 --- ftd.text:
 text: $list-desc1
 padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -197,7 +196,6 @@ padding-left: $fpm.space.space-15
 text: $list-desc3
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -242,7 +240,6 @@ align: left
 text: $list-desc5
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-3
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -288,7 +285,6 @@ align: left
 text: $list-desc7
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -333,7 +329,6 @@ align: left
 text: $list-desc9
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -374,7 +369,6 @@ align: left
 text: $list-desc11
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
