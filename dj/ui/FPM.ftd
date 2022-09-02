@@ -1,7 +1,7 @@
 -- import: fpm
 
 -- fpm.package: movie-db
-base: https://raw.githubusercontent.com/FifthTry/movie-db
+download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
 
 -- fpm.dependency: fifthtry.github.io/button
 -- fpm.dependency: fifthtry.github.io/header
