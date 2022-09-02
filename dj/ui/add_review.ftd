@@ -128,7 +128,6 @@ align: left
 --- ftd.text:
 text: $list-desc1
 padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -169,7 +168,6 @@ padding-left: $fpm.space.space-15
 text: $list-desc3
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -214,7 +212,6 @@ align: left
 text: $list-desc5
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-3
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -256,7 +253,6 @@ align: left
 text: $list-desc7
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
@@ -295,11 +291,17 @@ border-radius: 8
 
 -- ftd.row:
 padding-left: $fpm.space.space-4
-padding bottom: 200
+padding-bottom: 200
 align: center
 
 
--- button.button: POST
+-- button.button: Add review
 role: primary
 large: true
 align: center
+$on-click$: message-host $add-review-api
+
+-- object add-review-api:
+function: http
+method: post
+url: add-review
