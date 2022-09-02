@@ -1,5 +1,6 @@
 -- import: fpm
 -- import: fifthtry.github.io/button
+-- import: movie-db/assets
 
 
 -- fpm.toc-item list empty-toc:
@@ -13,101 +14,158 @@ $processor$: toc
 
 
 -- h.header:
-site-logo: $hassets.files.static.header.logo.png
+site-logo: $assets.files.logo.png
 site-url: /
-site-name: FTIFTHTRY
+site-name: FIFTHTRY
 current-url: /
 link-style: bold
 toc: $empty-toc
 
 
 
+-- optional string input_title:
+$always-include$: true
 
+-- optional string input_reviewer:
+$always-include$: true
 
--- ftd.text: WRITE A REVIEW
+-- optional string input_description:
+$always-include$: true
+
+-- optional decimal input_rating:
+$always-include$: true
+
+;;to check if the fields are taking input
+/-- ftd.text: $input_title
+color: $black
+padding-horizontal: 10
+padding-vertical: 12
+
+-- ftd.color black:
+light: black
+dark: black
+
+-- ftd.text: ADD NEW MOVIE
 role: $fpm.type.heading-large
 text-align: center
 style: bold
 margin-top: $fpm.space.space-8
 padding-left: 30
 
+-- record list1:
+caption name: 
+boolean movie: false
+boolean reviewer: false
+boolean rating: false
+boolean description: false
 
 
+--- ftd.input meow:
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
 
+-- list1 list fields:
 
--- list1:
-list-desc1: $l1
-list-desc2: $l2
-list-desc3: $l3
-list-desc4: $l4
-list-desc5: $l5
-list-desc6: $l6
-list-desc7: $l7
-list-desc8: $l8
-
-
-
-
-
--- string l1:
-
-Movie Title
-
-
+-- string l1: Movie Title
 -- string l2:
 
 \*
-
-
--- string l3:
-
-Reviewer-Name
-
 
 -- string l4:
 
 \*
 
+-- string l5:Reviewer
 
--- string l5:
+-- string l6:\*
 
-Rating
-
-
--- string l6:
-
-\*
+-- string l8: Rating
 
 
--- string l7:
+-- string l10:\*
 
-Write-Review
+-- string l11:Description
 
+-- string l12:\*
 
--- string l8:
-
-\*
-
-
-
+--- ftd.row:
+padding-left: $fpm.space.space-7
+align: left
 
 
+--- ftd.text:
+text: $l1
+padding-horizontal: $fpm.space.space-2
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
 
 
+--- ftd.row:
+align: left
 
 
+--- ftd.text:
+text: $l2
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
 
--- ftd.column list1:
-optional caption title:
+-- fields: $l1
+movie: true
+
+-- fields: $l8
+rating: true
+
+-- fields: $l5
+reviewer: true
+
+-- fields: $l11
+description: true
+
+
+-- ftd.row A:
+caption title:
+string placeText: Default
+boolean movie:
+boolean reviewer:
+boolean description:
+boolean rating:
+
+/--- ftd.boolean: $movie
+
+--- ftd.text: $title
+
+--- ftd.input:
+placeholder: $placeText
+if: $movie
+$on-input$: $input_title=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $reviewer
+$on-input$: $input_reviewer=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $description
+$on-input$: $input_description=$VALUE
+
+--- ftd.input:
+placeholder: $placeText
+if: $rating
+$on-input$: $input_rating=$VALUE
+
+-- ftd.column foo:
+optional caption name:
 optional string label:
-optional string list-desc1:
-optional string list-desc2:
-optional string list-desc3:
-optional string list-desc4:
-optional string list-desc5:
-optional string list-desc6:
-optional string list-desc7:
-optional string list-desc8:
 min-width: percent 50
 margin-bottom: $fpm.space.space-8
 margin-top: $fpm.space.space-8
@@ -116,174 +174,20 @@ width: percent 100
 height: 560
 align: left
 
+--- A: $obj.name
+$loop$: $fields as $obj
+movie: $obj.movie
+reviewer: $obj.reviewer
+description: $obj.description
+rating: $obj.rating
 
 
+/-- foo: $obj.name
+$loop$: $fields as $obj
+
+-- foo:
 
 
---- ftd.row:
-padding-left: $fpm.space.space-7
-align: left
-
-
---- ftd.text:
-text: $list-desc1
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc2
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
-
-
-
---- ftd.row:
-align: left
-padding-left: $fpm.space.space-15
-
-
---- ftd.text:
-text: $list-desc3
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc4
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-11
-padding-top: $fpm.space.space-10
-align: left
-
-
---- ftd.text:
-text: $list-desc5
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-3
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-padding-right: $fpm.space.space-10
-
-
---- ftd.text:
-text: $list-desc6
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
-
-
-
---- ftd.row:
-padding-left: 130
-align: left
-
-
---- ftd.text:
-text: $list-desc7
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $list-desc8
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
-
---- ftd.input:
-placeholder: Add a short description
-multiline: true
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 200
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
-
---- container: ftd.main
 
 
 
@@ -291,11 +195,11 @@ border-radius: 8
 
 -- ftd.row:
 padding-left: $fpm.space.space-4
-padding-bottom: 200
+padding-bottom: 10
 align: center
 
 
--- button.button: Add review
+-- button.button: Add Movie
 role: primary
 large: true
 align: center
@@ -304,4 +208,8 @@ $on-click$: message-host $add-review-api
 -- object add-review-api:
 function: http
 method: post
-url: add-review
+url: add-movie
+title: $input_title
+reviewer: $input_reviewer
+description: $input_description
+rating: $input_rating
