@@ -102,25 +102,8 @@ padding-left: $fpm.space.space-7
 align: left
 
 
---- ftd.text:
-text: $l1
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
 --- ftd.row:
 align: left
-
-
---- ftd.text:
-text: $l2
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
 
 -- fields: $l1
 movie: true
@@ -138,7 +121,7 @@ poster: true
 description: true
 
 ;;we can make the placeText optional as well
--- ftd.row A:
+-- ftd.row getting_input:
 caption title:
 string placeText: Default
 boolean movie:
@@ -229,7 +212,7 @@ width: percent 100
 height: 560
 align: left
 
---- A: $obj.name
+--- getting_input: $obj.name
 $loop$: $fields as $obj
 movie: $obj.movie
 release_date: $obj.release_date
