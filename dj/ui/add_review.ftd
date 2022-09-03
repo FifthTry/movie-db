@@ -3,6 +3,7 @@
 -- import: movie-db/assets
 
 
+
 -- fpm.toc-item list empty-toc:
 
 -- fpm.toc-item list toc-top-right:
@@ -21,6 +22,10 @@ current-url: /
 link-style: bold
 toc: $empty-toc
 
+
+-- ftd.color black:
+light: black
+dark: black
 
 
 -- optional string input_title:
@@ -41,78 +46,38 @@ color: $black
 padding-horizontal: 10
 padding-vertical: 12
 
--- ftd.color black:
-light: black
-dark: black
 
--- ftd.text: ADD NEW MOVIE
+
+-- ftd.text: WRITE A REVIEW
 role: $fpm.type.heading-large
 text-align: center
 style: bold
 margin-top: $fpm.space.space-8
 padding-left: 30
 
+
 -- record list1:
-caption name: 
+caption name:
 boolean movie: false
 boolean reviewer: false
 boolean rating: false
 boolean description: false
 
 
---- ftd.input meow:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
 
 -- list1 list fields:
 
 -- string l1: Movie Title
--- string l2:
-
-\*
-
--- string l4:
-
-\*
-
--- string l5:Reviewer
-
--- string l6:\*
-
--- string l8: Rating
-
-
--- string l10:\*
-
--- string l11:Description
-
--- string l12:\*
-
---- ftd.row:
-padding-left: $fpm.space.space-7
-align: left
-
+/-- string l2:\*
+-- string l3: Reviewer-Name
+/-- string l4:\*
+-- string l5: Rating
+/-- string l6:\*
+-- string l7: Write-Review
+/-- string l8:\*
 
 --- ftd.text:
-text: $l1
-padding-horizontal: $fpm.space.space-2
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $l2
+text: $l8
 color: $fpm.color.main.error.text
 role: $fpm.type.heading-small
 style: bold
@@ -121,13 +86,13 @@ width:50
 -- fields: $l1
 movie: true
 
--- fields: $l8
-rating: true
-
--- fields: $l5
+-- fields: $l3
 reviewer: true
 
--- fields: $l11
+-- fields: $l5
+rating: true
+
+-- fields: $l7
 description: true
 
 
@@ -144,22 +109,56 @@ boolean rating:
 --- ftd.text: $title
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Title of the movie
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $movie
 $on-input$: $input_title=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Your name
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $reviewer
 $on-input$: $input_reviewer=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Your review of the movie
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+height: 150
+multiline: true
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $description
 $on-input$: $input_description=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Your rating (in decimal)
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $rating
 $on-input$: $input_rating=$VALUE
 
@@ -173,6 +172,48 @@ padding-vertical: $fpm.space.space-4
 width: percent 100
 height: 560
 align: left
+
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-7
+align: left
+
+
+--- ftd.text:
+text: $l1
+padding-horizontal: $fpm.space.space-2
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- container: ftd.main
+
+
+
+
+
+--- ftd.row:
+padding-left: 130
+align: left
+
+
+--- ftd.text:
+text: $l7
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-4
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- container: ftd.main
+
 
 --- A: $obj.name
 $loop$: $fields as $obj
