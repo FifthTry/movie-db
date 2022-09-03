@@ -46,9 +46,7 @@ color: $black
 padding-horizontal: 10
 padding-vertical: 12
 
-
-
--- ftd.text: WRITE A REVIEW
+-- ftd.text: ADD NEW REVIEW
 role: $fpm.type.heading-large
 text-align: center
 style: bold
