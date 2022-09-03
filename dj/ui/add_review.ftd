@@ -76,13 +76,6 @@ boolean description: false
 -- string l7: Write-Review
 /-- string l8:\*
 
---- ftd.text:
-text: $l8
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width:50
-
 -- fields: $l1
 movie: true
 
@@ -96,7 +89,7 @@ rating: true
 description: true
 
 
--- ftd.row A:
+-- ftd.row getting_input:
 caption title:
 string placeText: Default
 boolean movie:
@@ -162,6 +155,8 @@ border-radius: 4
 if: $rating
 $on-input$: $input_rating=$VALUE
 
+-- string label: \*
+
 -- ftd.column foo:
 optional caption name:
 optional string label:
@@ -178,16 +173,6 @@ align: left
 --- ftd.row:
 padding-left: $fpm.space.space-7
 align: left
-
-
---- ftd.text:
-text: $l1
-padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
 
 
 --- container: ftd.main
@@ -215,7 +200,7 @@ style: bold
 --- container: ftd.main
 
 
---- A: $obj.name
+--- getting_input: $obj.name
 $loop$: $fields as $obj
 movie: $obj.movie
 reviewer: $obj.reviewer
@@ -240,7 +225,7 @@ padding-bottom: 10
 align: center
 
 
--- button.button: Add Movie
+-- button.button: Post
 role: primary
 large: true
 align: center
