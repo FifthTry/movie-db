@@ -3,6 +3,7 @@
 -- import: movie-db/assets
 
 
+
 -- fpm.toc-item list empty-toc:
 
 -- fpm.toc-item list toc-top-right:
@@ -71,42 +72,22 @@ boolean description: false
 -- list1 list fields:
 
 -- string l1: Movie Title
--- string l2:
-
-\*
-
+-- string l2: \*
 -- string l3: Release-date
-
--- string l4:
-
-\*
-
--- string l5:Directed By
-
--- string l6:\*
-
-
--- string l7:Poster
-
--- string l8:\*
+-- string l4: \*
+-- string l5: Directed By
+-- string l6: \*
+-- string l7: Poster
+-- string l8: \*
+-- string l9 : Description
+-- string l10: \*
 
 
--- string l10:\*
 
--- string l11:Description
-
--- string l12:\*
-
---- ftd.row:
-padding-left: $fpm.space.space-7
-align: left
-
-
---- ftd.row:
-align: left
 
 -- fields: $l1
 movie: true
+
 
 -- fields: $l3
 release_date: true
@@ -117,22 +98,51 @@ director: true
 -- fields: $l7
 poster: true
 
--- fields: $l11
+-- fields: $l9
 description: true
 
 ;;we can make the placeText optional as well
 -- ftd.row getting_input:
 caption title:
-string placeText: Default
 boolean movie:
 boolean release_date:
 boolean director:
 boolean poster:
 boolean description:
+min-width: percent 50
+margin-top: $fpm.space.space-4
+padding-vertical: $fpm.space.space-4
+width: percent 100
+height: 560
+align: left
 
-/--- ftd.boolean: $movie
+
+--- ftd.row:
+padding-left: $fpm.space.space-7
+align: left
+
 
 --- ftd.text: $title
+padding-left: $fpm.space.space-7
+padding-horizontal: $fpm.space.space-2
+color: $fpm.color.main.text-strong
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $l2
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
+
 
 --- ftd.input:
 placeholder: Title of the movie
@@ -146,6 +156,8 @@ border-color: $fpm.color.main.border
 border-radius: 4
 if: $movie
 $on-input$: $input_title=$VALUE
+
+
 
 --- ftd.input:
 placeholder: When was this movie released?
@@ -212,6 +224,8 @@ width: percent 100
 height: 560
 align: left
 
+
+
 --- getting_input: $obj.name
 $loop$: $fields as $obj
 movie: $obj.movie
@@ -225,9 +239,6 @@ description: $obj.description
 $loop$: $fields as $obj
 
 -- foo:
-
-
-
 
 
 
@@ -253,3 +264,4 @@ release_date: $input_release_date
 director: $input_director
 poster: $input_poster
 description: $input_description
+
