@@ -68,16 +68,6 @@ boolean director: false
 boolean poster: false
 boolean description: false
 
-
---- ftd.input meow:
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-
 -- list1 list fields:
 
 -- string l1: Movie Title
@@ -162,27 +152,69 @@ boolean description:
 --- ftd.text: $title
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Title of the movie
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $movie
 $on-input$: $input_title=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: When was this movie released?
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $release_date
 $on-input$: $input_release_date=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Name of the director
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $director
 $on-input$: $input_director=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: URL of the poster
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $poster
 $on-input$: $input_poster=$VALUE
 
 --- ftd.input:
-placeholder: $placeText
+placeholder: Description of the movie
+padding-horizontal: 16
+padding-vertical: 16
+padding-top: 8
+padding-bottom: 8
+width: 400
+height: 150
+multiline: true
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 4
 if: $description
 $on-input$: $input_description=$VALUE
 
