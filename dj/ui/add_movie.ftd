@@ -125,7 +125,6 @@ align: left
 --- ftd.text: $title
 padding-left: $fpm.space.space-7
 padding-horizontal: $fpm.space.space-2
-color: $fpm.color.main.text-strong
 role: $fpm.type.copy-large
 align: left
 text-align: left
