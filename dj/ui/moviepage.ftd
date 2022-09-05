@@ -1,1 +1,337 @@
+-- import: fpm
+-- import: fifthtry.github.io/button
+-- import: movie-db/assets
 
+
+
+-- fpm.toc-item list empty-toc:
+
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+
+
+
+-- h.header:
+site-logo: $hassets.files.static.header.download.png
+site-url: /
+site-name: FTD3
+current-url: /
+link-style: bold
+background: $fpm.color.main.background.overlay
+toc: $empty-toc
+
+
+
+
+
+-- component-1: 
+movie-name: Samshera
+src: $assets.files.download.png
+
+
+- All Movies / Movie-Name
+
+
+
+
+
+
+
+
+
+
+-- ftd.column component-1:
+optional caption title:
+optional string label:
+string movie-name:
+ftd.image-src src:
+background-color: $fpm.color.main.custom.two
+padding-vertical: $fpm.space.space-6
+align: center
+width: percent 100
+height: 250
+body body:
+
+--- ftd.text: 
+text: $body
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+padding-left: 18
+
+
+--- ftd.column:
+align: center
+max-width: 756
+
+
+
+--- ftd.image:
+src: $src
+height: 250
+width: 200
+
+
+--- container: ftd.main
+
+
+--- ftd.column:
+align: right
+padding-right: 200
+
+
+--- button.button: WRITE REVIEW
+role: primary
+large: true
+align: right
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-2: 
+text-1: $s1
+text-2: $s2
+text-3: $s3
+text-4: $s4
+text-5: $s5
+text-6: $s6
+
+
+
+-- string s1:
+
+MOVIE-TITLE
+
+-- string s2:
+
+DIRECTOR NAME
+
+-- string s3:
+
+RELEASE DATE
+
+-- string s4:
+
+Description
+
+-- string s5:
+
+Review Count Number Reviews
+
+-- string s6:
+
+\-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-- ftd.column component-2:
+optional caption title:
+optional string label:
+optional string text-1:
+optional string text-2:
+optional string text-3:
+optional string text-4:
+optional string text-5:
+optional string text-6:
+align: left
+margin-bottom: 200
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.text: 
+text: $text-1
+role: $fpm.type.heading-large
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-5
+
+cursor: pointer
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-2
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-2
+
+--- container: ftd.main
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-3
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-4
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-10
+
+
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-5
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text: 
+text: $text-6
+text-align: left
+align: left
+
+--- container: ftd.main
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-3: 
+text-1: $t1
+text-2: $t2
+text-3: $t3
+text-4: $t4
+
+
+
+
+-- string t1:
+
+REVIEWER-NAME
+
+-- string t2:
+
+RATING / 10
+
+-- string t3:
+
+REVIEW BODY
+
+
+-- string t4:
+
+\-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- ftd.column component-3:
+optional caption title:
+optional string label:
+optional string text-1:
+optional string text-2:
+optional string text-3:
+optional string text-4:
+align: left
+margin-top: $fpm.space.space-10
+margin-bottom: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.text: 
+text: $text-1
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+
+cursor: pointer
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-2
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+--- container: ftd.main
+
+--- ftd.row:
+align: left
+
+--- ftd.text: 
+text: $text-3
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text: 
+text: $text-4
+text-align: left
+align: left
+
+--- container: ftd.main
