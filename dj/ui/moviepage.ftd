@@ -3,7 +3,6 @@
 -- import: movie-db/assets
 
 
-
 -- fpm.toc-item list empty-toc:
 
 -- fpm.toc-item list toc-top-right:
@@ -19,7 +18,7 @@ $processor$: toc
 -- h.header:
 site-logo: $hassets.files.static.header.download.png
 site-url: /
-site-name: FTD3
+site-name: FIFTHTRY
 current-url: /
 link-style: bold
 background: $fpm.color.main.background.overlay
@@ -29,7 +28,7 @@ toc: $empty-toc
 
 
 
--- component-1: 
+-- component-1:
 movie-name: Samshera
 src: $assets.files.download.png
 
@@ -57,7 +56,7 @@ width: percent 100
 height: 250
 body body:
 
---- ftd.text: 
+--- ftd.text:
 text: $body
 role: $fpm.type.blockquote
 text-align: center
@@ -104,39 +103,33 @@ align: right
 
 
 
--- component-2: 
+-- component-2:
 text-1: $s1
 text-2: $s2
 text-3: $s3
 text-4: $s4
 text-5: $s5
 text-6: $s6
+text-7: $s7
 
 
 
--- string s1:
+-- string s1: MOVIE-TITLE ⭐
 
-MOVIE-TITLE
+-- string s2: Rating
 
--- string s2:
+-- string s3: DIRECTOR NAME
 
-DIRECTOR NAME
+-- string s4: RELEASE DATE
 
--- string s3:
+-- string s5: Description
 
-RELEASE DATE
+-- string s6: Review Count Number Reviews
 
--- string s4:
+-- string s7: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Description
 
--- string s5:
 
-Review Count Number Reviews
-
--- string s6:
-
-\-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 -- ftd.column component-2:
@@ -148,6 +141,7 @@ optional string text-3:
 optional string text-4:
 optional string text-5:
 optional string text-6:
+optional string text-7:
 align: left
 margin-bottom: 200
 margin-top: $fpm.space.space-10
@@ -158,33 +152,56 @@ width: 756
 height: 40
 
 
---- ftd.text: 
+--- ftd.row:
+padding-bottom: 10
+
+
+--- ftd.text:
 text: $text-1
 role: $fpm.type.heading-large
 text-align: left
 align: left
 style: bold
-margin-bottom: $fpm.space.space-5
 
-cursor: pointer
+
+--- ftd.row:
+align: center
+
+
+--- ftd.text:
+text: $text-2
+role: $fpm.type.copy-relaxed
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: $fpm.space.space-2
+
+
+--- container: ftd.main
+
 
 --- ftd.row:
 align: left
 
---- ftd.text: 
-text: $text-2
+
+--- ftd.text:
+text: $text-3
 role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-2
 
+
 --- container: ftd.main
+
 
 --- ftd.row:
 align: left
 
---- ftd.text: 
-text: $text-3
+
+--- ftd.text:
+text: $text-4
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -193,17 +210,17 @@ margin-bottom: $fpm.space.space-6
 
 --- container: ftd.main
 
+
 --- ftd.row:
 align: left
 
---- ftd.text: 
-text: $text-4
+
+--- ftd.text:
+text: $text-5
 role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-10
-
-
 
 
 --- container: ftd.main
@@ -212,8 +229,9 @@ margin-bottom: $fpm.space.space-10
 --- ftd.row:
 align: left
 
---- ftd.text: 
-text: $text-5
+
+--- ftd.text:
+text: $text-6
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -227,12 +245,11 @@ margin-bottom: $fpm.space.space-5
 align: left
 
 
---- ftd.text: 
-text: $text-6
+--- ftd.text:
+text: $text-7
 text-align: left
 align: left
 
---- container: ftd.main
 
 --- container: ftd.main
 
@@ -245,7 +262,7 @@ align: left
 
 
 
--- component-3: 
+-- component-3:
 text-1: $t1
 text-2: $t2
 text-3: $t3
@@ -254,22 +271,14 @@ text-4: $t4
 
 
 
--- string t1:
+-- string t1: REVIEWER-NAME
 
-REVIEWER-NAME
+-- string t2: RATING / 10 ⭐
 
--- string t2:
-
-RATING / 10
-
--- string t3:
-
-REVIEW BODY
+-- string t3: REVIEW BODY
 
 
--- string t4:
-
-\-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- string t4: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- ftd.column component-3:
 optional caption title:
@@ -288,7 +297,7 @@ width: 756
 height: 40
 
 
---- ftd.text: 
+--- ftd.text:
 text: $text-1
 role: $fpm.type.copy-relaxed
 text-align: left
@@ -297,12 +306,11 @@ style: bold
 margin-bottom: $fpm.space.space-1
 
 
-cursor: pointer
-
 --- ftd.row:
 align: left
 
---- ftd.text: 
+
+--- ftd.text:
 text: $text-2
 role: $fpm.type.copy-relaxed
 text-align: left
@@ -310,12 +318,15 @@ align: left
 style: bold
 margin-bottom: $fpm.space.space-2
 
+
 --- container: ftd.main
+
 
 --- ftd.row:
 align: left
 
---- ftd.text: 
+
+--- ftd.text:
 text: $text-3
 role: $fpm.type.blockquote
 text-align: left
@@ -325,13 +336,27 @@ margin-bottom: $fpm.space.space-6
 
 --- container: ftd.main
 
+
 --- ftd.row:
 align: left
 
 
---- ftd.text: 
+--- ftd.text:
 text: $text-4
 text-align: left
 align: left
 
+
 --- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+
+
