@@ -77,6 +77,8 @@ boolean description: false
 -- fields: $l1
 movie: true
 
+-- string l2: \*
+
 -- fields: $l3
 reviewer: true
 
@@ -89,15 +91,43 @@ description: true
 
 -- ftd.row getting_input:
 caption title:
-string placeText: Default
 boolean movie:
 boolean reviewer:
 boolean description:
 boolean rating:
+min-width: percent 50
+margin-top: $fpm.space.space-4
+padding-vertical: $fpm.space.space-4
+width: percent 100
+height: 560
+align: left
 
 /--- ftd.boolean: $movie
 
+--- ftd.row:
+padding-left: $fpm.space.space-7
+align: left
+
+
 --- ftd.text: $title
+padding-left: $fpm.space.space-7
+padding-horizontal: $fpm.space.space-2
+role: $fpm.type.copy-large
+align: left
+text-align: left
+style: bold
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $l2
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width:50
 
 --- ftd.input:
 placeholder: Title of the movie
