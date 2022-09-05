@@ -1,5 +1,6 @@
 -- import: fpm
 -- import: fifthtry.github.io/button
+-- import: movie-db/assets
 
 
 -- fpm.toc-item list empty-toc:
@@ -32,9 +33,7 @@ toc: $empty-toc
 
 
 
--- component-1: 
-
-aditi movie app
+-- component-1: aditi movie app
 
 
 
@@ -46,15 +45,15 @@ aditi movie app
 
 
 -- ftd.column component-1:
+caption title:
 background-color: $fpm.color.main.custom.two
 align: center
-body body:
 width: percent 100
 height: 250
 
 
 --- ftd.text: 
-text: $body
+text: $title
 role: $fpm.type.heading-large
 text-align: center
 align: center
@@ -82,7 +81,7 @@ border-radius: 8
 
 --- ftd.row:
 padding-left: $fpm.space.space-4
-padding bottom: 200
+padding-bottom: 200
 align: center
 
 
@@ -94,7 +93,6 @@ align: center
 
 --- container: ftd.main
 
---- container: ftd.main
 
 
 
@@ -104,25 +102,21 @@ align: center
 
 
 
-
--- component-2: 
-
-All Movies
+-- component-2: All Movies
 
 
 
 
 
 -- ftd.row component-2:
+caption title:
 align: left
 padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-2
-max-width: 756
-body body:
 
 
 --- ftd.text: 
-text: $body
+text: $title
 role: $fpm.type.heading-small
 text-align: left
 align: left
@@ -139,9 +133,11 @@ padding-right: 10
 padding-left: 1100
 margin-left: 40
 
+--- ftd.column:
 
 --- button.button: ADD MOVIE
 role: primary
+link : /add_movie
 large: true
 align: right
 
@@ -153,13 +149,9 @@ align: right
 
 
 
-
-
-
-
 -- component-3: 
 movie-name: Samshera
-src: $assets.files.download.png
+src: $assets.files.logo.png
 
 
 
