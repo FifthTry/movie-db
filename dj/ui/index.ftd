@@ -165,8 +165,8 @@ align: right
 
 
 -- component-3: 
-movie-name: Samshera
-src: $assets.files.logo.png
+movie-name: Inception
+src: $assets.files.deewar.png
 
 
 
@@ -188,8 +188,8 @@ padding-horizontal: $fpm.space.space-4
 
 --- ftd.iframe:
 src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-height : 275
-width : 200
+height : 500
+width : 320
 
 
 --- ftd.text: $movie-name
@@ -301,3 +301,10 @@ method: get
 url: movies
 /page_number: $page_number
 /items: $items
+
+/-- record response:
+integer page-number: 0
+optional string next:
+optional string previous:
+integer count: 8
+movie list movies:
