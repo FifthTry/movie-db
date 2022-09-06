@@ -4,17 +4,22 @@
 
 
 
+
+
 -- fpm.toc-item list empty-toc:
 
 -- fpm.toc-item list toc-top-right:
 $processor$: toc
 
-- services:/roadmap/
 - about us:/about-us/
 
 
 
+
+
 -- h.header:
+logo-height: 80
+logo-width: 100
 site-logo: $assets.files.logo.png
 site-url: /
 site-name: FIFTHTRY
@@ -23,30 +28,52 @@ link-style: bold
 toc: $empty-toc
 
 
+
+
+
 -- ftd.color black:
 light: black
 dark: black
 
 
--- optional string input_title:
-$always-include$: true
+-- ftd.color yellow:
+light: yellow
+dark: yellow
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+
+
 
 -- optional string input_reviewer:
 $always-include$: true
 
+
+-- optional string input_title:
+$always-include$: true
+
+
 -- optional string input_description:
 $always-include$: true
+
 
 -- optional decimal input_rating:
 $always-include$: true
 
-;;to check if the fields are taking input
-/-- ftd.text: $input_title
-color: $black
-padding-horizontal: 10
-padding-vertical: 12
 
--- ftd.text: ADD NEW REVIEW
+
+
+
+
+
+
+
+
+-- ftd.text: WRITE A REVIEW
 role: $fpm.type.heading-large
 text-align: center
 style: bold
@@ -54,216 +81,227 @@ margin-top: $fpm.space.space-8
 padding-left: 30
 
 
--- record list1:
+
+
+
+-- record Label_Type:
 caption name:
-boolean movie: false
 boolean reviewer: false
-boolean rating: false
+boolean movie: false
 boolean description: false
+boolean rating: false
 
 
 
--- list1 list fields:
+-- Label_Type list left-fields:
+-- Label_Type list right-fields:
 
--- string l1: Movie Title
-/-- string l2:\*
--- string l3: Reviewer-Name
-/-- string l4:\*
--- string l5: Rating
-/-- string l6:\*
--- string l7: Write-Review
-/-- string l8:\*
 
--- fields: $l1
-movie: true
+-- string label_1: Reviewer-Name
+-- string label_2: Movie Title
+-- string label_3: Description
+-- string label_4: Rating
+-- string asterik: \*
 
--- string l2: \*
 
--- fields: $l3
+-- left-fields: $label_1
 reviewer: true
 
--- fields: $l5
-rating: true
 
--- fields: $l7
+-- left-fields: $label_3
 description: true
 
 
+-- right-fields: $label_2
+movie: true
+
+
+-- right-fields: $label_4
+rating: true
+
+
+
+
+
+;; we can make the placeText optional as well
+;; ROW [ [TITLE]* [INPUT-BOX] ]
+
 -- ftd.row getting_input:
+id: outer_row
 caption title:
 boolean movie:
 boolean reviewer:
 boolean description:
 boolean rating:
-min-width: percent 50
-margin-top: $fpm.space.space-4
-padding-vertical: $fpm.space.space-4
-width: percent 100
-height: 560
-align: left
-
-/--- ftd.boolean: $movie
-
---- ftd.row:
 padding-left: $fpm.space.space-7
+width: fill
+height: 150
 align: left
 
 
 --- ftd.text: $title
 padding-left: $fpm.space.space-7
-padding-horizontal: $fpm.space.space-2
 role: $fpm.type.copy-large
 align: left
-text-align: left
+text-align: right
 style: bold
-
-
---- ftd.row:
-align: left
+width: 200
 
 
 --- ftd.text:
-text: $l2
+move-up: 8
+text: $asterik
+padding-right: $fpm.space.space-7
 color: $fpm.color.main.error.text
 role: $fpm.type.heading-small
 style: bold
-width:50
+width: 20
 
---- ftd.input:
-placeholder: Title of the movie
-padding-horizontal: 16
-padding-vertical: 16
-padding-top: 8
-padding-bottom: 8
-width: 400
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 4
-if: $movie
-$on-input$: $input_title=$VALUE
 
+;; CASE 1 input field
 --- ftd.input:
+if: $reviewer
 placeholder: Your name
 padding-horizontal: 16
-padding-vertical: 16
-padding-top: 8
-padding-bottom: 8
+padding-vertical: 8
 width: 400
+height: 40
 border-width: 2
 border-color: $fpm.color.main.border
-border-radius: 4
-if: $reviewer
+border-radius: 8
 $on-input$: $input_reviewer=$VALUE
 
+
+;; CASE 2 input field
 --- ftd.input:
-placeholder: Your review of the movie
+if: $movie
+placeholder: movie name
 padding-horizontal: 16
-padding-vertical: 16
-padding-top: 8
-padding-bottom: 8
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_title=$VALUE
+
+
+;; CASE 3 input field
+--- ftd.input:
+if: $description
+multiline: true
+placeholder: Description of the movie
+padding-horizontal: 16
+padding-vertical: 8
 width: 400
 height: 150
-multiline: true
 border-width: 2
 border-color: $fpm.color.main.border
-border-radius: 4
-if: $description
+border-radius: 8
 $on-input$: $input_description=$VALUE
 
+
+;; CASE 4 input field
 --- ftd.input:
-placeholder: Your rating (in decimal)
+if: $rating
+placeholder: out of 10
 padding-horizontal: 16
-padding-vertical: 16
-padding-top: 8
-padding-bottom: 8
+padding-vertical: 8
 width: 400
+height: 40
 border-width: 2
 border-color: $fpm.color.main.border
-border-radius: 4
-if: $rating
+border-radius: 8
 $on-input$: $input_rating=$VALUE
 
--- string label: \*
 
--- ftd.column foo:
+
+
+
+
+
+
+
+
+-- ftd.column left-column-fields:
 optional caption name:
 optional string label:
-min-width: percent 50
-margin-bottom: $fpm.space.space-8
-margin-top: $fpm.space.space-8
-padding-vertical: $fpm.space.space-4
-width: percent 100
-height: 560
+padding-vertical: $fpm.space.space-8
+width percent: fill
+min-height: 400
 align: left
-
-
-
---- ftd.row:
-padding-left: $fpm.space.space-7
-align: left
-
-
---- container: ftd.main
-
-
-
-
-
---- ftd.row:
-padding-left: 130
-align: left
-
-
---- ftd.text:
-text: $l7
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-4
-color: $fpm.color.main.text-strong
-role: $fpm.type.copy-large
-align: left
-text-align: left
-style: bold
-
-
---- container: ftd.main
 
 
 --- getting_input: $obj.name
-$loop$: $fields as $obj
-movie: $obj.movie
+$loop$: $left-fields as $obj
 reviewer: $obj.reviewer
+movie: $obj.movie
 description: $obj.description
 rating: $obj.rating
 
 
-/-- foo: $obj.name
-$loop$: $fields as $obj
-
--- foo:
 
 
 
+-- ftd.column right-column-fields:
+optional caption name:
+optional string label:
+padding-vertical: $fpm.space.space-8
+width: percent 100
+min-height: 400
+align: right
 
 
+--- getting_input: $obj.name
+$loop$: $right-fields as $obj
+reviewer: $obj.reviewer
+movie: $obj.movie
+description: $obj.description
+rating: $obj.rating
 
 
 -- ftd.row:
-padding-left: $fpm.space.space-4
-padding-bottom: 10
+spacing: 50
+width: fill
+
+
+--- left-column-fields:
+
+--- right-column-fields:
+
+
+-- ftd.row yellow-button:
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+height: 70
+width: 150
+
+
+--- ftd.text: $button-text
+role: $fpm.type.heading-small
+color: $black
+style: bold
+width: fill
+text-align: center
 align: center
 
 
--- button.button: Post
-role: primary
-large: true
+-- ftd.row:
 align: center
-$on-click$: message-host $add-review-api
 
--- object add-review-api:
+
+-- yellow-button: POST
+$on-click$: message-host $add-movie-api
+
+
+-- object add-movie-api:
 function: http
 method: post
 url: add-movie
-title: $input_title
 reviewer: $input_reviewer
+title: $input_title
 description: $input_description
 rating: $input_rating
