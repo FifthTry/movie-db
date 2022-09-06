@@ -276,8 +276,8 @@ border-width: 2
 border-radius: 10
 border-color: $transparent
 background-color: $fpm.color.main.custom.two
-height: 70
-width: 150
+height: 60
+width: 120
 
 
 --- ftd.text: $button-text
@@ -305,3 +305,9 @@ reviewer: $input_reviewer
 title: $input_title
 description: $input_description
 rating: $input_rating
+
+-- record review:
+caption title: $input_title
+body description: $input_description
+string reviewer: $input_reviewer
+integer rating: $input_rating
