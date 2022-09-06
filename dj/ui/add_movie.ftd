@@ -310,6 +310,7 @@ width: 150
 role: $fpm.type.heading-small
 color: $black
 style: bold
+link: /
 width: fill
 text-align: center
 align: center
