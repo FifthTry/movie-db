@@ -242,11 +242,6 @@ $on-input$: $input_description=$VALUE
 
 
 
-
-
-
-
-
 -- ftd.column left-column-fields:
 optional caption name:
 optional string label:
@@ -309,8 +304,8 @@ width: 150
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
 color: $black
-style: bold
 link: /
+style: bold
 width: fill
 text-align: center
 align: center
@@ -333,3 +328,10 @@ release_date: $input_release_date
 director: $input_director
 poster: $input_poster
 description: $input_description
+
+-- record movie:
+caption title: $input_title
+string release-date: $input_release_date
+string poster: $input_poster
+string director: $input_director
+body description: $input_description
