@@ -185,7 +185,7 @@ if: $movie
 placeholder: Title of the movie
 padding-horizontal: 16
 padding-vertical: 8
-width: 600
+width: 400
 height: 40
 border-width: 2
 border-color: $fpm.color.main.border
@@ -200,7 +200,7 @@ type: date
 placeholder: When was this movie released?
 padding-horizontal: 16
 padding-vertical: 8
-width: 600
+width: 400
 height: 40
 border-width: 2
 border-color: $fpm.color.main.border
@@ -214,7 +214,7 @@ if: $director
 placeholder: Name of the director
 padding-horizontal: 16
 padding-vertical: 8
-width: 600
+width: 400
 height: 40
 border-width: 2
 border-color: $fpm.color.main.border
@@ -228,7 +228,7 @@ if: $poster
 placeholder: URL of the poster
 padding-horizontal: 16
 padding-vertical: 8
-width: 600
+width: 400
 height: 40
 border-width: 2
 border-color: $fpm.color.main.border
@@ -243,7 +243,7 @@ multiline: true
 placeholder: Description of the movie
 padding-horizontal: 16
 padding-vertical: 8
-width: 600
+width: 400
 height: 150
 border-width: 2
 border-color: $fpm.color.main.border
@@ -313,7 +313,7 @@ border-width: 2
 border-radius: 10
 border-color: $transparent
 background-color: $fpm.color.main.custom.two
-height: 80
+height: 70
 width: 150
 
 
@@ -343,4 +343,3 @@ release_date: $input_release_date
 director: $input_director
 poster: $input_poster
 description: $input_description
-
