@@ -186,11 +186,10 @@ max-width: 756
 padding-horizontal: $fpm.space.space-4
 
 
---- ftd.image:
-src: $src
+--- ftd.iframe:
+src: https://www.imdb.com/gallery/rg1624939264/mediaviewer/rm2065239041?ref_=rgmi_mi_all_pos_1
 height : 275
 width : 200
-border-width: 2
 
 
 --- ftd.text: $movie-name
