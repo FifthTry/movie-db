@@ -319,6 +319,7 @@ width: 150
 
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
+link: /
 color: $black
 style: bold
 width: fill
