@@ -72,17 +72,6 @@ $always-include$: true
 
 
 
-;;to check if the fields are taking input
-/-- ftd.text: $input_title
-color: $black
-padding-horizontal: 10
-padding-vertical: 12
-
-
-/-- ftd.text: $input_poster
-color: $black
-padding-horizontal: 10
-padding-vertical: 12
 
 
 
@@ -319,7 +308,6 @@ width: 150
 
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
-link: /
 color: $black
 style: bold
 width: fill
