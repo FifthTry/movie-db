@@ -190,6 +190,7 @@ padding-horizontal: $fpm.space.space-4
 src: $src
 height : 275
 width : 200
+border-width: 2
 
 
 --- ftd.text: $movie-name
