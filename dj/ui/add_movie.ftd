@@ -145,7 +145,7 @@ boolean poster:
 boolean description:
 padding-left: $fpm.space.space-7
 width: fill
-height: 150
+height: 100
 align: left
 
 
@@ -298,8 +298,9 @@ border-width: 2
 border-radius: 10
 border-color: $transparent
 background-color: $fpm.color.main.custom.two
-height: 70
+height: 50
 width: 150
+
 
 
 --- ftd.text: $button-text
@@ -314,7 +315,7 @@ align: center
 
 -- ftd.row:
 align: center
-
+padding-top: 20
 
 -- yellow-button: Add Movie
 $on-click$: message-host $add-movie-api

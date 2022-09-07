@@ -59,7 +59,7 @@ padding-vertical: 12
 caption title:
 background-color: $fpm.color.main.custom.two
 align: center
-width: percent 100
+width: fill
 height: 250
 
 
@@ -79,6 +79,8 @@ margin-top: $fpm.space.space-6
 margin-right: $fpm.space.space-4
 padding-vertical: $fpm.space.space-6
 align: center
+spacing: 20
+
 
 
 --- ftd.input:
@@ -113,6 +115,7 @@ width: fill
 height: fill
 text-align: center
 align: center
+padding-top: 5
 $on-click$: message-host $movie
 
 
@@ -184,6 +187,7 @@ width: 180
 --- ftd.text: ADD MOVIE
 role: $fpm.type.heading-small
 color: $fpm.color.main.background.step-1
+padding-top: 5
 style: bold
 width: fill
 height: fill
