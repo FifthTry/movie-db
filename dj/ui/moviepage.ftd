@@ -107,19 +107,21 @@ cursor: pointer
 
 --- ftd.column:
 align: center
+move-up: 80
 
 --- ftd.iframe:
 src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
 height : 500
 width : 320
+scale: 0.7
 
 
 --- container: ftd.main
 
 --- write-review-button: WRITE REVIEW
 align: right
-move-up: 225
-move-left: 40
+move-up: 275
+move-left: 60
 
 
 

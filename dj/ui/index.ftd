@@ -21,11 +21,11 @@ dark: rgba(255,255,255,0)
 
 
 -- h.header:
-logo-height: 80
-logo-width: 100
+logo-height: 40
+logo-width: 80
 site-logo: $assets.files.logo.png
 site-url: /
-site-name: FIFTHTRY
+site-name:
 current-url: /
 link-style: bold
 toc: $empty-toc
@@ -160,7 +160,6 @@ text-align: left
 align: left
 style: bold
 margin-top: $fpm.space.space-10
-padding-right: 10
 padding-left: 28
 
 
@@ -202,18 +201,48 @@ link: /add_movie
 
 
 
+-- ftd.column movie-card:
+caption movie-name:
+
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+height : 500
+width : 320
+scale: 0.7
+move-up: 60
+link : /moviepage
+cursor: pointer
+
+
+--- ftd.text: $movie-name
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+move-up: 120
+cursor: pointer
 
 
 
+-- ftd.row:
+spacing: 20
+padding-horizontal: 30
+
+--- movie-card: Inception
+
+--- movie-card: Inception
+
+--- movie-card: Inception
+
+--- movie-card: Inception
 
 
--- component-3:
+/-- component-3:
 movie-name: Inception
 src1: $assets.files.deewar.png
 src2: $assets.files.deewar.png
 src3: $assets.files.deewar.png
 src4: $assets.files.deewar.png
-
 
 
 
@@ -225,7 +254,6 @@ ftd.image-src src1:
 ftd.image-src src2:
 ftd.image-src src3:
 ftd.image-src src4:
-padding-vertical: $fpm.space.space-7
 padding-left: $fpm.space.space-4
 
 
@@ -241,11 +269,10 @@ src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5O
 link : /moviepage
 height : 500
 width : 320
+scale: 0.7
 
 
 --- ftd.text: $movie-name
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 text-align: left
 align: center
@@ -266,11 +293,10 @@ src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5O
 link : /moviepage
 height : 500
 width : 320
+scale: 0.7
 
 
 --- ftd.text: $movie-name
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 text-align: left
 align: center
@@ -291,11 +317,10 @@ src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5O
 link : /moviepage
 height : 500
 width : 320
+scale: 0.7
 
 
 --- ftd.text: $movie-name
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 text-align: left
 align: center
@@ -316,11 +341,10 @@ src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5O
 link : /moviepage
 height : 500
 width : 320
+scale: 0.7
 
 
 --- ftd.text: $movie-name
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 text-align: left
 align: center
