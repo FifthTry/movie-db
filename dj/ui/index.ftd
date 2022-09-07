@@ -12,6 +12,12 @@ $processor$: toc
 - about us:/about-us/
 
 
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+
 
 
 -- h.header:
@@ -57,7 +63,7 @@ width: percent 100
 height: 250
 
 
---- ftd.text: 
+--- ftd.text:
 text: $title
 role: $fpm.type.heading-large
 text-align: center
@@ -69,7 +75,9 @@ padding-left: 18
 
 --- ftd.row:
 padding-left: $fpm.space.space-6
-margin-top: $fpm.space.space-10
+margin-top: $fpm.space.space-6
+margin-right: $fpm.space.space-4
+padding-vertical: $fpm.space.space-6
 align: center
 
 
@@ -86,17 +94,28 @@ $on-input$: $input_title=$VALUE
 
 
 --- ftd.row:
-padding-left: $fpm.space.space-4
-padding-bottom: 200
+padding-bottom: 8
 align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.background.step-1
+width: 150
 
 
 ;;api call for searching movie database
---- button.button: SEARCH
-role: primary
-large: true
+--- ftd.text: SEARCH
+role: $fpm.type.heading-small
+color: $fpm.color.main.custom.two
+style: bold
+width: fill
+height: fill
+text-align: center
 align: center
-$on-click$: message-host $movie
+
+
+
 
 -- object movie:
 function: http
@@ -130,7 +149,7 @@ padding-vertical: $fpm.space.space-2
 padding-horizontal: $fpm.space.space-2
 
 
---- ftd.text: 
+--- ftd.text:
 text: $title
 role: $fpm.type.heading-small
 text-align: left
@@ -145,16 +164,30 @@ padding-left: 28
 align: right
 margin-top: $fpm.space.space-10
 padding-right: 10
-padding-left: 1100
+padding-left: 1000
 margin-left: 40
 
---- ftd.column:
 
---- button.button: ADD MOVIE
-role: primary
-link : /add_movie
-large: true
-align: right
+--- ftd.column:
+padding-bottom: 6
+align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+width: 150
+
+
+;;api call for adding a movie database
+--- ftd.text: ADD MOVIE
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+style: bold
+width: fill
+height: fill
+text-align: center
+align: center
 
 
 --- container: ftd.main
@@ -164,7 +197,11 @@ align: right
 
 
 
--- component-3: 
+
+
+
+
+-- component-3:
 movie-name: Inception
 src: $assets.files.deewar.png
 
@@ -265,7 +302,7 @@ width: fill
 height: 40
 
 
---- ftd.text: 
+--- ftd.text:
 text: $text-1
 role: $fpm.type.blockquote
 text-align: left
@@ -277,7 +314,7 @@ padding-left: 15
 cursor: pointer
 
 
---- ftd.text: 
+--- ftd.text:
 text: $text-2
 role: $fpm.type.blockquote
 text-align: left
