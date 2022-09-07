@@ -188,6 +188,7 @@ padding-horizontal: $fpm.space.space-4
 
 --- ftd.iframe:
 src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+link : /moviepage
 height : 500
 width : 320
 
@@ -198,6 +199,7 @@ padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 text-align: left
 align: center
+link : /moviepage
 
 
 --- container: ftd.main

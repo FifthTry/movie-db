@@ -101,7 +101,7 @@ boolean rating: false
 -- string label_2: Movie Title
 -- string label_3: Description
 -- string label_4: Rating
--- string asterik: \*
+-- string asterisk: \*
 
 
 -- left-fields: $label_1
@@ -148,9 +148,8 @@ style: bold
 width: 200
 
 
---- ftd.text:
+--- ftd.text: $asterisk
 move-up: 8
-text: $asterik
 padding-right: $fpm.space.space-7
 color: $fpm.color.main.error.text
 role: $fpm.type.heading-small
@@ -287,6 +286,7 @@ style: bold
 width: fill
 text-align: center
 align: center
+link : /moviepage
 
 
 -- ftd.row:

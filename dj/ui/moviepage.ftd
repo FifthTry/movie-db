@@ -27,21 +27,14 @@ toc: $empty-toc
 
 
 
+-- string string1: ALL MOVIES/
+
+-- string string2: MOVIE NAME
 
 
 -- component-1:
 movie-name: Samshera
 src: $assets.files.download.png
-
-
-All Movies / Movie-Name
-
-
-
-
-
-
-
 
 
 
@@ -55,10 +48,22 @@ padding-vertical: $fpm.space.space-6
 align: center
 width: percent 100
 height: 230
-body body:
+
+
 
 --- ftd.text:
-text: $body
+text: $string1
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+padding-left: 18
+link: /
+
+
+--- ftd.text:
+text: $string2
 role: $fpm.type.blockquote
 text-align: center
 align: left
@@ -73,10 +78,10 @@ max-width: 756
 
 
 
---- ftd.image:
-src: $src
-height: 275
-width: 225
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+height : 500
+width : 320
 
 
 --- container: ftd.main
@@ -91,6 +96,7 @@ padding-right: 200
 role: primary
 large: true
 align: right
+link : /add_review
 
 
 --- container: ftd.main
@@ -112,7 +118,6 @@ date: $s4
 description: $s5
 review-count: $s6
 line: $s7
-
 
 
 -- string s1: MOVIE-TITLE ⭐
