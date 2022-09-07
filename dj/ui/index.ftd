@@ -205,7 +205,11 @@ link: /add_movie
 
 -- component-3:
 movie-name: Inception
-src: $assets.files.deewar.png
+src1: $assets.files.deewar.png
+src2: $assets.files.deewar.png
+src3: $assets.files.deewar.png
+src4: $assets.files.deewar.png
+
 
 
 
@@ -213,7 +217,10 @@ src: $assets.files.deewar.png
 optional caption title:
 optional string label:
 string movie-name:
-ftd.image-src src:
+ftd.image-src src1:
+ftd.image-src src2:
+ftd.image-src src3:
+ftd.image-src src4:
 padding-vertical: $fpm.space.space-7
 padding-left: $fpm.space.space-4
 
@@ -244,10 +251,79 @@ link : /moviepage
 --- container: ftd.main
 
 
+--- ftd.column:
+align: left
+max-width: 756
+padding-horizontal: $fpm.space.space-4
 
 
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+link : /moviepage
+height : 500
+width : 320
 
 
+--- ftd.text: $movie-name
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+
+
+--- container: ftd.main
+
+
+--- ftd.column:
+align: left
+max-width: 756
+padding-horizontal: $fpm.space.space-4
+
+
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+link : /moviepage
+height : 500
+width : 320
+
+
+--- ftd.text: $movie-name
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+
+
+--- container: ftd.main
+
+
+--- ftd.column:
+align: left
+max-width: 756
+padding-horizontal: $fpm.space.space-4
+
+
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+link : /moviepage
+height : 500
+width : 320
+
+
+--- ftd.text: $movie-name
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+
+
+--- container: ftd.main
 
 
 
