@@ -18,11 +18,11 @@ $processor$: toc
 
 
 -- h.header:
-logo-height: 80
-logo-width: 100
+logo-height: 40
+logo-width: 80
 site-logo: $assets.files.logo.png
 site-url: /
-site-name: FIFTHTRY
+site-name:
 current-url: /
 link-style: bold
 toc: $empty-toc

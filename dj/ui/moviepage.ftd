@@ -15,19 +15,52 @@ $processor$: toc
 
 
 -- h.header:
-logo-height: 80
-logo-width: 100
+logo-height: 40
+logo-width: 80
 site-logo: $assets.files.logo.png
 site-url: /
-site-name: FIFTHTRY
+site-name:
 current-url: /
 link-style: bold
 toc: $empty-toc
 
 
+-- ftd.color black:
+light: black
+dark: black
 
 
--- string string1: ALL MOVIES/
+-- ftd.color yellow:
+light: yellow
+dark: yellow
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+-- ftd.row write-review-button:
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+
+
+--- ftd.text: $button-text
+role: $fpm.type.copy-relaxed
+color: $black
+style: bold
+height: 40
+width: 150
+padding-top: 8
+text-align: center
+align: center
+link : /add_review
+
+
+-- string string1: ALL MOVIES /
 
 -- string string2: MOVIE NAME
 
@@ -47,9 +80,9 @@ background-color: $fpm.color.main.custom.two
 padding-vertical: $fpm.space.space-6
 align: center
 width: percent 100
-height: 230
+height: 180
 
-
+--- ftd.row:
 
 --- ftd.text:
 text: $string1
@@ -58,7 +91,7 @@ text-align: center
 align: left
 style: bold
 cursor: pointer
-padding-left: 18
+padding-horizontal: 10
 link: /
 
 
@@ -69,39 +102,26 @@ text-align: center
 align: left
 style: bold
 cursor: pointer
-padding-left: 18
 
+--- container: ftd.main
 
 --- ftd.column:
 align: center
-max-width: 756
-
-
+move-up: 80
 
 --- ftd.iframe:
 src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
 height : 500
 width : 320
+scale: 0.7
 
 
 --- container: ftd.main
 
-
---- ftd.column:
+--- write-review-button: WRITE REVIEW
 align: right
-padding-right: 200
-
-
---- button.button: WRITE REVIEW
-role: primary
-large: true
-align: right
-link : /add_review
-
-
---- container: ftd.main
-
-
+move-up: 275
+move-left: 60
 
 
 
@@ -132,8 +152,7 @@ line: $s7
 
 -- string s6: Review Count Number Reviews
 
--- string s7: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+-- string s7: \_____________________________________________________________________________________________________________________________
 
 
 
@@ -168,10 +187,6 @@ role: $fpm.type.heading-large
 text-align: left
 align: left
 style: bold
-
-
---- ftd.row:
-align: center
 
 
 --- ftd.text:
@@ -284,7 +299,7 @@ line: $t4
 -- string t3: REVIEW BODY
 
 
--- string t4: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- string t4: \___________________________________________________________________________________________________________________________________
 
 -- ftd.column component-3:
 optional caption title:
