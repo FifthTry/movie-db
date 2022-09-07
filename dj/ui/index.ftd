@@ -113,6 +113,7 @@ width: fill
 height: fill
 text-align: center
 align: center
+$on-click$: message-host $movie
 
 
 
@@ -169,14 +170,14 @@ margin-left: 40
 
 
 --- ftd.column:
-padding-bottom: 6
 align: center
 caption button-text:
 border-width: 2
 border-radius: 10
 border-color: $transparent
 background-color: $fpm.color.main.custom.two
-width: 150
+height: 50
+width: 180
 
 
 ;;api call for adding a movie database
@@ -188,6 +189,7 @@ width: fill
 height: fill
 text-align: center
 align: center
+link: /add_movie
 
 
 --- container: ftd.main
