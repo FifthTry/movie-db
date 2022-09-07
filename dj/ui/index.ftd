@@ -1,0 +1,351 @@
+-- import: fpm
+-- import: fifthtry.github.io/button
+-- import: movie-db/assets
+
+
+-- fpm.toc-item list empty-toc:
+
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+
+
+
+-- h.header:
+logo-height: 80
+logo-width: 100
+site-logo: $assets.files.logo.png
+site-url: /
+site-name: FIFTHTRY
+current-url: /
+link-style: bold
+toc: $empty-toc
+
+
+-- integer items: 8
+
+
+-- optional string input_title:
+$always-include$: true
+
+
+;;to check if the input is working
+/-- ftd.text: $input_title
+padding-horizontal: 10
+padding-vertical: 12
+
+
+-- component-1: aditi movie app
+
+
+
+
+
+
+
+
+
+
+-- ftd.column component-1:
+caption title:
+background-color: $fpm.color.main.custom.two
+align: center
+width: percent 100
+height: 250
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-large
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 18
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-6
+margin-top: $fpm.space.space-6
+margin-right: $fpm.space.space-4
+padding-vertical: $fpm.space.space-6
+align: center
+
+
+--- ftd.input:
+placeholder: Search here
+padding-horizontal: 16
+padding-vertical: 8
+width: 600
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+$on-input$: $input_title=$VALUE
+
+
+--- ftd.row:
+padding-bottom: 8
+align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.background.step-1
+width: 150
+
+
+;;api call for searching movie database
+--- ftd.text: SEARCH
+role: $fpm.type.heading-small
+color: $fpm.color.main.custom.two
+style: bold
+width: fill
+height: fill
+text-align: center
+align: center
+$on-click$: message-host $movie
+
+
+
+
+-- object movie:
+function: http
+method: get
+url: moviepage
+title: $input_title
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-2: All Movies
+$on-click$: message-host $movie-list
+
+
+
+
+
+-- ftd.row component-2:
+caption title:
+align: left
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-small
+text-align: left
+align: left
+style: bold
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-left: 28
+
+
+--- ftd.row:
+align: right
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-left: 1000
+margin-left: 40
+
+
+--- ftd.column:
+align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+height: 50
+width: 180
+
+
+;;api call for adding a movie database
+--- ftd.text: ADD MOVIE
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+style: bold
+width: fill
+height: fill
+text-align: center
+align: center
+link: /add_movie
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+movie-name: Inception
+src: $assets.files.deewar.png
+
+
+
+-- ftd.row component-3:
+optional caption title:
+optional string label:
+string movie-name:
+ftd.image-src src:
+padding-vertical: $fpm.space.space-7
+padding-left: $fpm.space.space-4
+
+
+
+--- ftd.column:
+align: left
+max-width: 756
+padding-horizontal: $fpm.space.space-4
+
+
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+link : /moviepage
+height : 500
+width : 320
+
+
+--- ftd.text: $movie-name
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-4:
+
+
+
+--- ftd.text: NEXT
+text-align: right
+align: right
+$on-click$: message-host $next
+
+-- object next:
+function: http
+method: get
+url: /movies/p_no=1&items=10
+/page_number: $page_number
+/items: $items
+
+
+--- ftd.text: PREVIOUS
+text-align: right
+align: right
+$on-click$: message-host $previous
+
+-- object previous:
+function: http
+method: get
+url: /movies/p_no=1&items=10
+/page_number: $page_number
+/items: $items
+
+
+
+
+
+
+
+
+
+
+-- ftd.row component-4:
+optional caption title:
+optional string label:
+optional string text-1:
+optional string text-2:
+align: right
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: fill
+height: 40
+
+
+--- ftd.text:
+text: $text-1
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-15
+padding-right: 500
+padding-left: 15
+cursor: pointer
+
+
+--- ftd.text:
+text: $text-2
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-15
+padding-right: 10
+padding-left: 850
+cursor: pointer
+
+
+--- container: ftd.main
+
+/-- button.button: Movie list
+role: primary
+large: true
+align: center
+$on-click$: message-host $movie-list
+
+-- object movie-list:
+function: http
+method: get
+url: movies
+/page_number: $page_number
+/items: $items
+
+/-- record response:
+integer page-number: 0
+optional string next:
+optional string previous:
+integer count: 8
+movie list movies:

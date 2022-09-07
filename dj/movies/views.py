@@ -17,7 +17,7 @@ def list_movie(req: django.http.HttpRequest):
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
     page_number = req.GET.get("p_no", 1)
-    items = req.GET.get("items", 10)
+    items = req.GET.get("items", 8)
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -63,6 +63,22 @@ def add_movie(req: django.http.HttpRequest):
     print(movie)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.id}, status=200)
+
+@csrf_exempt
+def get_movie(req: django.http.HttpRequest):
+
+    movie = req.GET.get("title")
+
+    return django.http.JsonResponse(
+        {
+            "title": movie.title,
+            "release_date": movie.release_date,
+            "poster": movie.poster,
+            "director": movie.director,
+            "description": movie.description,
+        },
+        status=200,
+    )
 
 
 """

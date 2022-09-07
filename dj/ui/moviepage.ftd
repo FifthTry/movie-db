@@ -1,0 +1,356 @@
+-- import: fpm
+-- import: movie-db/assets
+
+
+-- fpm.toc-item list empty-toc:
+
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+
+
+
+-- h.header:
+logo-height: 80
+logo-width: 100
+site-logo: $assets.files.logo.png
+site-url: /
+site-name: FIFTHTRY
+current-url: /
+link-style: bold
+toc: $empty-toc
+
+
+
+
+-- string string1: ALL MOVIES/
+
+-- string string2: MOVIE NAME
+
+
+-- component-1:
+movie-name: Samshera
+src: $assets.files.download.png
+
+
+
+-- ftd.column component-1:
+optional caption title:
+optional string label:
+string movie-name:
+ftd.image-src src:
+background-color: $fpm.color.main.custom.two
+padding-vertical: $fpm.space.space-6
+align: center
+width: percent 100
+height: 230
+
+
+
+--- ftd.text:
+text: $string1
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+padding-left: 18
+link: /
+
+
+--- ftd.text:
+text: $string2
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+padding-left: 18
+
+
+--- ftd.column:
+align: center
+max-width: 756
+
+
+
+--- ftd.iframe:
+src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+height : 500
+width : 320
+
+
+--- container: ftd.main
+
+
+--- ftd.column:
+align: right
+padding-right: 200
+
+
+--- button.button: WRITE REVIEW
+role: primary
+large: true
+align: right
+link : /add_review
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-2:
+movie-title: $s1
+rating: $s2
+director: $s3
+date: $s4
+description: $s5
+review-count: $s6
+line: $s7
+
+
+-- string s1: MOVIE-TITLE ⭐
+
+-- string s2: Rating
+
+-- string s3: DIRECTOR NAME
+
+-- string s4: RELEASE DATE
+
+-- string s5: Description
+
+-- string s6: Review Count Number Reviews
+
+-- string s7: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+-- ftd.column component-2:
+optional caption title:
+optional string label:
+optional string movie-title:
+optional string rating:
+optional string director:
+optional string date:
+optional string description:
+optional string review-count:
+optional string line:
+align: left
+margin-bottom: 200
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.row:
+padding-bottom: 10
+
+
+--- ftd.text:
+text: $movie-title
+role: $fpm.type.heading-large
+text-align: left
+align: left
+style: bold
+
+
+--- ftd.row:
+align: center
+
+
+--- ftd.text:
+text: $rating
+role: $fpm.type.copy-relaxed
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $director
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $date
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $description
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-10
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $review-count
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $line
+text-align: left
+align: left
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+reviewer-name: $t1
+rating: $t2
+review: $t3
+line: $t4
+
+
+
+
+-- string t1: REVIEWER-NAME
+
+-- string t2: RATING / 10 ⭐
+
+-- string t3: REVIEW BODY
+
+
+-- string t4: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- ftd.column component-3:
+optional caption title:
+optional string label:
+optional string reviewer-name:
+optional string rating:
+optional string review:
+optional string line:
+align: left
+margin-top: $fpm.space.space-10
+margin-bottom: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.text:
+text: $reviewer-name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $rating
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $review
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $line
+text-align: left
+align: left
+
+
+--- container: ftd.main
