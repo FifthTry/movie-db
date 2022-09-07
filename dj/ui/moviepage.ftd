@@ -10,9 +10,7 @@ $processor$: toc
 
 - about us:/about-us/
 
--- ftd.color transparent:
-light: rgba(255,255,255,0)
-dark: rgba(255,255,255,0)
+
 
 
 
@@ -53,7 +51,7 @@ optional string label:
 string movie-name:
 ftd.image-src src:
 background-color: $fpm.color.main.custom.two
-padding-vertical: $fpm.space.space-5
+padding-vertical: $fpm.space.space-6
 align: center
 width: percent 100
 height: 230
@@ -73,30 +71,26 @@ padding-left: 18
 align: center
 max-width: 756
 
+
+
 --- ftd.image:
 src: $src
 height: 275
 width: 225
 
 
---- ftd.row:
-caption button-text:
-border-width: 2
-border-radius: 10
-border-color: $transparent
-background-color: $fpm.color.main.custom.two
-height: 70
-width: 200
+--- container: ftd.main
+
+
+--- ftd.column:
 align: right
+padding-right: 200
 
 
---- ftd.text: WRITE REVIEW
-role: $fpm.type.heading-small
-color: $fpm.color.main.background.step-1
-style: bold
-width: fill
-text-align: center
-align: center
+--- button.button: WRITE REVIEW
+role: primary
+large: true
+align: right
 
 
 --- container: ftd.main
@@ -243,6 +237,102 @@ role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $line
+text-align: left
+align: left
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+reviewer-name: $t1
+rating: $t2
+review: $t3
+line: $t4
+
+
+
+
+-- string t1: REVIEWER-NAME
+
+-- string t2: RATING / 10 ⭐
+
+-- string t3: REVIEW BODY
+
+
+-- string t4: \-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- ftd.column component-3:
+optional caption title:
+optional string label:
+optional string reviewer-name:
+optional string rating:
+optional string review:
+optional string line:
+align: left
+margin-top: $fpm.space.space-10
+margin-bottom: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.text:
+text: $reviewer-name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $rating
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $review
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
 
 
 --- container: ftd.main
