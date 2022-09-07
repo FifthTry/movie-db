@@ -14,14 +14,14 @@ $processor$: toc
 
 
 
-
 -- h.header:
-site-logo: $hassets.files.static.header.download.png
+logo-height: 80
+logo-width: 100
+site-logo: $assets.files.logo.png
 site-url: /
-site-name: FTD3
+site-name: FIFTHTRY
 current-url: /
 link-style: bold
-background: $fpm.color.main.background.overlay
 toc: $empty-toc
 
 
