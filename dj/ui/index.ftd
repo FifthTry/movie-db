@@ -192,7 +192,7 @@ width: fill
 height: fill
 text-align: center
 align: center
-link: /add_movie
+link: /add-movie
 
 
 --- container: ftd.main
