@@ -94,7 +94,7 @@ def get_movie(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def add_review(req: django.http.HttpRequest):
+def add-review(req: django.http.HttpRequest):
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
