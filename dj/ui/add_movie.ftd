@@ -324,7 +324,7 @@ $on-click$: message-host $add-movie-api
 -- object add-movie-api:
 function: http
 method: post
-url: add-movie
+url: /add-movie/
 title: $input_title
 release_date: $input_release_date
 director: $input_director

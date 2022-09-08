@@ -64,6 +64,18 @@ def add_movie(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.id}, status=200)
 
+
+"""
+curl -X POST http://127.0.0.1:8001/add-movie/ \
+--data-raw '{
+    "title": "Movie Title", 
+    "release_date": "2022-12-10", 
+    "poster": "M Poster", 
+    "director": "Movie Director"
+}'
+"""
+
+
 @csrf_exempt
 def get_movie(req: django.http.HttpRequest):
 
@@ -79,17 +91,6 @@ def get_movie(req: django.http.HttpRequest):
         },
         status=200,
     )
-
-
-"""
-curl -X POST http://127.0.0.1:8001/add-movie/ \
---data-raw '{
-    "title": "Movie Title", 
-    "release_date": "2022-12-10", 
-    "poster": "M Poster", 
-    "director": "Movie Director"
-}'
-"""
 
 
 @csrf_exempt
