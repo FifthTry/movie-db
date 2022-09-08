@@ -46,7 +46,7 @@ def list_movie(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def add_movie(req: django.http.HttpRequest):
+def add-movie(req: django.http.HttpRequest):
 
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
