@@ -1,5 +1,4 @@
 -- import: fpm
--- import: fifthtry.github.io/button
 -- import: movie-db/assets
 
 
@@ -306,7 +305,7 @@ width: 150
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
 color: $black
-link: /
+link: /moviepage
 style: bold
 width: fill
 text-align: center
