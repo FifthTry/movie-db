@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
-def list-movie(req: django.http.HttpRequest):
+def list_movie(req: django.http.HttpRequest):
     # Request
 
     """
@@ -46,7 +46,7 @@ def list-movie(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def add-movie(req: django.http.HttpRequest):
+def add_movie(req: django.http.HttpRequest):
 
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
@@ -77,7 +77,7 @@ curl -X POST http://127.0.0.1:8001/add-movie/ \
 
 
 @csrf_exempt
-def get-movie(req: django.http.HttpRequest):
+def get_movie(req: django.http.HttpRequest):
 
     movie = req.GET.get("title")
 
@@ -94,7 +94,7 @@ def get-movie(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def add-review(req: django.http.HttpRequest):
+def add_review(req: django.http.HttpRequest):
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
