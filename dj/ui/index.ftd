@@ -203,161 +203,208 @@ link: /add-movie
 
 
 
-
-
--- ftd.column movie-card:
-caption movie-name:
-border-width:2
-border-color: $black
-
---- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-height : 500
-width : 320
-scale: 0.6
-move-up: 60
-link : /moviepage
-cursor: pointer
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
-link : /moviepage
-move-up: 120
-cursor: pointer
-
-
-
--- ftd.row:
-spacing: 20
-padding-horizontal: 30
-
---- movie-card: Inception
-
---- movie-card: Inception
-
---- movie-card: Inception
-
---- movie-card: Inception
-
-
-/-- component-3:
-movie-name: Inception
-src1: $assets.files.deewar.png
-src2: $assets.files.deewar.png
-src3: $assets.files.deewar.png
-src4: $assets.files.deewar.png
+;;; paste heeeeeeeeeeeeeeeeeereeeeeeeeeeeeee
+-- component-3:
+movie-name1: Samshera
+movie-name2: Jug Jug Jeeyo
+poster1: $assets.files.deewar.png
+poster2: $assets.files.deewar.png
+star: ⭐
+rating1: r
+rating2: r
+text-1: /10
+review-count1: count
+review-count2: count
+text-2: Reviews
 
 
 
 -- ftd.row component-3:
 optional caption title:
 optional string label:
-string movie-name:
-ftd.image-src src1:
-ftd.image-src src2:
-ftd.image-src src3:
-ftd.image-src src4:
+string movie-name1:
+string movie-name2:
+ftd.image-src poster1:
+ftd.image-src poster2:
+string star:
+string rating1:
+string rating2:
+string text-1:
+string review-count1:
+string review-count2:
+string text-2:
+padding-vertical: $fpm.space.space-7
 padding-left: $fpm.space.space-4
+align:left
+spacing: 40
 
 
 
+;;ROW-1 COLUMN-1 Image Setup
 --- ftd.column:
-align: left
-max-width: 756
-padding-horizontal: $fpm.space.space-4
+border-width:2
+border-color: $black
+move-right:10
 
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-link : /moviepage
+src: https://imgur.com/dIyMKVU
 height : 500
 width : 320
+move-up: 20
 scale: 0.7
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
 link : /moviepage
+cursor: pointer
+move-right: 15
+
+
+
+--- ftd.row:
+
+--- ftd.text: $movie-name1
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+text-align: left
+align: left
+move-up:50
+move-right:10
+
+
+--- ftd.text: $star
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+text-align: right
+align: right
+move-up:50
+move-right: 160
+
+
+--- ftd.text: $rating1
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-up:50
+move-right: 140
+
+
+--- ftd.text: $text-1
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-up:50
+move-right: 120
+
+
+--- ftd.text: $review-count1
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-left: 210
+move-up: 10
+
+
+--- ftd.text: $text-2
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-left: 230
+move-up: 10
 
 
 --- container: ftd.main
 
 
+
+
+;;ROW-1 COLUMN-2 Image Setup
 --- ftd.column:
-align: left
-max-width: 756
-padding-horizontal: $fpm.space.space-4
+border-width:2
+border-color: $black
+move-right:10
 
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-link : /moviepage
+src: https://imgur.com/dIyMKVU
 height : 500
 width : 320
+move-up: 20
 scale: 0.7
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
 link : /moviepage
+cursor: pointer
+move-right: 15
+
+
+
+--- ftd.row:
+
+--- ftd.text: $movie-name2
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+text-align: left
+align: left
+move-up:50
+move-right:10
+
+
+--- ftd.text: $star
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+text-align: right
+align: right
+move-up:50
+move-right: 160
+
+
+--- ftd.text: $rating2
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-up:50
+move-right: 140
+
+
+--- ftd.text: $text-1
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-up:50
+move-right: 120
+
+
+--- ftd.text: $review-count2
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-left: 210
+move-up: 10
+
+
+--- ftd.text: $text-2
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+move-left: 230
+move-up: 10
 
 
 --- container: ftd.main
 
-
---- ftd.column:
-align: left
-max-width: 756
-padding-horizontal: $fpm.space.space-4
-
-
---- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-link : /moviepage
-height : 500
-width : 320
-scale: 0.7
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
-link : /moviepage
-
-
---- container: ftd.main
-
-
---- ftd.column:
-align: left
-max-width: 756
-padding-horizontal: $fpm.space.space-4
-
-
---- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-link : /moviepage
-height : 500
-width : 320
-scale: 0.7
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
-link : /moviepage
-
-
---- container: ftd.main
 
 
 
