@@ -1,0 +1,35 @@
+-- ft.page: `ftd` + `Django` Movie DB App
+
+We are building this application with the help of `ftd` as UI programming
+language and `Django` as backend framework.
+
+
+-- ft.h2: Introduction
+
+-- text-1:
+
+Movies, like movie websites, are made to entertain audiences. It is precisely what you are looking for.
+Our website provides visitors with a dynamic and interactive experience. It provides four sections with open
+source access where anyone can review and rate any movie they want.
+
+The homepage is displayed first, where a number of movies are added for public review. It allows users to not
+only review existing movies, but also to add new random movies by providing specific details. After clicking
+add movie, they are taken to the next page, which is the movie page. which gives them all the information about
+the film, their cast bios, genre and other general information.
+
+In the following section, we will offer to write a review, specific descriptions, and ratings for a specific
+movie. It is visible on the website as soon as it is posted, which is helpful to other visitors.
+
+-- ftd.row text-1:
+optional caption title:
+optional string label:
+body body:
+width: auto
+
+
+
+--- ftd.text:
+text: $body
+color: $fpm.color.main.text
+role: $fpm.type.copy-relaxed
+text-align: justify
