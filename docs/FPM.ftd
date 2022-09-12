@@ -1,0 +1,20 @@
+-- import: fpm
+
+-- fpm.package: movie-db
+download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
+
+-- fpm.dependency: fifthtry.github.io/doc-site as ft
+
+
+-- fpm.auto-import: ft
+-- fpm.auto-import: fpm
+
+
+
+-- fpm.sitemap:
+
+# HOME: /
+
+- Django-Work: /project-setup/
+
+- UI-Work: /aaa/
