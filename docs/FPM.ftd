@@ -16,5 +16,9 @@ download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
 # HOME: /
 
 - Django-Work: /project-setup/
+  - models.py: /models/
+  - urls.py: /urls/
+  - views.py: /views/
+
 
 - UI-Work: /aaa/
