@@ -46,7 +46,8 @@ ftd-django==0.1.3
 Since `ftd` and `ftd-sys` are required dependencies for ftd-django, we only need to add `ftd-django` in the requirements.txt file.
 
 **Note:** Before installing these dependencies, make sure your virtualenv is activated.
-To activate your virtualenv, type `source <env-directory-name>/bin/activate` in your terminal.
+To activate your virtualenv in linux, type `source <env-directory-name>/bin/activate` in your terminal.
+To activate your virtualenv in Windows, type `source <env-directory-name>\Scripts\activate` in your terminal.
 
 Once your virtualenv is activated, install these dependencies from requirements.txt.
 To do so, run this command in your terminal
