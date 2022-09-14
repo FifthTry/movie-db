@@ -123,11 +123,12 @@ def add_review(req: django.http.HttpRequest):
 
     review = Review.objects.create(
         movie=movie,
-        title=body.get["title"],
+        title=body["title"],
         description=body.get("description"),
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+    print(review)
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {"review": review.id, "movie": movie.id}, status=200
@@ -145,7 +146,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 }'
 """
 
-
+@csrf_exempt
 def list_review(req: django.http.HttpRequest):
 
     # Request
