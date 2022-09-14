@@ -30,7 +30,7 @@ def list_movie(req: django.http.HttpRequest):
     """
 
     order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[(page_number - 1) * items + 1 : page_number * items]
+    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
 
     return django.http.JsonResponse(
         {
@@ -62,7 +62,7 @@ def add_movie(req: django.http.HttpRequest):
 
     print(movie)
     # TODO: redirect to movie page
-    return django.http.JsonResponse({"movie": movie.id}, status=200)
+    return django.http.JsonResponse({"movie": movie.title}, status=200)
 
 
 """
@@ -93,6 +93,17 @@ def get_movie(req: django.http.HttpRequest):
     )
 
 
+"""
+curl -X GET http://127.0.0.1:8001/add-movie/ \
+--data-raw '{
+    "title": "Movie Title", 
+    "release_date": "2022-12-10", 
+    "poster": "M Poster", 
+    "director": "Movie Director"
+}'
+"""
+
+
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
     # Request
@@ -112,7 +123,7 @@ def add_review(req: django.http.HttpRequest):
 
     review = Review.objects.create(
         movie=movie,
-        title=body["title"],
+        title=body.get["title"],
         description=body.get("description"),
         reviewer=body["reviewer"],
         rating=body["rating"],
@@ -133,6 +144,22 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
     "rating": 8
 }'
 """
+
+
+def list_review(req: django.http.HttpRequest):
+
+    # Request
+    no_of_reviews = req.GET.get("No_of_reviews", 100)
+    reviews = Review.objects.all()
+
+    return django.http.JsonResponse(
+        {
+            "No_of_reviews": no_of_reviews,
+            "reviews": json.loads(serializers.serialize("json", reviews)),
+        },
+        status=200,
+    )
+
 
 # Movie list should come from Database
 

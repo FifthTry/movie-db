@@ -293,13 +293,23 @@ align: center
 
 
 -- yellow-button: POST
-$on-click$: message-host $add-movie-api
+$on-click$: message-host $add-review-api
+$on-click$: message-host $list-review-api
 
-
--- object add-movie-api:
+-- object list-review-api:
 function: http
 method: post
-url: add-movie
+url: /moviepage/
+reviewer: $input_reviewer
+title: $input_title
+description: $input_description
+rating: $input_rating
+
+
+-- object add-review-api:
+function: http
+method: post
+url: /moviepage/
 reviewer: $input_reviewer
 title: $input_title
 description: $input_description
