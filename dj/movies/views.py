@@ -3,6 +3,8 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+import requests
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -17,7 +19,7 @@ def list_movie(req: django.http.HttpRequest):
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
     page_number = req.GET.get("p_no", 1)
-    items = req.GET.get("items", 8)
+    items = req.GET.get("items", 50)
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -46,12 +48,13 @@ def list_movie(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def add_movie(req: django.http.HttpRequest):
+def add_movie(request: django.http.HttpRequest):
+    all_movies = {}
 
-    if req.method == "GET":
+    if request.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
-    body = json.loads(req.body.decode("utf-8"))
+    body = json.loads(request.body.decode("utf-8"))
     movie = Movie.objects.create(
         title=body["title"],
         release_date=body["release_date"],
@@ -60,7 +63,14 @@ def add_movie(req: django.http.HttpRequest):
         description=body.get("description"),
     )
 
-    print(movie)
+
+
+
+    movie.save()
+
+    all_movies = Movie.objects.all().order_by('release_date')
+
+    print(Movie)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.title}, status=200)
 
@@ -106,6 +116,7 @@ curl -X GET http://127.0.0.1:8001/add-movie/ \
 
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
+    all_reviews = {}
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -128,11 +139,17 @@ def add_review(req: django.http.HttpRequest):
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+
+
+
+    review.save()
+
+    all_reviews = Review.objects.all().order_by('title')
+
+
     print(review)
     # TODO: redirect to movie page
-    return django.http.JsonResponse(
-        {"review": review.id, "movie": movie.id}, status=200
-    )
+    return django.http.JsonResponse({"movie": movie.id,"review": review.id}, status=200)
 
 
 """
@@ -161,6 +178,33 @@ def list_review(req: django.http.HttpRequest):
         status=200,
     )
 
+
+@csrf_exempt
+def get_movie(request, title):
+
+    body = json.loads(request.body.decode("utf-8"))
+
+    try:
+        movie = Movie.objects.get(title=body["movie"])
+    except Exception as e:
+        print(e)
+        # TODO: Redirect to error page with 404 error
+        return django.http.HttpResponse("redirect to movie page", status=404)
+
+    movie = Movie.objects.get(id=title)
+
+
+    print(movie)
+    print(Movie)
+    # TODO: redirect to movie page
+    return django.http.JsonResponse({"movie": movie.title}, status=200)
+
+"""
+curl -X GET http://127.0.0.1:8001/title/ \
+--data-raw '{
+    "title": "Movie Title",
+}'
+"""
 
 # Movie list should come from Database
 
