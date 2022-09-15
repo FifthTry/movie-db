@@ -23,4 +23,5 @@ urlpatterns = [
     path("add-movie/", views.add_movie),
     path("add-review/", views.add_review),
     path("moviepage/", views.list_review),
+    path("moviepage/", views.get_movie),
 ]
