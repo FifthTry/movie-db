@@ -3,8 +3,6 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-import requests
-from django.shortcuts import render
 
 # Create your views here.
 
@@ -33,6 +31,7 @@ def list_movie(req: django.http.HttpRequest):
 
     order_by = req.GET.get("p_no", 0)
     movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
+    movie_dict = Movie.objects.all().order_by('-release_date')
 
     return django.http.JsonResponse(
         {
@@ -41,15 +40,18 @@ def list_movie(req: django.http.HttpRequest):
             "next": "/movies/p_no=1&items=10",
             "previous": "/movies/p_no=1&items=10",
             "items": items,
-            "movies": json.loads(serializers.serialize("json", movies)),
+            "movies": json.loads(serializers.serialize("json", movie_dict)),
         },
         status=200,
     )
 
 
+all_movies = {}
+
+
 @csrf_exempt
 def add_movie(request: django.http.HttpRequest):
-    all_movies = {}
+    movies_dict = {}
 
     if request.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
@@ -63,17 +65,12 @@ def add_movie(request: django.http.HttpRequest):
         description=body.get("description"),
     )
 
-
-
-
     movie.save()
 
-    all_movies = Movie.objects.all().order_by('release_date')
+    movies_dict = Movie.objects.all().order_by('release_date')
+    all_movies = movies_dict
 
     print(Movie)
-
-    #for i in all_movies:
-       # print(i)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.title}, status=200)
 
@@ -146,15 +143,11 @@ def add_review(req: django.http.HttpRequest):
         rating=body["rating"],
     )
 
-    reviews = Review.objects.all()
-
-
-
     review.save()
 
     review_dict = Review.objects.all().order_by('title')
-    all_reviews = review_dict
 
+    all_reviews = review_dict
 
     # TODO: redirect to movie page
     return django.http.JsonResponse(
@@ -162,6 +155,7 @@ def add_review(req: django.http.HttpRequest):
             "reviews": json.loads(serializers.serialize("json", review_dict))
         },
         status=200)
+
 
 """
 curl -X POST http://127.0.0.1:8001/add-review/ \
@@ -173,6 +167,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
     "rating": 8
 }'
 """
+
 
 @csrf_exempt
 def list_review(req: django.http.HttpRequest):
@@ -204,11 +199,11 @@ def get_movie(request, title):
 
     movie = Movie.objects.get(id=title)
 
-
     print(movie)
     print(Movie)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.title}, status=200)
+
 
 """
 curl -X GET http://127.0.0.1:8001/title/ \
