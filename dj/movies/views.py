@@ -71,6 +71,9 @@ def add_movie(request: django.http.HttpRequest):
     all_movies = Movie.objects.all().order_by('release_date')
 
     print(Movie)
+
+    #for i in all_movies:
+       # print(i)
     # TODO: redirect to movie page
     return django.http.JsonResponse({"movie": movie.title}, status=200)
 
@@ -114,9 +117,12 @@ curl -X GET http://127.0.0.1:8001/add-movie/ \
 """
 
 
+all_reviews = {}
+
+
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
-    all_reviews = {}
+    review_dict = {}
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -140,17 +146,22 @@ def add_review(req: django.http.HttpRequest):
         rating=body["rating"],
     )
 
+    reviews = Review.objects.all()
+
 
 
     review.save()
 
-    all_reviews = Review.objects.all().order_by('title')
+    review_dict = Review.objects.all().order_by('title')
+    all_reviews = review_dict
 
 
-    print(review)
     # TODO: redirect to movie page
-    return django.http.JsonResponse({"movie": movie.id,"review": review.id}, status=200)
-
+    return django.http.JsonResponse(
+        {
+            "reviews": json.loads(serializers.serialize("json", review_dict))
+        },
+        status=200)
 
 """
 curl -X POST http://127.0.0.1:8001/add-review/ \
