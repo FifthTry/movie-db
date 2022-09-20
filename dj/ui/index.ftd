@@ -1,5 +1,4 @@
 -- import: fpm
--- import: fifthtry.github.io/button
 -- import: movie-db/assets
 
 
@@ -15,6 +14,11 @@ $processor$: toc
 -- ftd.color transparent:
 light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
+
+
+-- ftd.color black:
+light: black
+dark: black
 
 
 
@@ -192,7 +196,7 @@ width: fill
 height: fill
 text-align: center
 align: center
-link: /add_movie
+link: /add-movie
 
 
 --- container: ftd.main
@@ -203,12 +207,14 @@ link: /add_movie
 
 -- ftd.column movie-card:
 caption movie-name:
+border-width:2
+border-color: $black
 
 --- ftd.iframe:
 src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
 height : 500
 width : 320
-scale: 0.7
+scale: 0.6
 move-up: 60
 link : /moviepage
 cursor: pointer

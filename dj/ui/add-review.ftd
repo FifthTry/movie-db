@@ -1,5 +1,4 @@
 -- import: fpm
--- import: fifthtry.github.io/button
 -- import: movie-db/assets
 
 
@@ -49,19 +48,11 @@ dark: rgba(255,255,255,0)
 
 
 
+-- optional string input_reviewer:
+$always-include$: true
+
+
 -- optional string input_title:
-$always-include$: true
-
-
--- optional string input_release_date:
-$always-include$: true
-
-
--- optional string input_director:
-$always-include$: true
-
-
--- optional string input_poster:
 $always-include$: true
 
 
@@ -69,6 +60,8 @@ $always-include$: true
 $always-include$: true
 
 
+-- optional decimal input_rating:
+$always-include$: true
 
 
 
@@ -77,7 +70,9 @@ $always-include$: true
 
 
 
--- ftd.text: ADD NEW MOVIE
+
+
+-- ftd.text: WRITE A REVIEW
 role: $fpm.type.heading-large
 text-align: center
 style: bold
@@ -90,43 +85,38 @@ padding-left: 30
 
 -- record Label_Type:
 caption name:
+boolean reviewer: false
 boolean movie: false
-boolean release_date: false
-boolean director: false
-boolean poster: false
 boolean description: false
+boolean rating: false
+
 
 
 -- Label_Type list left-fields:
 -- Label_Type list right-fields:
 
 
--- string label_1: Movie Title
--- string label_2: Release-date
--- string label_3: Directed By
--- string label_4: Poster
--- string label_5 : Description
--- string asterik: \*
+-- string label_1: Reviewer-Name
+-- string label_2: Movie Title
+-- string label_3: Description
+-- string label_4: Rating
+-- string asterisk: \*
 
 
 -- left-fields: $label_1
-movie: true
+reviewer: true
 
 
 -- left-fields: $label_3
-director: true
-
-
--- left-fields: $label_5
 description: true
 
 
 -- right-fields: $label_2
-release_date: true
+movie: true
 
 
 -- right-fields: $label_4
-poster: true
+rating: true
 
 
 
@@ -139,13 +129,12 @@ poster: true
 id: outer_row
 caption title:
 boolean movie:
-boolean release_date:
-boolean director:
-boolean poster:
+boolean reviewer:
 boolean description:
+boolean rating:
 padding-left: $fpm.space.space-7
 width: fill
-height: 100
+height: 150
 align: left
 
 
@@ -155,12 +144,11 @@ role: $fpm.type.copy-large
 align: left
 text-align: right
 style: bold
-width: 170
+width: 200
 
 
---- ftd.text:
+--- ftd.text: $asterisk
 move-up: 8
-text: $asterik
 padding-right: $fpm.space.space-7
 color: $fpm.color.main.error.text
 role: $fpm.type.heading-small
@@ -170,8 +158,22 @@ width: 20
 
 ;; CASE 1 input field
 --- ftd.input:
+if: $reviewer
+placeholder: Your name
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_reviewer=$VALUE
+
+
+;; CASE 2 input field
+--- ftd.input:
 if: $movie
-placeholder: Title of the movie
+placeholder: movie name
 padding-horizontal: 16
 padding-vertical: 8
 width: 400
@@ -182,51 +184,7 @@ border-radius: 8
 $on-input$: $input_title=$VALUE
 
 
-
-;; CASE 2 input field
---- ftd.input:
-if: $release_date
-type: date
-placeholder: When was this movie released?
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_release_date=$VALUE
-
-
 ;; CASE 3 input field
---- ftd.input:
-if: $director
-placeholder: Name of the director
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_director=$VALUE
-
-
-;; CASE 4 input field
---- ftd.input:
-if: $poster
-placeholder: URL of the poster
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_poster=$VALUE
-
-
-;; CASE 5 input field
 --- ftd.input:
 if: $description
 multiline: true
@@ -241,24 +199,43 @@ border-radius: 8
 $on-input$: $input_description=$VALUE
 
 
+;; CASE 4 input field
+--- ftd.input:
+if: $rating
+placeholder: out of 10
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_rating=$VALUE
+
+
+
+
+
+
+
+
 
 
 -- ftd.column left-column-fields:
 optional caption name:
 optional string label:
 padding-vertical: $fpm.space.space-8
-width: fill
+width percent: fill
 min-height: 400
 align: left
 
 
 --- getting_input: $obj.name
 $loop$: $left-fields as $obj
+reviewer: $obj.reviewer
 movie: $obj.movie
-release_date: $obj.release_date
-director: $obj.director
-poster: $obj.poster
 description: $obj.description
+rating: $obj.rating
 
 
 
@@ -275,11 +252,10 @@ align: right
 
 --- getting_input: $obj.name
 $loop$: $right-fields as $obj
+reviewer: $obj.reviewer
 movie: $obj.movie
-release_date: $obj.release_date
-director: $obj.director
-poster: $obj.poster
 description: $obj.description
+rating: $obj.rating
 
 
 -- ftd.row:
@@ -298,42 +274,39 @@ border-width: 2
 border-radius: 10
 border-color: $transparent
 background-color: $fpm.color.main.custom.two
-height: 50
-width: 150
-
+height: 60
+width: 120
 
 
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
 color: $black
-link: /
 style: bold
 width: fill
 text-align: center
 align: center
+link : /moviepage
 
 
 -- ftd.row:
 align: center
-padding-top: 20
 
--- yellow-button: Add Movie
+
+-- yellow-button: POST
 $on-click$: message-host $add-movie-api
 
 
 -- object add-movie-api:
 function: http
 method: post
-url: /add-movie/
+url: add-movie
+reviewer: $input_reviewer
 title: $input_title
-release_date: $input_release_date
-director: $input_director
-poster: $input_poster
 description: $input_description
+rating: $input_rating
 
--- record movie:
+-- record review:
 caption title: $input_title
-string release-date: $input_release_date
-string poster: $input_poster
-string director: $input_director
 body description: $input_description
+string reviewer: $input_reviewer
+integer rating: $input_rating

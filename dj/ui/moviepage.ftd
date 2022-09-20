@@ -57,7 +57,7 @@ width: 150
 padding-top: 8
 text-align: center
 align: center
-link : /add_review
+link : /add-review
 
 
 -- string string1: ALL MOVIES /
