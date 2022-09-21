@@ -62,8 +62,9 @@ def add_movie(req: django.http.HttpRequest):
 
     print(movie)
     # TODO: redirect to movie page
-    return django.http.JsonResponse({
-        "movie": movie.id, "message": "movie added using proxy"}, status=200)
+    # from django.shortcuts import redirect
+    # return redirect("/", permanent=True)
+    return django.http.JsonResponse({"data": {"url": "/"}}, status=200)
 
 
 """

@@ -2,7 +2,7 @@
 
 -- fpm.package: movie-db
 download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
-
+endpoint: http://127.0.0.1:8001
 
 -- fpm.dependency: fifthtry.github.io/header
 
@@ -14,4 +14,4 @@ download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
 -- fpm.sitemap:
 
 # Home: /add-movie/
-- if this api is present in microservice
+- Movie: /movie/

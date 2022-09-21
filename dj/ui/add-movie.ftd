@@ -305,7 +305,6 @@ width: 150
 --- ftd.text: $button-text
 role: $fpm.type.heading-small
 color: $black
-link: /moviepage
 style: bold
 width: fill
 text-align: center
