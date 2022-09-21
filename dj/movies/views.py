@@ -82,17 +82,19 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 def get_movie(req: django.http.HttpRequest):
 
     # movie = req.GET.get("title")
+    from django.shortcuts import redirect
+    return redirect("https://www.google.com", permanent=True)
 
-    return django.http.JsonResponse(
-        {
-            "title": "movie.title",
-            "release_date": "movie.release_date",
-            "poster": "movie.poster",
-            "director": "movie.director",
-            "description": "movie.description",
-        },
-        status=200,
-    )
+    # return django.http.JsonResponse(
+    #     {
+    #         "title": "movie.title",
+    #         "release_date": "movie.release_date",
+    #         "poster": "movie.poster",
+    #         "director": "movie.director",
+    #         "description": "movie.description",
+    #     },
+    #     status=200,
+    # )
 
 
 """

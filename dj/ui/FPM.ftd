@@ -8,6 +8,10 @@ download-base-url: https://raw.githubusercontent.com/FifthTry/movie-db
 
 
 -- fpm.auto-import: fpm
--- fpm.auto-import: fifthtry.github.io/header/assets as hassets
+-- fpm.auto-import: fifthtry.github.io/header/assets as assets
 -- fpm.auto-import: fifthtry.github.io/header as h
 
+-- fpm.sitemap:
+
+# Home: /add-movie/
+- if this api is present in microservice
