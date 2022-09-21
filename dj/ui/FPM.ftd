@@ -13,5 +13,6 @@ endpoint: http://127.0.0.1:8001
 
 -- fpm.sitemap:
 
-# Home: /add-movie/
-- Movie: /movie/
+# Home: /
+- Add Movie: /add-movie/
+- Review Movie: /review-movie/
