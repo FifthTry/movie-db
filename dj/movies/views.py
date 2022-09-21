@@ -84,6 +84,7 @@ def get_movie(req: django.http.HttpRequest):
 
     # movie = req.GET.get("title")
     from django.shortcuts import redirect
+
     return redirect("https://www.google.com", permanent=True)
 
     # return django.http.JsonResponse(
