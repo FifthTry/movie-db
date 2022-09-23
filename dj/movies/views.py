@@ -62,8 +62,9 @@ def add_movie(req: django.http.HttpRequest):
 
     print(movie)
     # TODO: redirect to movie page
-    return django.http.JsonResponse({
-        "movie": movie.id, "message": "movie added using proxy"}, status=200)
+    # from django.shortcuts import redirect
+    # return redirect("/", permanent=True)
+    return django.http.JsonResponse({"data": {"url": "/"}}, status=200)
 
 
 """
@@ -82,17 +83,20 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 def get_movie(req: django.http.HttpRequest):
 
     # movie = req.GET.get("title")
+    from django.shortcuts import redirect
 
-    return django.http.JsonResponse(
-        {
-            "title": "movie.title",
-            "release_date": "movie.release_date",
-            "poster": "movie.poster",
-            "director": "movie.director",
-            "description": "movie.description",
-        },
-        status=200,
-    )
+    return redirect("https://www.google.com", permanent=True)
+
+    # return django.http.JsonResponse(
+    #     {
+    #         "title": "movie.title",
+    #         "release_date": "movie.release_date",
+    #         "poster": "movie.poster",
+    #         "director": "movie.director",
+    #         "description": "movie.description",
+    #     },
+    #     status=200,
+    # )
 
 
 """
