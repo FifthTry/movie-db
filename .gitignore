@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 .idea/
-
+.DS_Store
 **/.build
 **/.packages

@@ -1,0 +1,49 @@
+-- ft.page: models.py Setup
+
+The following libraries need to be imported into models.py to create a project.
+
+
+
+from django.db import models
+
+-- ft.markdown:
+
+We will be creating two classes, i.e., a `Movie` and a `Review` for our project.
+
+Title, release date, poster, director, description, created-on, and updated-on are all attributes of Class `Movie`.
+
+Class `Movie` stores the data of the movie from the `add-movie` page using an `API`.
+
+
+-- ft.code:
+lang: ftd
+
+class Movie(models.Model):
+    title = models.CharField(max_length=1024)
+    release_date = models.DateField()
+    poster = models.URLField(max_length=1024)
+    director = models.CharField(max_length=1024)
+    description = models.TextField(null=True, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+
+-- ft.markdown:
+
+Class `Review` has attributes such as title, description, reviewer, rating, and created-on.
+
+Class `Review` stores the reviews of the movie and returns them using an `API`.
+
+-- ft.code:
+lang: ftd
+
+class Review(models.Model):
+    movie = models.ForeignKey(
+        Movie,
+        on_delete=models.CASCADE,
+    )
+    title = models.CharField(max_length=1024)
+    description = models.TextField()
+    reviewer = models.CharField(max_length=1024)
+    rating = models.IntegerField(null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
