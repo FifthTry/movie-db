@@ -128,7 +128,7 @@ $on-click$: message-host $movie
 -- object movie:
 function: http
 method: get
-url: /api/get-movie/
+url: /api/get-movie/?id=<movie-id>
 title: $input_title
 
 
