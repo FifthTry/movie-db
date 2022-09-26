@@ -111,6 +111,7 @@ width: 150
 
 
 ;;api call for searching movie database
+
 --- ftd.text: SEARCH
 role: $fpm.type.heading-small
 color: $fpm.color.main.custom.two
@@ -128,8 +129,9 @@ $on-click$: message-host $movie
 -- object movie:
 function: http
 method: get
-url: /api/get-movie/?id=<movie-id>
-title: $input_title
+url: api/movie/
+
+
 
 
 --- container: ftd.main
@@ -187,6 +189,7 @@ width: 180
 
 
 ;;api call for adding a movie database
+
 --- ftd.text: ADD MOVIE
 role: $fpm.type.heading-small
 color: $fpm.color.main.background.step-1
@@ -196,7 +199,7 @@ width: fill
 height: fill
 text-align: center
 align: center
-link: /add-movie
+;link: /add-movie
 
 
 --- container: ftd.main
@@ -211,7 +214,7 @@ border-width:2
 border-color: $black
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+src: https://i.ibb.co/LYbPW28/deewar.png
 height : 500
 width : 320
 scale: 0.6
@@ -271,7 +274,7 @@ padding-horizontal: $fpm.space.space-4
 
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+src: https://i.ibb.co/LYbPW28/deewar.png
 link : /moviepage
 height : 500
 width : 320
@@ -295,7 +298,31 @@ padding-horizontal: $fpm.space.space-4
 
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+src: https://i.ibb.co/LYbPW28/deewar.png
+link : /moviepage
+height : 500
+width : 320
+;scale: 0.7
+
+
+--- ftd.text: $movie-name
+role: $fpm.type.copy-tight
+text-align: left
+align: center
+link : /moviepage
+
+
+--- container: ftd.main
+
+
+--- ftd.column:
+align: left
+max-width: 756
+padding-horizontal: $fpm.space.space-4
+
+
+--- ftd.iframe:
+src: https://i.ibb.co/LYbPW28/deewar.png
 link : /moviepage
 height : 500
 width : 320
@@ -319,31 +346,7 @@ padding-horizontal: $fpm.space.space-4
 
 
 --- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
-link : /moviepage
-height : 500
-width : 320
-scale: 0.7
-
-
---- ftd.text: $movie-name
-role: $fpm.type.copy-tight
-text-align: left
-align: center
-link : /moviepage
-
-
---- container: ftd.main
-
-
---- ftd.column:
-align: left
-max-width: 756
-padding-horizontal: $fpm.space.space-4
-
-
---- ftd.iframe:
-src: http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1._SX320.jpg
+src: https://i.ibb.co/LYbPW28/deewar.png
 link : /moviepage
 height : 500
 width : 320
