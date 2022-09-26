@@ -12,8 +12,6 @@ $processor$: request-data
 
 $query.id
 
--- string query-id: $query.id
-
 -- record movie-data:
 string title:
 string release_date:
@@ -34,3 +32,8 @@ $movie.title
 -- ds.markdown:
 
 $movie.release_date
+
+
+-- ds.markdown:
+
+$movie.director
