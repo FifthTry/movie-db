@@ -64,7 +64,7 @@ def add_movie(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     # from django.shortcuts import redirect
     # return redirect("/", permanent=True)
-    return django.http.JsonResponse({"data": {"url": "/"}}, status=200)
+    return django.http.JsonResponse({"data": {"url": "/movie/?id="+str(movie.id)}}, status=200)
 
 
 """
@@ -82,21 +82,33 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 @csrf_exempt
 def get_movie(req: django.http.HttpRequest):
 
-    # movie = req.GET.get("title")
-    from django.shortcuts import redirect
+    movie_id = req.GET.get("id")
+    print(movie_id)
+    try:
+        movie = Movie.objects.get(id=movie_id)
+        print("Movie details", movie)
+        return django.http.JsonResponse(
+            {
+                "title": movie.title,
+                "release_date": movie.release_date,
+                "poster": movie.poster,
+                "director": movie.director,
+                "description": movie.description,
+            },
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": "Movie with id not found",
+            },
+            status=404,
+        )
 
-    return redirect("https://www.google.com", permanent=True)
+    # from django.shortcuts import redirect
 
-    # return django.http.JsonResponse(
-    #     {
-    #         "title": "movie.title",
-    #         "release_date": "movie.release_date",
-    #         "poster": "movie.poster",
-    #         "director": "movie.director",
-    #         "description": "movie.description",
-    #     },
-    #     status=200,
-    # )
+    # return redirect("https://www.google.com", permanent=True)
 
 
 """
