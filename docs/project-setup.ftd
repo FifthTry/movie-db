@@ -1,0 +1,76 @@
+-- ft.page: Project Setup
+
+This page will tell you how to do `ftd` and `Django` project setup.
+
+-- ft.h2: Create GitHub Repository
+
+First, create your own Github repository which will be used as an ftd-django project.
+You can follow the official github quickstart guide [`here`](https://docs.github.com/en/get-started/quickstart/create-a-repo)
+
+-- ft.h2: Clone GitHub Repository
+
+To work with your project, clone your git repository to your local machine.
+Run this command in your terminal
+
+`git clone <your-git-repository-url>`
+
+-- ft.h2: Create Virtual Environment
+
+To ensure that the dependencies regarding the current project dont affect the other projects,
+we create a virtual environment. To create a virtual environment, run this command in your terminal
+
+`python -m venv <env-directory-name>`
+                or
+`virtualenv <env-directory-name>`
+
+-- ft.h2: Install Requirements
+
+Before we start working on any ftd-django project, we need to install certain python dependencies
+* `Django`
+* `ftd_sys`
+* `ftd`
+* `ftd_django`
+* `black`
+
+To install these dependencies, create a requirements.txt file and add these dependencies and save it:
+
+-- ft.code:
+lang: py
+
+black==22.1.0
+Django==4.0.6
+ftd-django==0.1.3
+
+-- ft.markdown:
+
+Since `ftd` and `ftd-sys` are required dependencies for ftd-django, we only need to add `ftd-django` in the requirements.txt file.
+
+**Note:** Before installing these dependencies, make sure your virtualenv is activated.
+To activate your virtualenv in linux, type `source <env-directory-name>/bin/activate` in your terminal.
+To activate your virtualenv in Windows, type `source <env-directory-name>\Scripts\activate` in your terminal.
+
+Once your virtualenv is activated, install these dependencies from requirements.txt.
+To do so, run this command in your terminal
+
+`pip install -r requirements.txt`
+
+-- ft.h2: Create Django Project
+
+To create a django project, run this command in your terminal
+
+`django-admin startproject <project-name>`
+
+-- ft.h2: Create Django App
+
+To create django app, go inside the django project directory
+`cd <project-name>`
+
+and run `django-admin startapp <app-name>` in your terminal.
+
+-- ft.h2: Run your Project
+
+To run your project, first go inside your project directory and then
+
+Type `python manage.py runserver [port-number]`
+
+**Note:** [port-number] is optional, and by default it will use 8000 port if not provided explicitly.

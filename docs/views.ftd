@@ -1,0 +1,133 @@
+-- ft.page: views.py Setup
+
+In the Django framework, views are python functions or classes that receive a web request and return a web response.
+
+The following libraries need to be imported into views.py to create a project.
+
+-- ft.code:
+lang: ftd
+
+ import django.http
+ from .models import Movie, Review
+ import json
+ from django.core import serializers
+ from django.views.generic import FormView, TemplateView
+ from django.views.decorators.csrf import csrf_exempt
+
+
+-- ft.markdown:
+
+Our code will be providing four functions: `list_movie`; `add_movie`; `get_movie`; and `add_review`.
+
+The first function, `list movie`, showcases the number of movies that are present on the current page and
+records the responses for page number, previous, and next.
+It also renders the `API` for the homepage as well as includes the number of pages
+and the number of movies on each page.
+
+
+-- ft.code:
+lang: ftd
+
+def list_movie(req: django.http.HttpRequest):
+
+    page_number = req.GET.get("p_no", 1)
+    items = req.GET.get("items", 8)
+    order_by = req.GET.get("p_no", 0)
+    movies = Movie.objects.all()[(page_number - 1) * items + 1 : page_number * items]
+
+    return django.http.JsonResponse(
+        {
+            "p_no": page_number,
+            "next": "/movies/p_no=1&items=10",
+            "previous": "/movies/p_no=1&items=10",
+            "items": items,
+            "movies": json.loads(serializers.serialize("json", movies)),
+        },
+        status=200,
+    )
+
+
+-- ft.markdown:
+
+
+The second function `add_movie` adds the movie API and stores the information about the movie input by the user.
+
+The fourth function `add_review` adds the review API and stores the review of the movie input by the user
+
+
+-- ft.code:
+lang: ftd
+
+def add_movie(req: django.http.HttpRequest):
+
+    if req.method == "GET":
+        return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    body = json.loads(req.body.decode("utf-8"))
+    movie = Movie.objects.create(
+        title=body["title"],
+        release_date=body["release_date"],
+        poster=body["poster"],
+        director=body["director"],
+        description=body.get("description"),
+    )
+
+    print(movie)
+    return django.http.JsonResponse({"movie": movie.id}, status=200)
+
+
+
+
+-- ft.markdown:
+
+The third function `get_movie` gets the movie API and returns the movie page from the database the user is searching for.
+
+-- ft.code:
+lang: ftd
+
+def get_movie(req: django.http.HttpRequest):
+
+    movie = req.GET.get("title")
+
+    return django.http.JsonResponse(
+        {
+            "title": movie.title,
+            "release_date": movie.release_date,
+            "poster": movie.poster,
+            "director": movie.director,
+            "description": movie.description,
+        },
+        status=200,
+    )
+
+
+
+-- ft.markdown:
+
+The fourth function `add_review` adds the review API and stores the review of the movie input by the user.
+
+-- ft.code:
+lang: ftd
+
+def add_review(req: django.http.HttpRequest):
+
+    if req.method == "GET":
+        return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    body = json.loads(req.body.decode("utf-8"))
+    try:
+        movie = Movie.objects.get(id=body["movie"])
+    except Exception as e:
+        print(e)
+        return django.http.HttpResponse("redirect to movie page", status=404)
+
+    review = Review.objects.create(
+        movie=movie,
+        title=body["title"],
+        description=body.get("description"),
+        reviewer=body["reviewer"],
+        rating=body["rating"],
+    )
+    return django.http.JsonResponse(
+        {"review": review.id, "movie": movie.id}, status=200
+    )
