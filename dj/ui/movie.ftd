@@ -94,24 +94,32 @@ link : /add-review
 
 
 -- component-1:
-movie-name:
 
 
 
 
+
+
+
+
+
+-- ftd.image-src img:
+light: $movie.poster
+dark: $movie.poster
 
 -- ftd.column component-1:
 optional caption title:
 optional string label:
-string movie-name:
+optional string movie-name:
 background-color: $fpm.color.main.custom.two
 padding-vertical: $fpm.space.space-6
 align: center
 width: percent 100
-height: 180
+height: fill
 
 
 --- ftd.row:
+min-height: 180
 
 
 ;Printing text 'ALL MOVIES'
@@ -157,7 +165,14 @@ move-right: 1160
 
 --- container: ftd.main
 
-
+--- ftd.image:
+src: $img
+align: center
+anchor: parent
+top: 64
+left: 620
+width: 300
+height: auto
 
 
 
