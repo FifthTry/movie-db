@@ -40,6 +40,7 @@ light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
 
 
+
 -- record query-data:
 string id:
 
@@ -89,7 +90,13 @@ link : /add-review
 
 
 
+-- string string1: ALL MOVIES /
 
+-- string string2: $movie.title
+
+-- string string3: MOVIE-ID :
+
+-- string string4: $query.id
 
 
 -- component-1:
@@ -110,12 +117,11 @@ width: percent 100
 height: 180
 
 
-
 --- ftd.row:
 
-;Printing text 'ALL MOVIES'
+
 --- ftd.text:
-text: ALL MOVIES /
+text: $string1
 role: $fpm.type.blockquote
 text-align: center
 align: left
@@ -125,9 +131,8 @@ padding-horizontal: 10
 link: /
 
 
-;Printing title of the Movie
 --- ftd.text:
-text: $movie.title
+text: $string2
 role: $fpm.type.blockquote
 text-align: center
 align: left
@@ -135,18 +140,16 @@ style: bold
 cursor: pointer
 
 
-;Printing text 'MOVIE-ID'
 --- ftd.text:
-text: MOVIE-ID :
+text: $string3
 role: $fpm.type.blockquote
 text-align: center
 align: right
 move-right: 1150
 
 
-;Printing ID of the Movie
 --- ftd.text:
-text: $query.id
+text: $string4
 role: $fpm.type.blockquote
 text-align: center
 align: right
@@ -169,13 +172,10 @@ scale: 0.7
 
 --- container: ftd.main
 
-
 --- write-review-button: WRITE REVIEW
 align: right
 move-up: 90
 move-left: 60
-
-
 
 
 
@@ -211,7 +211,6 @@ line: $s7
 
 
 
-
 -- ftd.column component-2:
 optional caption title:
 optional string label:
@@ -242,7 +241,6 @@ role: $fpm.type.heading-large
 text-align: left
 align: left
 style: bold
-
 
 --- ftd.text:
 text: ⭐
