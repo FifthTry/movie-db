@@ -92,9 +92,11 @@ link : /add-review
 
 
 
+
 -- component-1:
 movie-name:
-src: $assets.files.logo.png
+
+
 
 
 
@@ -102,7 +104,6 @@ src: $assets.files.logo.png
 optional caption title:
 optional string label:
 string movie-name:
-ftd.image-src src:
 background-color: $fpm.color.main.custom.two
 padding-vertical: $fpm.space.space-6
 align: center
@@ -110,8 +111,8 @@ width: percent 100
 height: 180
 
 
-
 --- ftd.row:
+
 
 ;Printing text 'ALL MOVIES'
 --- ftd.text:
@@ -153,27 +154,9 @@ align: right
 move-right: 1160
 
 
---- container: ftd.main
-
-
---- ftd.column:
-align: center
-move-up: 70
-
---- ftd.image:
-src: $src
-height : 300
-width : 275
-scale: 0.7
-
 
 --- container: ftd.main
 
-
---- write-review-button: WRITE REVIEW
-align: right
-move-up: 90
-move-left: 60
 
 
 
@@ -185,28 +168,13 @@ move-left: 60
 
 
 -- component-2:
-movie-title: $s1
-rating: $s2
-director: $s3
-date: $s4
-description: $s5
-review-count: $s6
-line: $s7
+review-count: $s1
+line: $s2
 
 
--- string s1: $movie.title
+-- string s1: Review Count Number
 
--- string s2: Rating
-
--- string s3: $movie.director
-
--- string s4: $movie.release_date
-
--- string s5: $movie.description
-
--- string s6: Review Count Number Reviews
-
--- string s7: \_____________________________________________________________________________________________________________________________
+-- string s2: \__________________________________________________________________________________________________________________________________
 
 
 
@@ -215,11 +183,6 @@ line: $s7
 -- ftd.column component-2:
 optional caption title:
 optional string label:
-optional string movie-title:
-optional string rating:
-optional string director:
-optional string date:
-optional string description:
 optional string review-count:
 optional string line:
 align: left
@@ -235,15 +198,16 @@ height: 40
 --- ftd.row:
 padding-bottom: 10
 
-
+;Printing title of the Movie
 --- ftd.text:
-text: $movie-title
+text: $movie.title
 role: $fpm.type.heading-large
 text-align: left
 align: left
 style: bold
 
 
+;Printing the symbol star
 --- ftd.text:
 text: ⭐
 role: $fpm.type.heading-large
@@ -251,9 +215,9 @@ text-align: left
 align: left
 style: bold
 
-
+;Printing the text rating
 --- ftd.text:
-text: $rating
+text: Rating
 role: $fpm.type.copy-relaxed
 text-align: center
 align: center
@@ -269,6 +233,8 @@ padding-left: $fpm.space.space-2
 --- ftd.row:
 align: left
 
+
+;Printing text 'DIRECTED BY'
 --- ftd.text:
 text: DIRECTED BY :
 role: $fpm.type.blockquote
@@ -277,9 +243,11 @@ align: left
 style : bold
 margin-bottom: $fpm.space.space-2
 
+
+;Printing director of the Movie
 --- ftd.text:
 move-right : 5
-text: $director
+text: $movie.director
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -292,6 +260,8 @@ margin-bottom: $fpm.space.space-2
 --- ftd.row:
 align: left
 
+
+;Printing text 'RELEASE DATE'
 --- ftd.text:
 text: RELEASE DATE :
 role: $fpm.type.blockquote
@@ -300,8 +270,10 @@ align: left
 style : bold
 margin-bottom: $fpm.space.space-2
 
+
+;Printing release date of the Movie
 --- ftd.text:
-text: $date
+text: $movie.release_date
 move-right: 5
 role: $fpm.type.blockquote
 text-align: left
@@ -316,8 +288,9 @@ margin-bottom: $fpm.space.space-6
 align: left
 
 
+;Printing description of the Movie
 --- ftd.text:
-text: $description
+text: $movie.description
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -338,6 +311,12 @@ text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
 
+--- ftd.text:
+text: Reviews
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
 
 --- container: ftd.main
 
@@ -355,6 +334,10 @@ align: left
 --- container: ftd.main
 
 
+--- write-review-button: WRITE REVIEW
+align: right
+move-right: 650
+move-up: 230
 
 
 
