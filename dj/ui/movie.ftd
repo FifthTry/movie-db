@@ -1,4 +1,43 @@
--- ds.page: Service API call using `http` processor
+-- import: fpm
+-- import: movie-db/assets
+
+
+-- fpm.toc-item list empty-toc:
+
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+
+
+
+-- h.header:
+logo-height: 40
+logo-width: 80
+site-logo: $assets.files.logo.png
+site-url: /
+site-name:
+current-url: /
+link-style: bold
+toc: $empty-toc
+
+
+-- ftd.color black:
+light: black
+dark: black
+
+
+-- ftd.color yellow:
+light: yellow
+dark: yellow
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
 
 
 -- record query-data:
@@ -8,15 +47,14 @@ string id:
 $processor$: request-data
 
 
--- ds.markdown:
-
-$query.id
 
 -- record movie-data:
 string title:
 string release_date:
 string poster:
 string director:
+string description:
+
 
 -- movie-data movie:
 $processor$: http
@@ -25,15 +63,390 @@ method: get
 id: $query.id
 
 
--- ds.markdown:
-
-$movie.title
-
--- ds.markdown:
-
-$movie.release_date
 
 
--- ds.markdown:
 
-$movie.director
+-- ftd.row write-review-button:
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+
+
+--- ftd.text: $button-text
+role: $fpm.type.copy-relaxed
+color: $black
+style: bold
+height: 40
+width: 150
+padding-top: 8
+text-align: center
+align: center
+link : /add-review
+
+
+
+
+
+
+
+
+
+-- component-1:
+
+
+
+
+
+
+
+
+
+-- ftd.image-src img:
+light: $movie.poster
+dark: $movie.poster
+
+-- ftd.column component-1:
+optional caption title:
+optional string label:
+optional string movie-name:
+background-color: $fpm.color.main.custom.two
+padding-vertical: $fpm.space.space-6
+align: center
+width: percent 100
+height: fill
+
+
+--- ftd.row:
+min-height: 180
+
+
+;Printing text 'ALL MOVIES'
+--- ftd.text:
+text: ALL MOVIES /
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+padding-horizontal: 10
+link: /
+
+
+;Printing title of the Movie
+--- ftd.text:
+text: $movie.title
+role: $fpm.type.blockquote
+text-align: center
+align: left
+style: bold
+cursor: pointer
+
+
+;Printing text 'MOVIE-ID'
+--- ftd.text:
+text: MOVIE-ID :
+role: $fpm.type.blockquote
+text-align: center
+align: right
+move-right: 1200
+
+
+;Printing ID of the Movie
+--- ftd.text:
+text: $query.id
+role: $fpm.type.blockquote
+text-align: center
+align: right
+move-right: 1210
+
+
+--- container: ftd.main
+
+
+--- ftd.image:
+src: $img
+align: center
+anchor: parent
+top: 70
+left: 620
+width: 300
+height: auto
+
+
+
+
+
+
+
+
+
+
+-- component-2:
+review-count: $s1
+line: $s2
+
+
+-- string s1: Review Count Number
+
+-- string s2: \__________________________________________________________________________________________________________________________________
+
+
+
+
+
+-- ftd.column component-2:
+optional caption title:
+optional string label:
+optional string review-count:
+optional string line:
+align: left
+margin-bottom: 200
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.row:
+padding-bottom: 10
+
+;Printing title of the Movie
+--- ftd.text:
+text: $movie.title
+role: $fpm.type.heading-large
+text-align: left
+align: left
+style: bold
+
+
+;Printing the symbol star
+--- ftd.text:
+text: ⭐
+role: $fpm.type.heading-large
+text-align: left
+align: left
+style: bold
+
+
+;Printing the text rating
+--- ftd.text:
+text: Rating
+role: $fpm.type.copy-relaxed
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: $fpm.space.space-2
+
+
+--- write-review-button: WRITE REVIEW
+align: right
+move-right: 900
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+;Printing text 'DIRECTED BY'
+--- ftd.text:
+text: DIRECTED BY :
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style : bold
+margin-bottom: $fpm.space.space-2
+
+
+;Printing director of the Movie
+--- ftd.text:
+move-right : 5
+text: $movie.director
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+;Printing text 'RELEASE DATE'
+--- ftd.text:
+text: RELEASE DATE :
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style : bold
+margin-bottom: $fpm.space.space-2
+
+
+;Printing release date of the Movie
+--- ftd.text:
+text: $movie.release_date
+move-right: 5
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+;Printing description of the Movie
+--- ftd.text:
+text: $movie.description
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-10
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $review-count
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+--- ftd.text:
+text: Reviews
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $line
+text-align: left
+align: left
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+reviewer-name: $t1
+rating: $t2
+review: $t3
+line: $t4
+
+
+
+
+-- string t1: REVIEWER-NAME
+
+-- string t2: RATING / 10 ⭐
+
+-- string t3: REVIEW BODY
+
+
+-- string t4: \___________________________________________________________________________________________________________________________________
+
+-- ftd.column component-3:
+optional caption title:
+optional string label:
+optional string reviewer-name:
+optional string rating:
+optional string review:
+optional string line:
+align: left
+margin-top: $fpm.space.space-10
+margin-bottom: $fpm.space.space-10
+padding-right: 10
+padding-vertical: 10
+margin-left: 30
+width: 756
+height: 40
+
+
+--- ftd.text:
+text: $reviewer-name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $rating
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $review
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-6
+
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $line
+text-align: left
+align: left
+
+
+--- container: ftd.main
