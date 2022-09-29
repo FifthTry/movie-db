@@ -329,6 +329,7 @@ director: $input_director
 poster: $input_poster
 description: $input_description
 
+
 -- record movie:
 caption title: $input_title
 string release-date: $input_release_date

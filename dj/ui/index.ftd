@@ -259,7 +259,7 @@ id: kkk
 src: $img1
 width: 280
 height: 440
-link : /moviepage
+link : /movie
 cursor: pointer
 
 
@@ -336,7 +336,7 @@ id: kkk
 src: $img2
 width: 280
 height: 440
-link : /moviepage
+link : /movie
 cursor: pointer
 
 
@@ -413,7 +413,7 @@ id: kkk
 src: $img3
 width: 280
 height: 440
-link : /moviepage
+link : /movie
 cursor: pointer
 
 
