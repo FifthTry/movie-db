@@ -18,5 +18,5 @@ endpoint: http://127.0.0.1:8001
 
 # Home: /
 - Add Movie: /add-movie/
-- Review Movie: /review-movie/
+- Review Movie: /add-review/
 - Movie: /movie/

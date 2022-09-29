@@ -74,6 +74,7 @@ border-color: $transparent
 background-color: $fpm.color.main.custom.two
 
 
+
 --- ftd.text: $button-text
 role: $fpm.type.copy-relaxed
 color: $black
@@ -83,11 +84,7 @@ width: 150
 padding-top: 8
 text-align: center
 align: center
-link : /add-review
-
-
-
-
+link: /add-review
 
 
 
@@ -246,6 +243,7 @@ padding-left: $fpm.space.space-2
 --- write-review-button: WRITE REVIEW
 align: right
 move-right: 900
+
 
 
 --- container: ftd.main
