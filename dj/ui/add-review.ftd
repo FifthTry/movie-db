@@ -285,7 +285,7 @@ style: bold
 width: fill
 text-align: center
 align: center
-link : /moviepage
+
 
 
 -- ftd.row:
@@ -299,7 +299,7 @@ $on-click$: message-host $add-movie-api
 -- object add-movie-api:
 function: http
 method: post
-url: add-movie
+url: /api/add-review/
 reviewer: $input_reviewer
 title: $input_title
 description: $input_description
