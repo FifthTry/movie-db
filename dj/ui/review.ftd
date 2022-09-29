@@ -12,40 +12,34 @@ $processor$: request-data
 
 $query.id
 
--- string query-id: $query.id
 
--- record movie-data:
+
+-- record review-data:
 string title:
-string release_date:
-string poster:
-string director:
+string review_name:
+string rating:
 string description:
 
 
--- movie-data movie:
+-- review-data review:
 $processor$: http
-url: http://127.0.0.1:8001/api/movie/
+url: http://127.0.0.1:8001/api/review/
 method: get
 id: $query.id
 
 
 -- ds.markdown:
 
-$movie.title
+$review.title
 
 -- ds.markdown:
 
-$movie.release_date
+$review.review_name
 
 -- ds.markdown:
 
-$movie.director
+$review.rating
 
 -- ds.markdown:
 
-$movie.description
-
-
--- ds.markdown:
-
-$movie.poster
+$review.description

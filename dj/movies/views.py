@@ -164,3 +164,38 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 # for a user
 
 # Optional Query. Sort: [release-date, rating, updated_on]
+
+@csrf_exempt
+def get_review(req: django.http.HttpRequest):
+
+    movie_id = req.GET.get("title")
+    print(movie_id)
+    try:
+        review = Review.objects.get(id=movie_id)
+        print("Movie reviews", review)
+        return django.http.JsonResponse(
+            {
+                "title": review.title,
+                "rating": review.rating,
+                "reviewer": review.reviewer,
+                "description": review.description,
+            },
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": "Movie with id not found",
+            },
+            status=404,
+        )
+
+    # from django.shortcuts import redirect
+
+    # return redirect("https://www.google.com", permanent=True)
+
+
+"""
+curl -X GET http://127.0.0.1:8001/review/
+"""
