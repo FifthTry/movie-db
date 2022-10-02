@@ -336,8 +336,3 @@ string release-date: $input_release_date
 string poster: $input_poster
 string director: $input_director
 body description: $input_description
-
-
-
-
-
