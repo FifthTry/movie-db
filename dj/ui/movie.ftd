@@ -182,12 +182,9 @@ height: auto
 
 -- component-2:
 review-count: $s1
-line: $s2
 
 
 -- string s1: Review Count Number
-
--- string s2: \__________________________________________________________________________________________________________________________________
 
 
 
@@ -197,7 +194,7 @@ line: $s2
 optional caption title:
 optional string label:
 optional string review-count:
-optional string line:
+;optional string line:
 align: left
 margin-bottom: 200
 margin-top: $fpm.space.space-10
@@ -345,7 +342,7 @@ align: left
 
 
 --- ftd.text:
-text: $line
+text: \\___________________________________________________________________________________________________________________________________
 text-align: left
 align: left
 
@@ -361,32 +358,11 @@ align: left
 
 
 
-
 -- component-3:
-reviewer-name: $t1
-rating: $t2
-review: $t3
-line: $t4
-
-
-
-
--- string t1: REVIEWER-NAME
-
--- string t2: RATING / 10 ⭐
-
--- string t3: REVIEW BODY
-
-
--- string t4: \___________________________________________________________________________________________________________________________________
 
 -- ftd.column component-3:
 optional caption title:
 optional string label:
-optional string reviewer-name:
-optional string rating:
-optional string review:
-optional string line:
 align: left
 margin-top: $fpm.space.space-10
 margin-bottom: $fpm.space.space-10
@@ -398,7 +374,7 @@ height: 40
 
 
 --- ftd.text:
-text: $reviewer-name
+text: REVIEWER-NAME
 role: $fpm.type.copy-relaxed
 text-align: left
 align: left
@@ -411,7 +387,17 @@ align: left
 
 
 --- ftd.text:
-text: $rating
+text: RATING
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- ftd.text:
+text: / 10 ⭐
+move-right: 2
 role: $fpm.type.copy-relaxed
 text-align: left
 align: left
@@ -427,7 +413,7 @@ align: left
 
 
 --- ftd.text:
-text: $review
+text: REVIEW BODY
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -442,12 +428,20 @@ align: left
 
 
 --- ftd.text:
-text: $line
+text: \\___________________________________________________________________________________________________________________________________
 text-align: left
 align: left
 
 
 --- container: ftd.main
+
+
+
+
+
+
+
+
 
 
 ;;; WRITE REVIEW
@@ -689,6 +683,7 @@ margin-bottom: $fpm.space.space-6
 width: percent 85
 background-image: $src
 height: 450
+
 
 -- ftd.row:
 width: fill
