@@ -444,7 +444,7 @@ align: left
 
 
 
-;;; WRITE REVIEW
+;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 -- card:
 
@@ -452,7 +452,7 @@ align: left
 $always-include$: true
 
 
--- optional string input_title:
+-- optional decimal input_rating:
 $always-include$: true
 
 
@@ -460,15 +460,14 @@ $always-include$: true
 $always-include$: true
 
 
--- optional decimal input_rating:
-$always-include$: true
+
 
 -- record Label_Type:
 caption name:
 boolean reviewer: false
-boolean movie: false
-boolean description: false
 boolean rating: false
+boolean description: false
+
 
 
 
@@ -477,9 +476,8 @@ boolean rating: false
 
 
 -- string label_1: Reviewer-Name
--- string label_2: Movie Title
+-- string label_2: RATING
 -- string label_3: Description
--- string label_4: Rating
 -- string asterisk: \*
 
 
@@ -492,11 +490,10 @@ description: true
 
 
 -- right-fields: $label_2
-movie: true
-
-
--- right-fields: $label_4
 rating: true
+
+
+
 
 
 
@@ -547,10 +544,9 @@ align: center
 -- ftd.row getting_input:
 id: outer_row
 caption title:
-boolean movie:
+boolean rating:
 boolean reviewer:
 boolean description:
-boolean rating:
 width: fill
 height: 150
 align: left
@@ -590,8 +586,8 @@ $on-input$: $input_reviewer=$VALUE
 
 ;; CASE 2 input field
 --- ftd.input:
-if: $movie
-placeholder: movie name
+if: $rating
+placeholder: out of 10
 padding-horizontal: 16
 padding-vertical: 8
 width: 400
@@ -599,7 +595,7 @@ height: 40
 border-width: 2
 border-color: $fpm.color.main.border
 border-radius: 8
-$on-input$: $input_title=$VALUE
+$on-input$: $input_rating=$VALUE
 
 
 ;; CASE 3 input field
@@ -617,18 +613,7 @@ border-radius: 8
 $on-input$: $input_description=$VALUE
 
 
-;; CASE 4 input field
---- ftd.input:
-if: $rating
-placeholder: out of 10
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_rating=$VALUE
+
 
 
 
@@ -651,9 +636,9 @@ align: left
 --- getting_input: $obj.name
 $loop$: $left-fields as $obj
 reviewer: $obj.reviewer
-movie: $obj.movie
-description: $obj.description
 rating: $obj.rating
+description: $obj.description
+
 
 
 
@@ -671,9 +656,9 @@ align: right
 --- getting_input: $obj.name
 $loop$: $right-fields as $obj
 reviewer: $obj.reviewer
-movie: $obj.movie
-description: $obj.description
 rating: $obj.rating
+description: $obj.description
+
 
 
 
@@ -683,7 +668,6 @@ margin-bottom: $fpm.space.space-6
 width: percent 85
 background-image: $src
 height: 450
-
 
 -- ftd.row:
 width: fill
