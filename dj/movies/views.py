@@ -59,6 +59,7 @@ def add_movie(req: django.http.HttpRequest):
         director=body["director"],
         description=body.get("description"),
     )
+    movie.save()
 
     print(movie)
     # TODO: redirect to movie page
@@ -148,6 +149,7 @@ def add_review(req: django.http.HttpRequest):
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+    new_review.save()
 
     review_id += 1
     all_reviews.append(new_review)
@@ -186,7 +188,7 @@ def get_review(req: django.http.HttpRequest):
     movie_id = req.GET.get("id")
     print(movie_id)
     try:
-        review = Review.objects.get(id=movie_id)
+        review = Review.objects.filter()
         print("Review details", review)
         return django.http.JsonResponse(
             {
