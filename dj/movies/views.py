@@ -115,9 +115,15 @@ def get_movie(req: django.http.HttpRequest):
 curl -X GET http://127.0.0.1:8001/movie/
 """
 
+review_id = 0
+
+all_reviews = []
 
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
+
+    global review_id
+    global all_reviews
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -133,17 +139,32 @@ def add_review(req: django.http.HttpRequest):
         # TODO: Redirect to error page with 404 error
         return django.http.HttpResponse("redirect to movie page", status=404)
 
-    review = Review.objects.create(
+    new_review = dict()
+
+    new_review = Review.objects.create(
         movie=movie,
         title=body["title"],
         description=body.get("description"),
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+
+    review_id += 1
+    all_reviews.append(new_review)
+    print("{all_reviews}")
+
     # TODO: redirect to movie page
     return django.http.JsonResponse(
-        {"review": review.id, "movie": movie.id}, status=200
+        {"review": new_review.id, "movie": movie.id}, status=200
     )
+
+    # return JsonResponse(
+    #     {
+    #         "data": {"success": True,
+    #                  "reload": True}
+    #     },
+    #     status=200,
+    # )
 
 
 """
@@ -157,6 +178,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
     "rating": 8
 }'
 """
+
 
 @csrf_exempt
 def get_review(req: django.http.HttpRequest):
@@ -183,8 +205,6 @@ def get_review(req: django.http.HttpRequest):
             },
             status=404,
         )
-
-
 
 # Movie list should come from Database
 
