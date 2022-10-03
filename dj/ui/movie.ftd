@@ -72,11 +72,7 @@ string description:
 
 
 
--- movie-data review:
-$processor$: http
-url: http://127.0.0.1:8001/api/review/
-method: get
-id: $query.id
+
 
 
 
@@ -111,21 +107,7 @@ $movie.poster
 
 
 
--- ds.markdown:
 
-$review.title
-
--- ds.markdown:
-
-$review.reviwer_name
-
--- ds.markdown:
-
-$review.rating
-
--- ds.markdown:
-
-$review.description
 
 
 
@@ -429,8 +411,39 @@ rating: $input_rating
 movie: $query.id
 
 
--- record review:
-caption title: $input_title
-body description: $input_description
-string reviewer: $input_reviewer
-integer rating: $input_rating
+
+-- record movie_review:
+caption title:
+string movie_title:
+body movie_description:
+string movie_reviewer:
+integer movie_rating:
+
+-- record query-review:
+string id:
+
+-- query-review r_query:
+$processor$: request-data
+
+-- movie_review list m_review:
+$processor$: http
+url: http://127.0.0.1:8001/api/review/
+method: get
+id: $r_query.id
+
+-- ftd.row foo:
+caption title:
+string movie_title:
+body movie_description:
+string movie_reviewer:
+integer movie_rating:
+
+-- foo: $obj.title
+$loop$: $m_review as $obj
+movie_title: $obj.movie_title
+movie_description: $obj.movie_description
+movie_reviewer: $obj.movie_reviewer
+movie_rating: $obj.movie_rating
+
+--- ftd.text: hello
+
