@@ -158,6 +158,34 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 }'
 """
 
+@csrf_exempt
+def get_review(req: django.http.HttpRequest):
+
+    movie_id = req.GET.get("id")
+    print(movie_id)
+    try:
+        review = Review.objects.get(id=movie_id)
+        print("Review details", review)
+        return django.http.JsonResponse(
+            {
+                "title": review.title,
+                "reviewer": review.reviewer,
+                "rating": review.rating,
+                "description": review.description,
+            },
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": "Movie with id not found",
+            },
+            status=404,
+        )
+
+
+
 # Movie list should come from Database
 
 # There will be an extra parameter in query `domain` based on filter the movies
