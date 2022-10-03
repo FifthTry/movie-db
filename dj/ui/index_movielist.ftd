@@ -68,7 +68,6 @@ $movie.poster
 caption name:
 string body:
 border-width: 1
-border-color: $grey
 padding: 10
 width: fill
 margin-top: 10
