@@ -446,13 +446,14 @@ align: left
 
 ;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 -- card:
 
 -- optional string input_reviewer:
 $always-include$: true
 
 
--- optional decimal input_rating:
+-- optional string input_title:
 $always-include$: true
 
 
@@ -460,14 +461,15 @@ $always-include$: true
 $always-include$: true
 
 
-
+-- optional decimal input_rating:
+$always-include$: true
 
 -- record Label_Type:
 caption name:
 boolean reviewer: false
-boolean rating: false
+boolean movie: false
 boolean description: false
-
+boolean rating: false
 
 
 
@@ -476,8 +478,9 @@ boolean description: false
 
 
 -- string label_1: Reviewer-Name
--- string label_2: RATING
+-- string label_2: Title
 -- string label_3: Description
+-- string label_4: Rating
 -- string asterisk: \*
 
 
@@ -490,10 +493,11 @@ description: true
 
 
 -- right-fields: $label_2
+movie: true
+
+
+-- right-fields: $label_4
 rating: true
-
-
-
 
 
 
@@ -502,7 +506,7 @@ optional caption title:
 optional string label:
 ftd.image-src src: $assets.files.background.png
 min-width: percent 50
-margin-top: $fpm.space.space-15
+margin-top: $fpm.space.space-10
 background-image: $src
 background-repeat: false
 padding-vertical: $fpm.space.space-8
@@ -544,9 +548,10 @@ align: center
 -- ftd.row getting_input:
 id: outer_row
 caption title:
-boolean rating:
+boolean movie:
 boolean reviewer:
 boolean description:
+boolean rating:
 width: fill
 height: 150
 align: left
@@ -586,8 +591,8 @@ $on-input$: $input_reviewer=$VALUE
 
 ;; CASE 2 input field
 --- ftd.input:
-if: $rating
-placeholder: out of 10
+if: $movie
+placeholder: description title
 padding-horizontal: 16
 padding-vertical: 8
 width: 400
@@ -595,7 +600,7 @@ height: 40
 border-width: 2
 border-color: $fpm.color.main.border
 border-radius: 8
-$on-input$: $input_rating=$VALUE
+$on-input$: $input_title=$VALUE
 
 
 ;; CASE 3 input field
@@ -613,7 +618,18 @@ border-radius: 8
 $on-input$: $input_description=$VALUE
 
 
-
+;; CASE 4 input field
+--- ftd.input:
+if: $rating
+placeholder: out of 10
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_rating=$VALUE
 
 
 
@@ -636,9 +652,9 @@ align: left
 --- getting_input: $obj.name
 $loop$: $left-fields as $obj
 reviewer: $obj.reviewer
-rating: $obj.rating
+movie: $obj.movie
 description: $obj.description
-
+rating: $obj.rating
 
 
 
@@ -656,9 +672,9 @@ align: right
 --- getting_input: $obj.name
 $loop$: $right-fields as $obj
 reviewer: $obj.reviewer
-rating: $obj.rating
+movie: $obj.movie
 description: $obj.description
-
+rating: $obj.rating
 
 
 
@@ -710,3 +726,21 @@ move-left: 500
 
 
 -- black-button: POST
+$on-click$: message-host $add-review-api
+
+
+-- object add-review-api:
+function: http
+method: post
+url: /api/add-review/
+reviewer: $input_reviewer
+title: $input_title
+description: $input_description
+rating: $input_rating
+
+
+-- record review:
+caption title: $input_title
+body description: $input_description
+string reviewer: $input_reviewer
+integer rating: $input_rating
