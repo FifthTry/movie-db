@@ -43,8 +43,6 @@ dark: white
 light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
 
--- integer count_r: 0
-
 
 -- record query-data:
 string id:
@@ -82,28 +80,6 @@ method: get
 id: $query.id
 
 
-;; MOVIE PRINTING ------------------------------------------------
-
--- ds.markdown:
-
-$movie.title
-
--- ds.markdown:
-
-$movie.release_date
-
--- ds.markdown:
-
-$movie.director
-
--- ds.markdown:
-
-$movie.description
-
-
--- ds.markdown:
-
-$movie.poster
 
 
 
@@ -117,25 +93,7 @@ $movie.poster
 
 
 
--- ftd.row write-review-button:
-caption button-text:
-border-width: 2
-border-radius: 10
-border-color: $transparent
-background-color: $fpm.color.main.custom.two
 
-
-
---- ftd.text: $button-text
-role: $fpm.type.copy-relaxed
-color: $black
-style: bold
-height: 40
-width: 150
-padding-top: 8
-text-align: center
-align: center
-link: /add-review
 
 
 
@@ -232,12 +190,10 @@ height: auto
 
 
 -- component-2:
-review-count-field: $s1
-review-count: $count_r
+review-count: $s1
 
 
--- string s1:   Review Count Number =
-
+-- string s1: Review Count Number
 
 
 
@@ -246,8 +202,7 @@ review-count: $count_r
 -- ftd.column component-2:
 optional caption title:
 optional string label:
-string review-count-field:
-integer review-count:
+optional string review-count:
 ;optional string line:
 align: left
 margin-bottom: 200
@@ -289,12 +244,6 @@ align: center
 style: bold
 margin-top: $fpm.space.space-10
 padding-left: $fpm.space.space-2
-
-
---- write-review-button: WRITE REVIEW
-align: right
-move-right: 900
-
 
 
 --- container: ftd.main
@@ -373,16 +322,16 @@ margin-bottom: $fpm.space.space-10
 --- ftd.row:
 align: left
 
+
 --- ftd.text:
-text: Number of reviewers =
+text: $review-count
 role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
 
---- ftd.integer:
-value: $review-count
-move-right: 5
+--- ftd.text:
+text: Reviews
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -409,91 +358,11 @@ align: left
 
 
 
-
+;;;;;;;;; REVIEW DESCRIPTION LOOP;;;;;;;;;;;;;;;;;;;;;;
 
 -- component-3:
 
-;; REVIEW PRINTING ------------------------------------------------
 
--- ftd.column review-print:
-string title:
-string reviewer_name:
-string rating:
-string description:
-
---- ftd.text:
-text: REVIEWER-NAME:
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-1
-
---- ftd.text: $reviewer_name
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-3
-
-
-
---- ftd.text:
-text: TITLE OF THE REVIEW
-role: $fpm.type.blockquote
-text-align: left
-align: left
-margin-bottom: $fpm.space.space-1
-
---- ftd.text: $title
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-3
-
---- ftd.text:
-text: DESCRIPTION
-role: $fpm.type.blockquote
-text-align: left
-align: left
-margin-bottom: $fpm.space.space-1
-
---- ftd.text: $description
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-3
-
-
---- ftd.text:
-text: RATING
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-1
-
---- ftd.text: $rating
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-3
-
-
---- ftd.text:
-text: \\___________________________________________________________________________________________________________________________________
-text-align: left
-align: left
-
--- review-print:
-$loop$: $reviews as $r
-title: $r.title
-rating: $r.rating
-description: $r.description
-reviewer_name: $r.reviewer_name
 
 
 
@@ -501,8 +370,8 @@ reviewer_name: $r.reviewer_name
 optional caption title:
 optional string label:
 align: left
-margin-top: $fpm.space.space-10
-margin-bottom: $fpm.space.space-10
+margin-top: $fpm.space.space-4
+margin-bottom: $fpm.space.space-6
 padding-right: 10
 padding-vertical: 10
 margin-left: 30
@@ -511,17 +380,100 @@ height: 40
 
 
 
+-- ftd.column review-print:
+string title:
+string reviewer_name:
+string rating:
+string description:
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+--- ftd.text:
+text: NAME :
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+margin-top: $fpm.space.space-3
+
+
+
+--- ftd.text:
+text: $reviewer_name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+move-right: 4
+margin-bottom: $fpm.space.space-2
+margin-top: $fpm.space.space-3
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+--- ftd.text:
+text: RATING :
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $rating
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+move-right: 2
+margin-bottom: $fpm.space.space-2
+
+
+--- ftd.text:
+text: / 10 ⭐
+move-right: 4
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+
+--- container: ftd.main
+
 --- ftd.row:
 align: left
 
 
 --- ftd.text:
-text: / 10 ⭐
-move-right: 2
-role: $fpm.type.copy-relaxed
+text: $title
+role: $fpm.type.blockquote
 text-align: left
 align: left
 style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $description
+role: $fpm.type.blockquote
+text-align: left
+align: left
 margin-bottom: $fpm.space.space-2
 
 
@@ -532,20 +484,24 @@ margin-bottom: $fpm.space.space-2
 align: left
 
 
---- container: ftd.main
-
-
---- ftd.row:
-align: left
-
-
 --- ftd.text:
 text: \\___________________________________________________________________________________________________________________________________
 text-align: left
 align: left
 
 
+-- review-print:
+$loop$: $reviews as $r
+title: $r.title
+rating: $r.rating
+description: $r.description
+reviewer_name: $r.reviewer_name
+
 --- container: ftd.main
+
+
+
+
 
 
 
@@ -866,8 +822,6 @@ move-left: 500
 
 --- black-button: POST
 $on-click$: message-host $add-review-api
-$on-click$: increment $count_r
-
 
 
 -- object add-review-api:
