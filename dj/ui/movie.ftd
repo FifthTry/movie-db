@@ -104,36 +104,7 @@ $movie.description
 $movie.poster
 
 
-;; REVIEW PRINTING ------------------------------------------------
 
--- ftd.column review-print:
-string title:
-string reviewer_name:
-string rating:
-string description:
-
---- ds.markdown:
-
-$title
-
---- ds.markdown:
-
-$reviewer_name
-
---- ds.markdown:
-
-$rating
-
---- ds.markdown:
-
-$description
-
--- review-print:
-$loop$: $reviews as $r
-title: $r.title
-rating: $r.rating
-description: $r.description
-reviewer_name: $r.reviewer_name
 
 
 
@@ -418,7 +389,6 @@ margin-bottom: $fpm.space.space-5
 --- ftd.row:
 align: left
 
-
 --- ftd.text:
 text: \\___________________________________________________________________________________________________________________________________
 text-align: left
@@ -438,6 +408,88 @@ align: left
 
 -- component-3:
 
+;; REVIEW PRINTING ------------------------------------------------
+
+-- ftd.column review-print:
+string title:
+string reviewer_name:
+string rating:
+string description:
+
+--- ftd.text:
+text: REVIEWER-NAME:
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+--- ftd.text: $reviewer_name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-3
+
+
+
+--- ftd.text:
+text: TITLE OF THE REVIEW
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-1
+
+--- ftd.text: $title
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-3
+
+--- ftd.text:
+text: DESCRIPTION
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-1
+
+--- ftd.text: $description
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-3
+
+
+--- ftd.text:
+text: RATING
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-1
+
+--- ftd.text: $rating
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-3
+
+
+--- ftd.text:
+text: \\___________________________________________________________________________________________________________________________________
+text-align: left
+align: left
+
+-- review-print:
+$loop$: $reviews as $r
+title: $r.title
+rating: $r.rating
+description: $r.description
+reviewer_name: $r.reviewer_name
+
 
 
 -- ftd.column component-3:
@@ -453,26 +505,9 @@ width: 756
 height: 40
 
 
---- ftd.text:
-text: REVIEWER-NAME
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-1
-
 
 --- ftd.row:
 align: left
-
-
---- ftd.text:
-text: RATING
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-2
 
 
 --- ftd.text:
@@ -490,14 +525,6 @@ margin-bottom: $fpm.space.space-2
 
 --- ftd.row:
 align: left
-
-
---- ftd.text:
-text: REVIEW BODY
-role: $fpm.type.blockquote
-text-align: left
-align: left
-margin-bottom: $fpm.space.space-6
 
 
 --- container: ftd.main
