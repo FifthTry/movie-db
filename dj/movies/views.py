@@ -115,12 +115,20 @@ curl -X GET http://127.0.0.1:8001/movie/
 """
 
 
+average = 0
+count_reviews = 0
+
+
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
     print("ADD REVIEW")
     body = json.loads(req.body.decode("utf-8"))
     movie_id = body["id"]
     print(f"printing mid: {movie_id}")
+    name_set = set()
+    total = 0
+    global average
+    global count_reviews
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -145,13 +153,36 @@ def add_review(req: django.http.HttpRequest):
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+
+    # TODO: Checking one review per reviewer
+    # reviews = Review.objects.filter(movie__pk=movie_id)
+    # name_set = set()
+    # for review in reviews:
+    #     if review.reviewer not in name_set:
+    #         name_set.add(review.reviewer)
+    #     else:
+    #         return django.http.HttpResponse("You have already reviewed the movie!", status=404)
+
+    # TODO: restrict invalid ratings
+    # if (body["rating"]>10 or body["rating"]<0):
+    #     return django.http.HttpResponse("Invalid rating, nigga", status=404)
+
+    # if (body["rating"]<=10 or body["rating"]>=0):
+    #     count_reviews+=1
+    #     total += sum(body["rating"])
+    #
+    # average = sum/count_reviews
+
+
+
     print("review item added")
+    print(f"average rating = {average}")
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {
             "data": {"success": True,
                      "reload": True},
-            "other": {"review": review.id, "movie": movie.id}
+            "other": {"review": review.id, "movie": movie.id, "average rating": average}
         },
         status=200,
     )
@@ -170,6 +201,31 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 """
 
 
+def get_ratings(req: django.http.HttpRequest):
+    print("GET REVIEW")
+    movie_id = req.GET.get("id")
+    print(movie_id)
+    try:
+        reviews = Review.objects.filter(movie__pk=movie_id)
+        return django.http.JsonResponse(
+            average,
+            count_reviews,
+            status=200,
+            safe=False
+        )
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+
+
+
 @csrf_exempt
 def get_review(req: django.http.HttpRequest):
     print("GET REVIEW")
@@ -177,6 +233,7 @@ def get_review(req: django.http.HttpRequest):
     print(movie_id)
     try:
         reviews = Review.objects.filter(movie__pk=movie_id)
+        name_set = set()
         filtered_reviews = []
         for review in reviews:
             print(review)
