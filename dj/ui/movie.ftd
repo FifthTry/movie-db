@@ -43,6 +43,8 @@ dark: white
 light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
 
+-- integer count_r: 0
+
 
 -- record query-data:
 string id:
@@ -230,10 +232,12 @@ height: auto
 
 
 -- component-2:
-review-count: $s1
+review-count-field: $s1
+review-count: $count_r
 
 
--- string s1: Review Count Number
+-- string s1:   Review Count Number =
+
 
 
 
@@ -242,7 +246,8 @@ review-count: $s1
 -- ftd.column component-2:
 optional caption title:
 optional string label:
-optional string review-count:
+string review-count-field:
+integer review-count:
 ;optional string line:
 align: left
 margin-bottom: 200
@@ -368,16 +373,16 @@ margin-bottom: $fpm.space.space-10
 --- ftd.row:
 align: left
 
-
 --- ftd.text:
-text: $review-count
+text: Number of reviewers =
 role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
 
---- ftd.text:
-text: Reviews
+--- ftd.integer:
+value: $review-count
+move-right: 5
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -861,6 +866,8 @@ move-left: 500
 
 --- black-button: POST
 $on-click$: message-host $add-review-api
+$on-click$: increment $count_r
+
 
 
 -- object add-review-api:
