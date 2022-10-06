@@ -7,6 +7,13 @@ value: $curr_pno
 
 /-- integer p_no: $count
 
+-- record movie-info:
+string title:
+string release_date:
+string poster:
+string director:
+string description:
+
 
 -- record movie-data-api:
 integer p_no:
@@ -14,14 +21,6 @@ string next:
 string previous:
 integer items:
 movie-info list movies:
-
-
--- record movie-info:
-string title:
-string release_date:
-string poster:
-string director:
-string description:
 
 
 
@@ -33,7 +32,8 @@ p_no: $curr_pno
 
 
 
-/-- foo: $obj.name
+-- foo:
+$loop$: $l_movie.movies as $obj
 title: $obj.title
 release_date: $obj.release_date
 director: $obj.director
@@ -41,33 +41,35 @@ description: $obj.description
 poster: $obj.poster
 
 
-
-
-/-- ds.markdown:
-
-$l_movie.title
-
-/-- ds.markdown:
-
-$movie.release_date
-
-/-- ds.markdown:
-
-$movie.director
-
-/-- ds.markdown:
-
-$movie.description
-
-
-/-- ds.markdown:
-
-$movie.poster
-
 -- ftd.column foo:
-caption name:
-string body:
+string title:
+string release_date:
+string poster:
+string director:
+string description:
 border-width: 1
 padding: 10
 width: fill
 margin-top: 10
+
+--- ds.markdown:
+
+$title
+
+--- ds.markdown:
+
+$release_date
+
+--- ds.markdown:
+
+$director
+
+--- ds.markdown:
+
+$description
+
+
+--- ds.markdown:
+
+$poster
+
