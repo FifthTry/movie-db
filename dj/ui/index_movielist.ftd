@@ -1,5 +1,9 @@
 -- ds.page: Service API call using `http` processor
 
+-- ftd.color white:
+light: white
+dark: white
+
 -- integer curr_pno: 1
 
 --- ftd.integer:
@@ -73,3 +77,20 @@ $description
 
 $poster
 
+-- ftd.row:
+
+-- ftd.text: PREVIOUS
+color: $white
+align: left
+$on-click$: decrement $curr_pno
+
+-- ftd.integer: $curr_pno
+color: $white
+align: center
+move-right: 300
+
+-- ftd.text: NEXT
+color: $white
+align: right
+$on-click$: increment $curr_pno
+move-right: 600
