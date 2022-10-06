@@ -195,10 +195,8 @@ average_rating: $s2
 
 -- ftd.column component-2:
 optional caption title:
-optional string label:
 optional string review-count:
 optional string average_rating:
-;optional string line:
 align: left
 margin-bottom: 200
 margin-top: $fpm.space.space-10
@@ -220,25 +218,6 @@ text-align: left
 align: left
 style: bold
 
-
-;Printing the symbol star
---- ftd.text:
-text: ⭐
-role: $fpm.type.heading-large
-text-align: left
-align: left
-style: bold
-
-
-;Printing the text rating
---- ftd.text:
-text: Rating
-role: $fpm.type.copy-relaxed
-text-align: center
-align: center
-style: bold
-margin-top: $fpm.space.space-10
-padding-left: $fpm.space.space-2
 
 
 --- container: ftd.main
@@ -324,10 +303,12 @@ text: $review-count
 role: $fpm.type.blockquote
 text-align: left
 align: left
-margin-bottom: $fpm.space.space-5
+style : bold
+margin-bottom: $fpm.space.space-2
 
 --- ftd.text:
 text: $rating.count_reviews
+move-right: 3
 style : bold
 role: $fpm.type.blockquote
 text-align: left
@@ -337,15 +318,27 @@ margin-bottom: $fpm.space.space-5
 
 --- ftd.text:
 text: $average_rating
+move-right: 30
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style : bold
+margin-bottom: $fpm.space.space-2
+
+--- ftd.text:
+text: $rating.average
+move-right: 33
+style : bold
 role: $fpm.type.blockquote
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
 
 --- ftd.text:
-text: $rating.average
-style : bold
-role: $fpm.type.blockquote
+text: ⭐
+move-right: 32
+move-up: 5
+role: $fpm.type.copy-relaxed
 text-align: left
 align: left
 margin-bottom: $fpm.space.space-5
