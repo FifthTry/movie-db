@@ -1,23 +1,22 @@
 -- ds.page: Service API call using `http` processor
 
+-- integer curr_pno: 1
 
--- record query-data:
-string p_no:
-string items:
+--- ftd.integer:
+value: $curr_pno
 
--- query-data query:
-$processor$: request-data
+/-- integer p_no: $count
 
 
--- ds.markdown:
+-- record movie-data-api:
+integer p_no:
+string next:
+string previous:
+integer items:
+movie-info list movies:
 
-$query.p_no
-$query.items
 
--- string query-p_no: $query.p_no
--- string query-items: $query.items
-
--- record movie-data:
+-- record movie-info:
 string title:
 string release_date:
 string poster:
@@ -25,15 +24,16 @@ string director:
 string description:
 
 
--- movie-data list movie:
+
+-- movie-data-api l_movie:
 $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
-p_no: $query.p_no
-items: $query.items
+p_no: $curr_pno
 
--- foo: $obj.name
-$loop$: $movie as $obj
+
+
+/-- foo: $obj.name
 title: $obj.title
 release_date: $obj.release_date
 director: $obj.director
@@ -43,24 +43,24 @@ poster: $obj.poster
 
 
 
--- ds.markdown:
+/-- ds.markdown:
 
-$movie.title
+$l_movie.title
 
--- ds.markdown:
+/-- ds.markdown:
 
 $movie.release_date
 
--- ds.markdown:
+/-- ds.markdown:
 
 $movie.director
 
--- ds.markdown:
+/-- ds.markdown:
 
 $movie.description
 
 
--- ds.markdown:
+/-- ds.markdown:
 
 $movie.poster
 
