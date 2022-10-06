@@ -23,7 +23,6 @@ string description:
 integer p_no:
 string next:
 string previous:
-integer items:
 movie-info list movies:
 
 
@@ -77,12 +76,23 @@ $description
 
 $poster
 
+
 -- ftd.row:
 
 -- ftd.text: PREVIOUS
 color: $white
 align: left
 $on-click$: decrement $curr_pno
+/link: $l_movie.previous
+/$on-click$: message-host $previous
+
+/-- object previous:
+function: http
+method: get
+url: $l_movie.previous
+/page_number: $page_number
+/items: $items
+
 
 -- ftd.integer: $curr_pno
 color: $white
@@ -93,4 +103,11 @@ move-right: 300
 color: $white
 align: right
 $on-click$: increment $curr_pno
+/link: $l_movie.next
 move-right: 600
+
+/-- object next:
+function: http
+method: get
+url: $l_movie.next
+/page_number: $page_number
