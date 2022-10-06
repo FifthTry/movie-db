@@ -201,7 +201,10 @@ def get_ratings(req: django.http.HttpRequest):
                 count_reviews += 1
                 total += review.rating
 
-        average = round(total/count_reviews,2)
+        if count_reviews==0:
+            average = 0
+        else:
+            average = round(total/count_reviews,2)
         print(round(average, 2))
         print(f"Count of reviews = {count_reviews}")
 
