@@ -1,5 +1,6 @@
 -- import: fpm
 -- import: movie-db/assets
+-- import: ds
 
 
 -- fpm.toc-item list empty-toc:
@@ -20,30 +21,9 @@ dark: rgba(255,255,255,0)
 light: black
 dark: black
 
-
-
-
-
-
--- ftd.image-src img1:
-light: https://i.ibb.co/JtkwS5S/download-5.jpg
-dark: https://i.ibb.co/JtkwS5S/download-5.jpg
-
-
--- ftd.image-src img2:
-light: https://i.ibb.co/q0XVLfx/download-3.jpg
-dark: https://i.ibb.co/q0XVLfx/download-3.jpg
-
-
--- ftd.image-src img3:
-light: https://i.ibb.co/XbpTnj8/download-2.jpg
-dark: https://i.ibb.co/XbpTnj8/download-2.jpg
-
-
--- ftd.image-src img4:
-light:  https://i.ibb.co/zQ14YBn/download-4.jpg
-dark:  https://i.ibb.co/zQ14YBn/download-4.jpg
-
+-- ftd.color white:
+light: white
+dark: white
 
 
 
@@ -59,7 +39,35 @@ link-style: bold
 toc: $empty-toc
 
 
--- integer items: 8
+;;;;;;;;;;;;;;;;;;;;;;;; CALLING LIST MOVIE API
+
+-- integer curr_pno: 1
+
+--- ftd.integer:
+value: $curr_pno
+
+-- record movie-info:
+string title:
+string release_date:
+optional ftd.image-src poster:
+string director:
+string description:
+
+
+-- record movie-data-api:
+integer p_no:
+string next:
+string previous:
+movie-info list movies:
+
+
+
+-- movie-data-api l_movie:
+$processor$: http
+url: http://127.0.0.1:8001/api/movies/
+method: get
+p_no: $curr_pno
+
 
 
 -- optional string input_title:
@@ -168,7 +176,6 @@ title: $input_title
 
 
 -- component-2: All Movies
-$on-click$: message-host $movie-list
 
 
 
@@ -255,13 +262,6 @@ margin-left: 24
 id: kkk
 
 
---- ftd.image:
-src: $img1
-width: 280
-height: 440
-link : /movie
-cursor: pointer
-
 
 --- ftd.row:
 width: fill
@@ -331,13 +331,6 @@ padding-horizontal: $fpm.space.space-4
 margin-left: 24
 id: kkk
 
-
---- ftd.image:
-src: $img2
-width: 280
-height: 440
-link : /movie
-cursor: pointer
 
 
 --- ftd.row:
@@ -409,13 +402,6 @@ margin-left: 24
 id: kkk
 
 
---- ftd.image:
-src: $img3
-width: 280
-height: 440
-link : /movie
-cursor: pointer
-
 
 --- ftd.row:
 width: fill
@@ -466,13 +452,28 @@ role: $fpm.type.copy-tight
 color: $black
 
 
+
+
 --- container: ftd.main
 
+-- foo:
+$loop$: $l_movie.movies as $obj
+title: $obj.title
+release_date: $obj.release_date
+director: $obj.director
+description: $obj.description
+poster: $obj.poster
 
-
-
-
-;;ROW-1 COLUMN-4 Image Setup
+-- ftd.column foo:
+string title:
+string release_date:
+string poster:
+string director:
+string description:
+border-width: 1
+padding: 10
+width: fill
+margin-top: 10
 
 --- ftd.column:
 border-width:2
@@ -483,48 +484,47 @@ height: 540
 padding-vertical: $fpm.space.space-4
 padding-horizontal: $fpm.space.space-4
 margin-left: 24
-id: kkk
 
 
---- ftd.image:
-src: $img4
-width: 280
-height: 440
-link : /moviepage
-cursor: pointer
-
-
---- ftd.row:
+--- ftd.column:
 width: fill
 padding-vertical: $fpm.space.space-2
 
 
---- ftd.text: Jug Jug Jeeyo
+--- ftd.text: $title
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+--- ftd.text: $release_date
 role: $fpm.type.copy-tight
 color: $black
 width: fill
 
 
---- ftd.row:
-
-
---- ftd.text: ⭐
+--- ftd.text: $director
 role: $fpm.type.copy-tight
 color: $black
+width: fill
 
 
---- ftd.text: rating
+--- ftd.text: $description
 role: $fpm.type.copy-tight
 color: $black
+width: fill
 
+--- ds.markdown:
 
---- ftd.text: /10
-role: $fpm.type.copy-tight
-color: $black
+$poster
 
+/--- ftd.image-src img:
+light: $movie-info.poster
+dark: $$movie-info.poster
+height: auto
+width: auto
 
---- container: kkk
-
+/--- ftd.image:
+src: $img
 
 --- ftd.row:
 
@@ -545,108 +545,37 @@ color: $black
 
 --- container: ftd.main
 
+-- ftd.row:
 
+-- ftd.text: PREVIOUS
+color: $black
+align: left
+$on-click$: decrement $curr_pno
+/link: $l_movie.previous
+/$on-click$: message-host $previous
 
-
-
-
-
-
-
-
--- component-4:
-
-
---- ftd.text: NEXT
-text-align: right
-align: right
-$on-click$: message-host $next
-
--- object next:
+/-- object previous:
 function: http
 method: get
-url: /movies/p_no=1&items=10
+url: $l_movie.previous
 /page_number: $page_number
 /items: $items
 
 
---- ftd.text: PREVIOUS
-text-align: right
-align: right
-$on-click$: message-host $previous
-
--- object previous:
-function: http
-method: get
-url: /movies/p_no=1&items=10
-/page_number: $page_number
-/items: $items
-
-
-
-
-
-
-
-
-
-
--- ftd.row component-4:
-optional caption title:
-optional string label:
-optional string text-1:
-optional string text-2:
-align: right
-margin-top: $fpm.space.space-10
-padding-right: 10
-padding-vertical: 10
-margin-left: 30
-width: fill
-height: 40
-
-
---- ftd.text:
-text: $text-1
-role: $fpm.type.blockquote
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-15
-padding-right: 500
-padding-left: 15
-cursor: pointer
-
-
---- ftd.text:
-text: $text-2
-role: $fpm.type.blockquote
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-15
-padding-right: 10
-padding-left: 850
-cursor: pointer
-
-
---- container: ftd.main
-
-/-- button.button: Movie list
-role: primary
-large: true
+-- ftd.integer: $curr_pno
+color: $black
 align: center
-$on-click$: message-host $movie-list
+move-right: 300
 
--- object movie-list:
+-- ftd.text: NEXT
+color: $black
+align: right
+$on-click$: increment $curr_pno
+/link: $l_movie.next
+move-right: 600
+
+/-- object next:
 function: http
 method: get
-url: movies
+url: $l_movie.next
 /page_number: $page_number
-/items: $items
-
-/-- record response:
-integer page-number: 0
-optional string next:
-optional string previous:
-integer count: 8
-movie list movies:
