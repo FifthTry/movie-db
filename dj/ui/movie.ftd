@@ -536,7 +536,7 @@ reviewer_name: $r.reviewer_name
 ;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
--- card:  ;;;;;only for checking if any inpur is being taken
+-- card:  ;;;;;only for checking if any input is being taken
 
 -- string input_reviewer: Nil
 
@@ -547,6 +547,7 @@ color: $white
 
 -- ftd.text: $input_title
 color: $white
+move-down: 600
 
 -- string input_description: Nil
 
@@ -598,51 +599,42 @@ movie: true
 -- right-fields: $label_4
 rating: true
 
+-- ftd.column:
+ftd.image-src src: $assets.files.background.png
+background-image: $src
+min-width: percent 50
+background-repeat: false
+padding-vertical: $fpm.space.space-4
+padding-horizontal:  $fpm.space.space-4
+width: percent 85
+height: 600
+align: center
+move-left: 50
+move-up: 40
 
 
 -- ftd.column card:
 optional caption title:
 optional string label:
-ftd.image-src src: $assets.files.background.png
-min-width: percent 50
-margin-top: $fpm.space.space-10
-background-image: $src
-background-repeat: false
-padding-vertical: $fpm.space.space-8
-padding-horizontal:  $fpm.space.space-8
-width: percent 85
-height: 560
-align: center
-move-down: 100
 
 
---- ftd.column:
-background-color: $transparent
+-- ftd.column:
 align: left
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-2
-max-width: 756
-
+margin-left: 60
 
 
 
 --- ftd.text: WRITE A REVIEW
+margin-bottom: $fpm.space.space-6
 role: $fpm.type.heading-large
 text-align: left
 style: bold
 margin-top: $fpm.space.space-8
-background-color: $transparent
 
 
 
 ;; we can make the placeText optional as well
 ;; ROW [ [TITLE]* [INPUT-BOX] ]
-
--- ftd.row:
-ftd.image-src src: $assets.files.background.png
-width: percent 85
-background-image: $src
-align: center
 
 
 -- ftd.row getting_input:
@@ -652,6 +644,7 @@ boolean movie:
 boolean reviewer:
 boolean description:
 boolean rating:
+padding-left: $fpm.space.space-7
 width: fill
 height: 150
 align: left
@@ -744,6 +737,7 @@ $on-input$: $input_rating=$VALUE
 optional caption name:
 optional string label:
 padding-vertical: $fpm.space.space-8
+move-left: 30
 width percent: fill
 min-height: 400
 align: left
@@ -767,6 +761,7 @@ padding-vertical: $fpm.space.space-8
 width: percent 100
 min-height: 400
 align: right
+move-left: 110
 
 
 --- getting_input: $obj.name
@@ -813,11 +808,10 @@ width: fill
 text-align: center
 align: center
 
--- ftd.row:
 
--- ftd.column:
+-- ftd.row:
 align: center
-move-down: 400
+move-down: 200
 move-left: 500
 
 
