@@ -44,6 +44,9 @@ light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
 
 
+
+;;;;;;;;;;;;;;;;;;;;;; READING MOVIE
+
 -- record query-data:
 string id:
 
@@ -80,32 +83,20 @@ method: get
 id: $query.id
 
 
+-- record rating-data:
+string average:
+string count_reviews:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- rating-data rating:
+$processor$: http
+url: http://127.0.0.1:8001/api/rating/
+method: get
+id: $query.id
 
 
 -- component-1:
-
-
-
-
-
-
 
 
 
@@ -191,9 +182,12 @@ height: auto
 
 -- component-2:
 review-count: $s1
+average_rating: $s2
 
 
--- string s1: Review Count Number
+-- string s1: Number of Reviewers =
+
+-- string s2: Average IMDB rating of the movie =
 
 
 
@@ -203,6 +197,7 @@ review-count: $s1
 optional caption title:
 optional string label:
 optional string review-count:
+optional string average_rating:
 ;optional string line:
 align: left
 margin-bottom: 200
@@ -318,6 +313,7 @@ margin-bottom: $fpm.space.space-10
 
 --- container: ftd.main
 
+--- ftd.column:
 
 --- ftd.row:
 align: left
@@ -331,7 +327,24 @@ align: left
 margin-bottom: $fpm.space.space-5
 
 --- ftd.text:
-text: Reviews
+text: $rating.count_reviews
+style : bold
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+
+--- ftd.text:
+text: $average_rating
+role: $fpm.type.blockquote
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+--- ftd.text:
+text: $rating.average
+style : bold
 role: $fpm.type.blockquote
 text-align: left
 align: left
@@ -534,7 +547,7 @@ reviewer_name: $r.reviewer_name
 ;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
--- card:
+-- card:  ;;;;;only for checking if any inpur is being taken
 
 -- string input_reviewer: Nil
 
