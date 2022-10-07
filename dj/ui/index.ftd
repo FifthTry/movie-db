@@ -1,5 +1,6 @@
 -- import: fpm
 -- import: movie-db/assets
+-- import: ds
 
 
 -- fpm.toc-item list empty-toc:
@@ -554,43 +555,6 @@ color: $black
 
 
 
--- component-4:
-
-
---- ftd.text: NEXT
-text-align: right
-align: right
-$on-click$: message-host $next
-
--- object next:
-function: http
-method: get
-url: /movies/p_no=1&items=10
-/page_number: $page_number
-/items: $items
-
-
---- ftd.text: PREVIOUS
-text-align: right
-align: right
-$on-click$: message-host $previous
-
--- object previous:
-function: http
-method: get
-url: /movies/p_no=1&items=10
-/page_number: $page_number
-/items: $items
-
-
-
-
-
-
-
-
-
-
 -- ftd.row component-4:
 optional caption title:
 optional string label:
@@ -650,3 +614,161 @@ optional string next:
 optional string previous:
 integer count: 8
 movie list movies:
+
+-- ftd.color white:
+light: white
+dark: white
+
+-- integer curr_pno: 1
+
+--- ftd.integer:
+value: $curr_pno
+
+/-- integer p_no: $count
+
+-- record movie-info:
+string title:
+string release_date:
+string poster:
+string director:
+string description:
+
+
+-- record movie-data-api:
+integer p_no:
+string next:
+string previous:
+movie-info list movies:
+
+
+
+-- movie-data-api l_movie:
+$processor$: http
+url: http://127.0.0.1:8001/api/movies/
+method: get
+p_no: $curr_pno
+
+
+
+-- foo:
+$loop$: $l_movie.movies as $obj
+title: $obj.title
+release_date: $obj.release_date
+director: $obj.director
+description: $obj.description
+poster: $obj.poster
+
+
+-- ftd.row foo:
+string title:
+string release_date:
+string poster:
+string director:
+string description:
+border-width: 1
+padding: 10
+width: fill
+margin-top: 10
+
+--- ftd.row:
+border-width:2
+border-color: $black
+width: 320
+max-width: 460
+height: 540
+padding-vertical: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-4
+margin-left: 24
+
+
+--- ftd.column:
+width: fill
+padding-vertical: $fpm.space.space-2
+
+
+--- ftd.text: $title
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+--- ftd.text: $release_date
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+
+--- ftd.text: $director
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+
+--- ftd.text: $description
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+--- ds.markdown:
+
+$poster
+
+/-- ftd.image-src img5:
+light: $poster
+dark: $poster
+
+-- ftd.row:
+align: left
+margin-top: $fpm.space.space-2
+padding-right: 10
+margin-left: 40
+
+-- ftd.text: PREVIOUS
+align: left
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+$on-click$: decrement $curr_pno
+/link: $l_movie.previous
+/$on-click$: message-host $previous
+
+/-- object previous:
+function: http
+method: get
+url: $l_movie.previous
+/page_number: $page_number
+/items: $items
+
+
+-- ftd.integer: $curr_pno
+align: center
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+move-right: 600
+
+-- ftd.text: NEXT
+align: right
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+$on-click$: increment $curr_pno
+/link: $l_movie.next
+move-right: 1200
+
+/-- object next:
+function: http
+method: get
+url: $l_movie.next
+/page_number: $page_number
