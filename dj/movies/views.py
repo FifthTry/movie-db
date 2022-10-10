@@ -4,6 +4,7 @@ import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
+
 # Create your views here.
 
 
@@ -30,7 +31,7 @@ def list_movie(req: django.http.HttpRequest):
     """
 
     order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[(page_number - 1) * items + 1 : page_number * items]
+    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
 
     return django.http.JsonResponse(
         {
@@ -47,7 +48,6 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def add_movie(req: django.http.HttpRequest):
-
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
@@ -60,11 +60,11 @@ def add_movie(req: django.http.HttpRequest):
         description=body.get("description"),
     )
 
-    print(movie)
+    # print(movie)
     # TODO: redirect to movie page
     # from django.shortcuts import redirect
     # return redirect("/", permanent=True)
-    return django.http.JsonResponse({"data": {"url": "/movie/?id="+str(movie.id)}}, status=200)
+    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
 
 
 """
@@ -81,12 +81,10 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 
 @csrf_exempt
 def get_movie(req: django.http.HttpRequest):
-
     movie_id = req.GET.get("id")
-    print(movie_id)
     try:
         movie = Movie.objects.get(id=movie_id)
-        print("Movie details", movie)
+        # print("Movie details", movie)
         return django.http.JsonResponse(
             {
                 "title": movie.title,
@@ -118,6 +116,9 @@ curl -X GET http://127.0.0.1:8001/movie/
 
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
+    body = json.loads(req.body.decode("utf-8"))
+    movie_id = body["id"]
+    name_set = set()
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -125,9 +126,9 @@ def add_review(req: django.http.HttpRequest):
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
-    body = json.loads(req.body.decode("utf-8"))
     try:
-        movie = Movie.objects.get(id=body["movie"])
+        movie = Movie.objects.get(id=movie_id)
+
     except Exception as e:
         print(e)
         # TODO: Redirect to error page with 404 error
@@ -140,9 +141,30 @@ def add_review(req: django.http.HttpRequest):
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+
+    # TODO: Checking one review per reviewer
+    # reviews = Review.objects.filter(movie__pk=movie_id)
+    # name_set = set()
+    # for review in reviews:
+    #     if (body["rating"]>10 or body["rating"]<0):
+    #         return django.http.HttpResponse("Invalid rating, nigga", status=404)
+    #     if review.reviewer not in name_set:
+    #         name_set.add(review.reviewer)
+    #     else:
+    #         return django.http.HttpResponse("You have already reviewed the movie!", status=404)
+
+    # TODO: restrict invalid ratings
+
+
+
     # TODO: redirect to movie page
     return django.http.JsonResponse(
-        {"review": review.id, "movie": movie.id}, status=200
+        {
+            "data": {"success": True,
+                     "reload": True},
+            "other": {"review": review.id, "movie": movie.id}
+        },
+        status=200,
     )
 
 
@@ -157,6 +179,78 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
     "rating": 8
 }'
 """
+
+
+
+def get_ratings(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    count_reviews= 0
+    total = 0
+    try:
+        reviews = Review.objects.filter(movie__pk=movie_id)
+        for review in reviews:
+            if (review.rating<=10 or review.rating>=0):
+                count_reviews += 1
+                total += review.rating
+
+        if count_reviews==0:
+            average = 0
+        else:
+            average = round(total/count_reviews,2)
+
+        return django.http.JsonResponse(
+            {
+                "average": str(average),
+                "count_reviews": str(count_reviews)
+
+            },
+            status=200,
+            safe=False
+        )
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+
+
+
+@csrf_exempt
+def get_review(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    global average
+    global count_reviews
+    total = 0
+    try:
+        reviews = Review.objects.filter(movie__pk=movie_id)
+        name_set = set()
+        filtered_reviews = []
+        for review in reviews:
+            item = {"title": review.title,
+                    "reviewer_name": review.reviewer,
+                    "rating": str(review.rating),
+                    "description": review.description}
+            filtered_reviews.append(item)
+
+        return django.http.JsonResponse(
+            filtered_reviews,
+            status=200,
+            safe=False
+        )
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
 
 # Movie list should come from Database
 
