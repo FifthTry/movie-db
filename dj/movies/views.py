@@ -117,10 +117,8 @@ curl -X GET http://127.0.0.1:8001/movie/
 
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
-    print("ADD REVIEW")
     body = json.loads(req.body.decode("utf-8"))
     movie_id = body["id"]
-    print(f"printing mid: {movie_id}")
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -128,10 +126,8 @@ def add_review(req: django.http.HttpRequest):
     if req.method == "GET":
         return django.http.HttpResponse("Wrong Method GET", status=405)
 
-    print(f"printing body: {body}")
     try:
         movie = Movie.objects.get(id=movie_id)
-        print(f"Printing movie to review: {movie}")
 
     except Exception as e:
         print(e)
@@ -145,7 +141,6 @@ def add_review(req: django.http.HttpRequest):
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
-    print("review item added")
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {
@@ -174,7 +169,6 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 def get_review(req: django.http.HttpRequest):
     print("GET REVIEW")
     movie_id = req.GET.get("id")
-    print(movie_id)
     try:
         reviews = Review.objects.filter(movie__pk=movie_id)
         filtered_reviews = []
