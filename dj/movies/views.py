@@ -128,7 +128,6 @@ def add_review(req: django.http.HttpRequest):
 
     try:
         movie = Movie.objects.get(id=movie_id)
-        print(f"Printing movie to review: {movie}")
 
     except Exception as e:
         print(e)
