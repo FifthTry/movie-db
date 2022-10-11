@@ -1,6 +1,7 @@
 import django.http
 from .models import Movie, Review
 import json
+import math
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 
@@ -19,6 +20,7 @@ def list_movie(req: django.http.HttpRequest):
     """
     page_number = int(req.GET.get("p_no"))
     items = 8
+    total_movies = 0
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -29,10 +31,14 @@ def list_movie(req: django.http.HttpRequest):
     st = (pno - 1) * items + 1 to
     end = pno * items
     """
-    meow2 = page_number * items
-    meow= (page_number - 1) * items + 1
-    print(meow)
-    print(meow2)
+    all_movies = Movie.objects.all()
+    for i in all_movies:
+        total_movies += 1
+
+    last_pno = math.ceil(total_movies/8)
+    print(last_pno)
+
+
 
     # order_by = req.GET.get("p_no", 0)
     movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
@@ -48,13 +54,12 @@ def list_movie(req: django.http.HttpRequest):
         }
         list_of_movies.append(item)
 
-    print(f"List of movies: {list_of_movies}")
-
     next_page_number = page_number + 1
     previous_page_number = page_number - 1 if page_number - 1 > 0 else 1
     return django.http.JsonResponse(
         {
             "p_no": page_number,
+            "last_pno": last_pno,
             # TODO: Next And Previous both are optional
             "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
             "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
@@ -293,7 +298,7 @@ def get_review(req: django.http.HttpRequest):
 
 
 @csrf_exempt
-def get_list(req: django.http.HttpRequest):
+def search_list(req: django.http.HttpRequest):
     try:
         movie = Movie.objects.all()
         movie_list = []
