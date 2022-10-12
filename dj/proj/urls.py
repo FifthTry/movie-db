@@ -25,4 +25,5 @@ urlpatterns = [
     path("api/movie/", views.get_movie),
     path("api/review/", views.get_review),
     path("api/rating/", views.get_ratings),
+    path("api/search/", views.search_movie),
 ]
