@@ -53,6 +53,7 @@ def list_movie(req: django.http.HttpRequest):
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
