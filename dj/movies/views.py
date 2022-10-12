@@ -85,8 +85,12 @@ def list_movie(req: django.http.HttpRequest):
         {
             "p_no": page_number,
             # TODO: Next And Previous both are optional
-            "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
-            "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
+            # "next": "/movies/p_no=1&items=10",
+            # "previous": "/movies/p_no=1&items=10",
+            # "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
+            # "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
+            "next": "http://127.0.0.1:8001/api/movies/?p_no=" + str(next_page_number),
+            "previous": "http://127.0.0.1:8001/api/movies/?p_no=" + str(previous_page_number),
             "movies": list_of_top_movies,
             "movies1": list_of_bottom_movies,
 
