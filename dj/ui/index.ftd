@@ -252,11 +252,12 @@ width: fill
 spacing: 40
 move-down: 20
 
+-- ftd.column:
+spacing: 50
 
+--- row1:
 
--- row1:
-
--- row2:
+--- row2:
 
 
 
@@ -303,20 +304,21 @@ height: 440
 link : /movie
 cursor: pointer
 
+--- bot2: $title
 
---- ftd.row:
+--- bot:
+
+--- container: ftd.main
+
+-- ftd.row bot2:
+caption title:
 width: fill
 padding-vertical: $fpm.space.space-2
-
 
 --- ftd.text: $title
 role: $fpm.type.copy-tight
 color: $black
 width: fill
-
-
---- ftd.row:
-
 
 --- ftd.text: ⭐
 role: $fpm.type.copy-tight
@@ -332,12 +334,7 @@ color: $black
 role: $fpm.type.copy-tight
 color: $black
 
-
---- container: kkk
-
-
---- ftd.row:
-
+-- ftd.row bot:
 
 --- ftd.text: count
 padding-top: $fpm.space.space-2
@@ -351,11 +348,6 @@ padding-top: $fpm.space.space-2
 padding-right: $fpm.space.space-6
 role: $fpm.type.copy-tight
 color: $black
-
-
---- container: ftd.main
-
-
 
 
 
@@ -447,4 +439,3 @@ cursor: pointer
 function: http
 method: get
 url: movies
-
