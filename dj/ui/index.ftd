@@ -1,428 +1,384 @@
--- import: fpm
--- import: movie-db/assets
-
-
--- fpm.toc-item list empty-toc:
-
--- fpm.toc-item list toc-top-right:
-$processor$: toc
-
-
-- about us:/about-us/
-
-
--- ftd.color transparent:
-light: rgba(255,255,255,0)
-dark: rgba(255,255,255,0)
-
-
--- ftd.color black:
-light: black
-dark: black
-
-
-
--- integer curr_pno: 1
-
---- ftd.integer:
-value: $curr_pno
-
-
-
--- record movie-info:
-string title:
-ftd.image-src poster:
-
-
-
--- record movie-data-api:
-integer p_no:
-string next:
-string previous:
-movie-info list movies:
-movie-info list movies1:
-
-
-
--- movie-data-api l_movie:
-$processor$: http
-url: http://127.0.0.1:8001/api/movies/
-method: get
-p_no: $curr_pno
-
-
-
-
-
--- h.header:
-logo-height: 40
-logo-width: 80
-site-logo: $assets.files.logo.png
-site-url: /
-site-name:
-current-url: /
-link-style: bold
-toc: $empty-toc
-
-
--- integer items: 8
-
-
--- optional string input_title:
-$always-include$: true
-
-
-;;to check if the input is working
-/-- ftd.text: $input_title
-padding-horizontal: 10
-padding-vertical: 12
-
-
--- component-1: aditi movie app
-
-
-
-
-
-
-
-
-
-
--- ftd.column component-1:
-caption title:
-background-color: $fpm.color.main.custom.two
-align: center
-width: fill
-height: 250
-
-
---- ftd.text:
-text: $title
-role: $fpm.type.heading-large
-text-align: center
-align: center
-style: bold
-margin-top: $fpm.space.space-10
-padding-left: 18
-
-
---- ftd.row:
-padding-left: $fpm.space.space-6
-margin-top: $fpm.space.space-6
-margin-right: $fpm.space.space-4
-padding-vertical: $fpm.space.space-6
-align: center
-spacing: 20
-
-
-
---- ftd.input:
-placeholder: Search here
-padding-horizontal: 16
-padding-vertical: 8
-width: 600
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-$on-input$: $input_title=$VALUE
-
-
---- ftd.row:
-padding-bottom: 8
-align: center
-caption button-text:
-border-width: 2
-border-radius: 10
-border-color: $transparent
-background-color: $fpm.color.main.background.step-1
-width: 150
-
-
-;;api call for searching movie database
---- ftd.text: SEARCH
-role: $fpm.type.heading-small
-color: $fpm.color.main.custom.two
-style: bold
-width: fill
-height: fill
-text-align: center
-align: center
-padding-top: 5
-$on-click$: message-host $movie
-
-
-
-
--- object movie:
-function: http
-method: get
-url: moviepage
-title: $input_title
-
-
---- container: ftd.main
-
-
-
-
-
-
-
-
-
-
--- component-2: All Movies
-$on-click$: message-host $movie-list
-
-
-
-
-
--- ftd.row component-2:
-caption title:
-align: left
-padding-vertical: $fpm.space.space-2
-padding-horizontal: $fpm.space.space-2
-
-
---- ftd.text:
-text: $title
-role: $fpm.type.heading-small
-text-align: left
-align: left
-style: bold
-margin-top: $fpm.space.space-10
-padding-left: 28
-
-
---- ftd.row:
-align: right
-margin-top: $fpm.space.space-10
-padding-right: 10
-padding-left: 1000
-margin-left: 40
-
-
---- ftd.column:
-align: center
-caption button-text:
-border-width: 2
-border-radius: 10
-border-color: $transparent
-background-color: $fpm.color.main.custom.two
-height: 50
-width: 180
-
-
-;;api call for adding a movie database
---- ftd.text: ADD MOVIE
-role: $fpm.type.heading-small
-color: $fpm.color.main.background.step-1
-padding-top: 5
-style: bold
-width: fill
-height: fill
-text-align: center
-align: center
-link: /add-movie
-
-
---- container: ftd.main
-padding-horizontal: 10
-padding-vertical: 12
-
-
-
-
-
-
-
-
-
-
--- component-3:
-
-
-
-
-
-
-
--- ftd.row component-3:
-width: fill
-spacing: 40
-move-down: 20
-padding-horizontal: 50
-padding-vertical: 12
-
--- ftd.column:
-spacing: 50
-
---- row1:
-
---- row2:
-
-
-
--- ftd.row row1:
-
---- movie-box:
-$loop$: $l_movie.movies as $obj
-title: $obj.title
-poster: $obj.poster
-
-
-
-
--- ftd.row row2:
-
---- movie-box:
-$loop$: $l_movie.movies1 as $obj
-title: $obj.title
-poster: $obj.poster
-
-
-;;ROW-1 COLUMN-1 Image Setup
-
-
-
--- ftd.column movie-box:
-string title:
-ftd.image-src poster:
-border-width:2
-border-color: $black
-width: 320
-max-width: 460
-height: 540
-padding-vertical: $fpm.space.space-4
-padding-horizontal: $fpm.space.space-4
-margin-left: 24
-id: kkk
-
-
---- ftd.image:
-src: $poster
-width: 280
-height: 440
-link : /movie
-cursor: pointer
-
---- bot2: $title
-
---- bot:
-
---- container: ftd.main
-
--- ftd.row bot2:
-caption title:
-width: fill
-padding-vertical: $fpm.space.space-2
-
---- ftd.text: $title
-role: $fpm.type.copy-tight
-color: $black
-width: fill
-
---- ftd.text: ⭐
-role: $fpm.type.copy-tight
-color: $black
-
-
---- ftd.text: rating
-role: $fpm.type.copy-tight
-color: $black
-
-
---- ftd.text: /10
-role: $fpm.type.copy-tight
-color: $black
-
--- ftd.row bot:
-
---- ftd.text: count
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
-role: $fpm.type.copy-tight
-color: $black
-
-
---- ftd.text: Reviews
-padding-top: $fpm.space.space-2
-padding-right: $fpm.space.space-6
-role: $fpm.type.copy-tight
-color: $black
-
-
-
-
-
-
--- container: ftd.main
-
-
-
--- object movie-list:
-function: http
-method: get
-url: movies
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; NEXT AND PREVIOUS
--- ftd.row:
-align: left
-margin-top: $fpm.space.space-2
-padding-right: 10
-margin-left: 40
-
--- ftd.text: PREVIOUS
-align: left
-role: $fpm.type.heading-small
-color: $fpm.color.main.background.step-1
-padding-top: 5
-style: bold
-width: fill
-height: fill
-text-align: center
-$on-click$: decrement $curr_pno clamp 1 8
-/link: $l_movie.previous
-/$on-click$: message-host $previous
-
-/-- object previous:
-function: http
-method: get
-url: $l_movie.previous
-/page_number: $page_number
-/items: $items
-
-
--- ftd.integer: $curr_pno
-align: center
-role: $fpm.type.heading-small
-color: $fpm.color.main.background.step-1
-padding-top: 5
-style: bold
-width: fill
-height: fill
-text-align: center
-move-right: 600
-
--- ftd.text: NEXT
-align: right
-role: $fpm.type.heading-small
-color: $fpm.color.main.background.step-1
-padding-top: 5
-style: bold
-width: fill
-height: fill
-text-align: center
-$on-click$: increment $curr_pno clamp 1 8
-/link: $l_movie.next
-move-right: 1200
-
-/-- object next:
-function: http
-method: get
-url: $l_movie.next
-/page_number: $page_number
+import math
+
+import django.http
+from .models import Movie, Review
+import json
+from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
+
+
+# Create your views here.
+
+# Create your views here.
+
+@csrf_exempt
+def list_movie(req: django.http.HttpRequest):
+    # Request
+
+    """
+    optional page_number: default 0
+    optional count: default 5
+    order by: release_date, rating, updated_on
+    optional domain: <domain is for uniquely identify user, constant unique token>
+    """
+    total_movies = 0
+    page_number = int(req.GET.get("p_no",1))
+    items = 8
+    """
+    Pagination Logic
+    E.g.: 10 items at every page
+    1: 1 10
+    2: 11 20
+    3: 21 30
+    
+    st = (pno - 1) * items + 1 to
+    end = pno * items
+    """
+    all_movies = Movie.objects.all()
+    for i in all_movies:
+        total_movies += 1
+
+    last_pno = math.ceil(total_movies/8)
+
+
+
+
+    # order_by = req.GET.get("p_no", 0)
+    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items + 1]
+    list_of_top_movies = []
+    list_of_bottom_movies = []
+    index = 0
+    for movie in movies:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        if 0 <= index <= 3:
+            list_of_top_movies.append(item)
+        if 4 <= index <= 7:
+            list_of_bottom_movies.append(item)
+
+
+        index = index + 1
+
+
+
+
+    next_page_number = page_number + 1
+    previous_page_number = page_number - 1 if page_number - 1 > 0 else 1
+    return django.http.JsonResponse(
+        {
+            "p_no": page_number,
+            # TODO: Next And Previous both are optional
+            # "next": "/movies/p_no=1&items=10",
+            # "previous": "/movies/p_no=1&items=10",
+            # "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
+            # "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
+            "next": "http://127.0.0.1:8001/api/movies/?p_no=" + str(next_page_number),
+            "previous": "http://127.0.0.1:8001/api/movies/?p_no=" + str(previous_page_number),
+            "movies": list_of_top_movies,
+            "movies1": list_of_bottom_movies,
+
+        },
+        status=200,
+        safe=False,
+    )
+
+
+def search_movie(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    try:
+        # movie = Movie.objects.filter(movie__pk=movie_id)
+        movie = Movie.objects.get(id=movie_id)
+
+        return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
+
+    except Exception as err:
+        print("movie not found in database")
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+
+
+@csrf_exempt
+def add_movie(req: django.http.HttpRequest):
+    if req.method == "GET":
+        return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    body = json.loads(req.body.decode("utf-8"))
+    movie = Movie.objects.create(
+        title=body["title"],
+        release_date=body["release_date"],
+        poster=body["poster"],
+        director=body["director"],
+        description=body.get("description"),
+    )
+
+    # print(movie)
+    # TODO: redirect to movie page
+    # from django.shortcuts import redirect
+    # return redirect("/", permanent=True)
+    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
+
+
+"""
+curl -X POST http://127.0.0.1:8000/add-movie/ \
+-H 'Content-Type: application/json' \
+--data '{
+    "title": "Movie Title", 
+    "release_date": "2022-12-10", 
+    "poster": "M Poster", 
+    "director": "Movie Director"
+}'
+"""
+
+
+@csrf_exempt
+def get_movie(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    try:
+        movie = Movie.objects.get(id=movie_id)
+        # print("Movie details", movie)
+        return django.http.JsonResponse(
+            {
+                "title": movie.title,
+                "release_date": movie.release_date,
+                "poster": movie.poster,
+                "director": movie.director,
+                "description": movie.description,
+            },
+            status=200,
+        )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": "Movie with id not found",
+            },
+            status=404,
+        )
+
+    # from django.shortcuts import redirect
+
+    # return redirect("https://www.google.com", permanent=True)
+
+
+"""
+curl -X GET http://127.0.0.1:8001/movie/
+"""
+
+
+@csrf_exempt
+def add_review(req: django.http.HttpRequest):
+    body = json.loads(req.body.decode("utf-8"))
+    movie_id = body["id"]
+    name_set = set()
+    # Request
+    """
+    movie_id, title, optional description, reviewer: token, optional rating
+    """
+    if req.method == "GET":
+        return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    try:
+        movie = Movie.objects.get(id=movie_id)
+
+    except Exception as e:
+        print(e)
+        # TODO: Redirect to error page with 404 error
+        return django.http.HttpResponse("redirect to movie page", status=404)
+
+    review = Review.objects.create(
+        movie=movie,
+        title=body["title"],
+        description=body.get("description"),
+        reviewer=body["reviewer"],
+        rating=body["rating"],
+    )
+
+    # TODO: Checking one review per reviewer
+    # reviews = Review.objects.filter(movie__pk=movie_id)
+    # name_set = set()
+    # for review in reviews:
+    #     if (body["rating"]>10 or body["rating"]<0):
+    #         return django.http.HttpResponse("Invalid rating, nigga", status=404)
+    #     if review.reviewer not in name_set:
+    #         name_set.add(review.reviewer)
+    #     else:
+    #         return django.http.HttpResponse("You have already reviewed the movie!", status=404)
+
+    # TODO: restrict invalid ratings
+
+
+    # TODO: redirect to movie page
+    return django.http.JsonResponse(
+        {
+            "data": {"success": True,
+                     "reload": True},
+            "other": {"review": review.id, "movie": movie.id}
+        },
+        status=200,
+    )
+
+
+"""
+curl -X POST http://127.0.0.1:8001/add-review/ \
+-H 'Content-Type: application/json' \
+--data '{
+    "movie": 1, 
+    "title": "Review Title", 
+    "description": "Review Description", 
+    "reviewer": "Movie Reviewer",
+    "rating": 8
+}'
+"""
+
+
+def give_rating(id):
+    count_reviews= 0
+    total = 0
+    try:
+        reviews = Review.objects.filter(movie__pk=id)
+        for review in reviews:
+            if review.rating <= 10 or review.rating >= 0:
+                count_reviews += 1
+                total += review.rating
+
+        if count_reviews == 0:
+            average_rating = 0
+        else:
+            average_rating = round(total/count_reviews, 2)
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+    return (average_rating, count_reviews)
+
+
+
+def get_ratings(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    count_reviews = 0
+    total = 0
+    try:
+        reviews = Review.objects.filter(movie__pk=movie_id)
+        for review in reviews:
+            if review.rating <= 10 or review.rating >= 0:
+                count_reviews += 1
+                total += review.rating
+
+        if count_reviews == 0:
+            average_rating = 0
+        else:
+            average_rating = round(total/count_reviews, 2)
+
+        return django.http.JsonResponse(
+            {
+                "average": str(average_rating),
+                "count_reviews": str(count_reviews)
+
+            },
+            status=200,
+            safe=False
+        )
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+
+
+
+@csrf_exempt
+def get_review(req: django.http.HttpRequest):
+    movie_id = req.GET.get("id")
+    global average
+    global count_reviews
+    total = 0
+    try:
+        reviews = Review.objects.filter(movie__pk=movie_id)
+        name_set = set()
+        filtered_reviews = []
+        for review in reviews:
+            item = {"title": review.title,
+                    "reviewer_name": review.reviewer,
+                    "rating": str(review.rating),
+                    "description": review.description}
+            filtered_reviews.append(item)
+
+        return django.http.JsonResponse(
+            filtered_reviews,
+            status=200,
+            safe=False
+        )
+
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": err,
+            },
+            status=404,
+        )
+
+
+# Movie list should come from Database
+
+# There will be an extra parameter in query `domain` based on filter the movies
+# for a user
+
+
+@csrf_exempt
+def get_list(req: django.http.HttpRequest):
+    try:
+        movie = Movie.objects.all()
+        movie_list = []
+        # print("Movie details", movie)
+        for movie in Movie:
+            print(movie)
+            item = {
+                "title": movie.title,
+                "release_date": movie.release_date,
+                "poster": movie.poster,
+                "director": movie.director,
+                "description": movie.description,
+            }
+            movie_list.append(item)
+
+        return django.http.JsonResponse(
+            movie_list,
+            status=200,
+            safe=False
+        )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": "Movies not found",
+            },
+            status=404,
+        )
+
+# Optional Query. Sort: [release-date, rating, updated_on]
