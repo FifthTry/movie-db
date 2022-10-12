@@ -34,6 +34,7 @@ string title:
 string average:
 string total_reviews:
 ftd.image-src poster:
+string url:
 
 
 
@@ -273,6 +274,7 @@ title: $obj.title
 average: $obj.average
 total_reviews: $obj.total_reviews
 poster: $obj.poster
+url: $obj.url
 
 
 
@@ -285,6 +287,7 @@ title: $obj.title
 average: $obj.average
 total_reviews: $obj.total_reviews
 poster: $obj.poster
+url: $obj.url
 
 
 ;;ROW-1 COLUMN-1 Image Setup
@@ -296,6 +299,7 @@ string title:
 string average:
 string total_reviews:
 ftd.image-src poster:
+string url:
 border-width:2
 border-color: $black
 width: 320
@@ -309,8 +313,8 @@ margin-left: 24
 src: $poster
 width: 280
 height: 440
-link : /movie
 cursor: pointer
+link: $url
 
 --- bot2: $title
 
