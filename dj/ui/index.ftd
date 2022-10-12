@@ -22,7 +22,6 @@ dark: black
 
 
 
-
 -- integer curr_pno: 1
 
 --- ftd.integer:
@@ -32,7 +31,7 @@ value: $curr_pno
 
 -- record movie-info:
 string title:
-string poster:
+ftd.image-src poster:
 
 
 
@@ -41,6 +40,7 @@ integer p_no:
 string next:
 string previous:
 movie-info list movies:
+movie-info list movies1:
 
 
 
@@ -243,35 +243,48 @@ link: /add-movie
 -- component-3:
 
 
--- ftd.image-src img:
-light: poster
-dark: poster
 
 
 
 
 -- ftd.row component-3:
-optional caption title:
-optional string label:
 width: fill
 spacing: 40
 move-down: 20
 
--- foo1:
+
+
+-- row1:
+
+-- row2:
+
+
+
+-- ftd.row row1:
+
+--- movie-box:
 $loop$: $l_movie.movies as $obj
 title: $obj.title
 poster: $obj.poster
 
 
--- ftd.column foo1:
-string title:
-string poster:
 
+
+-- ftd.row row2:
+
+--- movie-box:
+$loop$: $l_movie.movies1 as $obj
+title: $obj.title
+poster: $obj.poster
 
 
 ;;ROW-1 COLUMN-1 Image Setup
 
---- ftd.column:
+
+
+-- ftd.column movie-box:
+string title:
+ftd.image-src poster:
 border-width:2
 border-color: $black
 width: 320
@@ -284,7 +297,7 @@ id: kkk
 
 
 --- ftd.image:
-src: $img
+src: $poster
 width: 280
 height: 440
 link : /movie

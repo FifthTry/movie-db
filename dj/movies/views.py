@@ -17,6 +17,7 @@ def list_movie(req: django.http.HttpRequest):
     order by: release_date, rating, updated_on
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
+    total_movies = 0
     page_number = int(req.GET.get("p_no"))
     items = 8
     """
@@ -29,26 +30,38 @@ def list_movie(req: django.http.HttpRequest):
     st = (pno - 1) * items + 1 to
     end = pno * items
     """
-    meow2 = page_number * items
-    meow= (page_number - 1) * items + 1
-    print(meow)
-    print(meow2)
+    all_movies = Movie.objects.all()
+    for i in all_movies:
+        total_movies += 1
+
+    last_pno = (total_movies/8)
+    print(last_pno)
+
+
+
 
     # order_by = req.GET.get("p_no", 0)
     movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
-    print(movies)
-    list_of_movies = []
+    list_of_top_movies = []
+    list_of_bottom_movies = []
+    index = 0
     for movie in movies:
         item = {
             "title": movie.title,
             "release_date": str(movie.release_date),
-            "poster": movie.poster,
+            "poster": {'light': movie.poster,'dark': movie.poster},
             "director": movie.director,
             "description": movie.description,
         }
-        list_of_movies.append(item)
+        if 0 <= index <= 3:
+            list_of_top_movies.append(item)
+        if 4 <= index <= 7:
+            list_of_bottom_movies.append(item)
 
-    print(f"List of movies: {list_of_movies}")
+        index = index + 1;
+
+
+
 
     next_page_number = page_number + 1
     previous_page_number = page_number - 1 if page_number - 1 > 0 else 1
@@ -58,7 +71,9 @@ def list_movie(req: django.http.HttpRequest):
             # TODO: Next And Previous both are optional
             "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
             "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
-            "movies": list_of_movies,
+            "movies": list_of_top_movies,
+            "movies1": list_of_bottom_movies,
+
         },
         status=200,
         safe=False,
