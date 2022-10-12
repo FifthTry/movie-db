@@ -22,7 +22,7 @@ def list_movie(req: django.http.HttpRequest):
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
     total_movies = 0
-    page_number = int(req.GET.get("p_no"))
+    page_number = int(req.GET.get("p_no",1))
     items = 8
     """
     Pagination Logic
@@ -53,15 +53,15 @@ def list_movie(req: django.http.HttpRequest):
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "average": rating[0],
-            "total_reviews": rating[1],
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
             "poster": {'light': movie.poster, 'dark': movie.poster},
             "director": movie.director,
             "description": movie.description,
         }
-        print(rating[0])
-        print(rating[1])
+        # print(rating[0])
+        # print(rating[1])
         if 0 <= index <= 3:
             list_of_top_movies.append(item)
         if 4 <= index <= 7:
