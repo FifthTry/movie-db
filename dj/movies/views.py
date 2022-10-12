@@ -1,3 +1,5 @@
+import math
+
 import django.http
 from .models import Movie, Review
 import json
@@ -36,14 +38,14 @@ def list_movie(req: django.http.HttpRequest):
     for i in all_movies:
         total_movies += 1
 
-    last_pno = (total_movies/8)
+    last_pno = math.ceil(total_movies/8)
     print(last_pno)
 
 
 
 
     # order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items]
+    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items + 1]
     list_of_top_movies = []
     list_of_bottom_movies = []
     index = 0
@@ -55,12 +57,19 @@ def list_movie(req: django.http.HttpRequest):
             "director": movie.director,
             "description": movie.description,
         }
+        print(movie.title)
         if 0 <= index <= 3:
             list_of_top_movies.append(item)
         if 4 <= index <= 7:
             list_of_bottom_movies.append(item)
 
-        index = index + 1;
+
+        index = index + 1
+
+    print("list of top movies")
+    print(list_of_top_movies)
+    print("list of bot movies")
+    print(list_of_bottom_movies)
 
 
 
