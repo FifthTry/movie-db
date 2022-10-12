@@ -1,36 +1,48 @@
--- ds.page: Service API call using `http` processor
+-- import: fpm
+-- import: movie-db/assets
 
 
--- ftd.color white:
-light: white
-dark: white
+-- fpm.toc-item list empty-toc:
 
-;;;;;;;;;;;;;;;;;;;;;; CALLING API/MOVIES/
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+-- ftd.color black:
+light: black
+dark: black
+
+
 
 -- integer curr_pno: 1
 
 --- ftd.integer:
 value: $curr_pno
 
--- integer last_pno: 10
-
---- ftd.integer:
-value: $last_pno
-
 
 
 -- record movie-info:
 string title:
-string poster:
+decimal average:
+integer total_reviews:
+ftd.image-src poster:
 
 
 
 -- record movie-data-api:
 integer p_no:
-integer last_pno:
 string next:
 string previous:
 movie-info list movies:
+movie-info list movies1:
 
 
 
@@ -40,53 +52,389 @@ url: http://127.0.0.1:8001/api/movies/
 method: get
 p_no: $curr_pno
 
-/-- integer last_pno: $last_pno
-
-/--- ftd.integer:
-value: $last_pno
 
 
--- foo:
+
+
+-- h.header:
+logo-height: 40
+logo-width: 80
+site-logo: $assets.files.logo.png
+site-url: /
+site-name:
+current-url: /
+link-style: bold
+toc: $empty-toc
+
+
+-- integer items: 8
+
+
+-- optional string input_title:
+$always-include$: true
+
+
+;;to check if the input is working
+/-- ftd.text: $input_title
+padding-horizontal: 10
+padding-vertical: 12
+
+
+-- component-1: aditi movie app
+
+
+
+
+
+
+
+
+
+
+-- ftd.column component-1:
+caption title:
+background-color: $fpm.color.main.custom.two
+align: center
+width: fill
+height: 250
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-large
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 18
+
+
+--- ftd.row:
+padding-left: $fpm.space.space-6
+margin-top: $fpm.space.space-6
+margin-right: $fpm.space.space-4
+padding-vertical: $fpm.space.space-6
+align: center
+spacing: 20
+
+
+
+--- ftd.input:
+placeholder: Search here
+padding-horizontal: 16
+padding-vertical: 8
+width: 600
+height: 50
+border-width: 3
+border-color: $fpm.color.main.background.step-2
+border-radius: 8
+$on-input$: $input_title=$VALUE
+
+
+--- ftd.row:
+padding-bottom: 8
+align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.background.step-1
+width: 150
+
+
+;;api call for searching movie database
+--- ftd.text: SEARCH
+role: $fpm.type.heading-small
+color: $fpm.color.main.custom.two
+style: bold
+width: fill
+height: fill
+text-align: center
+align: center
+padding-top: 5
+$on-click$: message-host $movie
+
+
+
+
+-- object movie:
+function: http
+method: get
+url: moviepage
+title: $input_title
+
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+-- component-2: All Movies
+$on-click$: message-host $movie-list
+
+
+
+
+
+-- ftd.row component-2:
+caption title:
+align: left
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-small
+text-align: left
+align: left
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 28
+
+
+--- ftd.row:
+align: right
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-left: 1000
+margin-left: 40
+
+
+--- ftd.column:
+align: center
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $fpm.color.main.custom.two
+height: 50
+width: 180
+
+
+;;api call for adding a movie database
+--- ftd.text: ADD MOVIE
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+align: center
+link: /add-movie
+
+
+--- container: ftd.main
+padding-horizontal: 10
+padding-vertical: 12
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+
+
+
+
+
+
+
+-- ftd.row component-3:
+width: fill
+spacing: 40
+move-down: 20
+padding-horizontal: 50
+padding-vertical: 12
+
+-- ftd.column:
+spacing: 50
+
+--- row1:
+
+--- row2:
+
+
+
+-- ftd.row row1:
+
+--- movie-box:
 $loop$: $l_movie.movies as $obj
 title: $obj.title
+average: $obj.average
+total_reviews: $obj.total_reviews
 poster: $obj.poster
 
 
--- ftd.column foo:
+
+
+-- ftd.row row2:
+
+--- movie-box:
+$loop$: $l_movie.movies1 as $obj
+title: $obj.title
+average: $obj.average
+total_reviews: $obj.total_reviews
+poster: $obj.poster
+
+
+;;ROW-1 COLUMN-1 Image Setup
+
+
+
+-- ftd.column movie-box:
 string title:
-string poster:
+ftd.image-src poster:
+decimal average:
+integer total_reviews:
+border-width:2
+border-color: $black
+width: 320
+max-width: 460
+height: 540
+padding-vertical: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-4
+margin-left: 24
+id: kkk
 
 
---- ds.markdown:
+--- ftd.image:
+src: $poster
+width: 280
+height: 440
+link : /movie
+cursor: pointer
 
-$title
+--- bot2: $title
+
+--- bot:
+
+--- container: ftd.main
+
+-- ftd.row bot2:
+caption title:
+width: fill
+padding-vertical: $fpm.space.space-2
+
+--- ftd.text: $title
+role: $fpm.type.copy-tight
+color: $black
+width: fill
+
+/--- ftd.text: $average
+role: $fpm.type.copy-tight
+color: $black
+
+--- ftd.text: ⭐
+role: $fpm.type.copy-tight
+color: $black
+
+
+--- ftd.text: rating
+role: $fpm.type.copy-tight
+color: $black
+
+
+--- ftd.text: /10
+role: $fpm.type.copy-tight
+color: $black
+
+-- ftd.row bot:
+
+--- ftd.text: count
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+
+
+--- ftd.text: Reviews
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
 
 
 
 
---- ds.markdown:
-
-$poster
 
 
+-- container: ftd.main
+
+
+
+-- object movie-list:
+function: http
+method: get
+url: movies
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; NEXT AND PREVIOUS
 -- ftd.row:
+align: left
+margin-top: $fpm.space.space-2
+padding-right: 10
+margin-left: 40
 
 -- ftd.text: PREVIOUS
-color: $white
 align: left
-$on-click$: decrement $curr_pno
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+$on-click$: decrement $curr_pno clamp 1 8
+/link: $l_movie.previous
+/$on-click$: message-host $previous
 
-
-
+/-- object previous:
+function: http
+method: get
+url: $l_movie.previous
+/page_number: $page_number
+/items: $items
 
 
 -- ftd.integer: $curr_pno
-color: $white
 align: center
-move-right: 300
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+move-right: 600
 
 -- ftd.text: NEXT
-color: $white
 align: right
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
 $on-click$: increment $curr_pno clamp 1 8
-move-right: 600
+/link: $l_movie.next
+move-right: 1200
+
+/-- object next:
+function: http
+method: get
+url: $l_movie.next
+/page_number: $page_number
