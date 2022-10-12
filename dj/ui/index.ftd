@@ -401,7 +401,7 @@ width: fill
 height: fill
 text-align: center
 $on-click$: decrement $curr_pno clamp 1 8
-/link: $l_movie.previous
+link: $l_movie.previous
 /$on-click$: message-host $previous
 
 /-- object previous:
@@ -433,7 +433,7 @@ width: fill
 height: fill
 text-align: center
 $on-click$: increment $curr_pno clamp 1 8
-/link: $l_movie.next
+link: $l_movie.next
 move-right: 1200
 
 /-- object next:
