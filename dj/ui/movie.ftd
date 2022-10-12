@@ -8,7 +8,7 @@
 $processor$: toc
 
 
-- about us:/about-us/
+- about us: /about-us/
 
 
 
@@ -35,10 +35,17 @@ light: yellow
 dark: yellow
 
 
+-- ftd.color white:
+light: white
+dark: white
+
 -- ftd.color transparent:
 light: rgba(255,255,255,0)
 dark: rgba(255,255,255,0)
 
+
+
+;;;;;;;;;;;;;;;;;;;;;; READING MOVIE
 
 -- record query-data:
 string id:
@@ -46,6 +53,7 @@ string id:
 -- query-data query:
 $processor$: request-data
 
+-- boolean flag: true
 
 
 -- record movie-data:
@@ -62,41 +70,33 @@ url: http://127.0.0.1:8001/api/movie/
 method: get
 id: $query.id
 
+-- record review-data:
+string title:
+string reviewer_name:
+string rating:
+string description:
+
+-- review-data list reviews:
+$processor$: http
+url: http://127.0.0.1:8001/api/review/
+method: get
+id: $query.id
+
+
+-- record rating-data:
+string average:
+string count_reviews:
 
 
 
-
--- ftd.row write-review-button:
-caption button-text:
-border-width: 2
-border-radius: 10
-border-color: $transparent
-background-color: $fpm.color.main.custom.two
-
-
-
---- ftd.text: $button-text
-role: $fpm.type.copy-relaxed
-color: $black
-style: bold
-height: 40
-width: 150
-padding-top: 8
-text-align: center
-align: center
-link: /add-review
-
-
-
+-- rating-data rating:
+$processor$: http
+url: http://127.0.0.1:8001/api/rating/
+method: get
+id: $query.id
 
 
 -- component-1:
-
-
-
-
-
-
 
 
 
@@ -181,13 +181,6 @@ height: auto
 
 
 -- component-2:
-review-count: $s1
-line: $s2
-
-
--- string s1: Review Count Number
-
--- string s2: \__________________________________________________________________________________________________________________________________
 
 
 
@@ -197,7 +190,8 @@ line: $s2
 optional caption title:
 optional string label:
 optional string review-count:
-optional string line:
+optional string average_rating:
+;optional string line:
 align: left
 margin-bottom: 200
 margin-top: $fpm.space.space-10
@@ -231,8 +225,8 @@ style: bold
 
 ;Printing the text rating
 --- ftd.text:
-text: Rating
-role: $fpm.type.copy-relaxed
+text: $rating.average
+role: $fpm.type.heading-small
 text-align: center
 align: center
 style: bold
@@ -240,10 +234,14 @@ margin-top: $fpm.space.space-10
 padding-left: $fpm.space.space-2
 
 
---- write-review-button: WRITE REVIEW
-align: right
-move-right: 900
-
+--- ftd.text:
+text: / 10
+role: $fpm.type.heading-small
+text-align: center
+align: center
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: $fpm.space.space-2
 
 
 --- container: ftd.main
@@ -313,29 +311,34 @@ text: $movie.description
 role: $fpm.type.blockquote
 text-align: left
 align: left
-margin-bottom: $fpm.space.space-10
+margin-bottom: $fpm.space.space-8
 
 
 --- container: ftd.main
 
+--- ftd.column:
 
 --- ftd.row:
 align: left
 
 
 --- ftd.text:
-text: $review-count
+text: $rating.count_reviews
 role: $fpm.type.blockquote
 text-align: left
 align: left
-margin-bottom: $fpm.space.space-5
+style : bold
+
 
 --- ftd.text:
 text: Reviews
 role: $fpm.type.blockquote
 text-align: left
 align: left
-margin-bottom: $fpm.space.space-5
+style : bold
+move-right: 4
+
+
 
 --- container: ftd.main
 
@@ -343,9 +346,8 @@ margin-bottom: $fpm.space.space-5
 --- ftd.row:
 align: left
 
-
 --- ftd.text:
-text: $line
+text: \\___________________________________________________________________________________________________________________________________
 text-align: left
 align: left
 
@@ -359,37 +361,19 @@ align: left
 
 
 
-
-
+;;;;;;;;; REVIEW DESCRIPTION LOOP;;;;;;;;;;;;;;;;;;;;;;
 
 -- component-3:
-reviewer-name: $t1
-rating: $t2
-review: $t3
-line: $t4
 
 
 
 
--- string t1: REVIEWER-NAME
-
--- string t2: RATING / 10 ⭐
-
--- string t3: REVIEW BODY
-
-
--- string t4: \___________________________________________________________________________________________________________________________________
 
 -- ftd.column component-3:
 optional caption title:
 optional string label:
-optional string reviewer-name:
-optional string rating:
-optional string review:
-optional string line:
 align: left
-margin-top: $fpm.space.space-10
-margin-bottom: $fpm.space.space-10
+margin-bottom: $fpm.space.space-6
 padding-right: 10
 padding-vertical: 10
 margin-left: 30
@@ -397,17 +381,52 @@ width: 756
 height: 40
 
 
---- ftd.text:
-text: $reviewer-name
-role: $fpm.type.copy-relaxed
-text-align: left
-align: left
-style: bold
-margin-bottom: $fpm.space.space-1
+
+-- ftd.column review-print:
+string title:
+string reviewer_name:
+string rating:
+string description:
+
+--- container: ftd.main
 
 
 --- ftd.row:
 align: left
+
+--- ftd.text:
+text: NAME :
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+margin-top: $fpm.space.space-3
+
+
+
+--- ftd.text:
+text: $reviewer_name
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+move-right: 4
+margin-bottom: $fpm.space.space-2
+margin-top: $fpm.space.space-3
+
+--- container: ftd.main
+
+
+--- ftd.row:
+align: left
+
+--- ftd.text:
+text: RATING :
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
 
 
 --- ftd.text:
@@ -416,6 +435,47 @@ role: $fpm.type.copy-relaxed
 text-align: left
 align: left
 style: bold
+move-right: 4
+margin-bottom: $fpm.space.space-2
+
+
+--- ftd.text:
+text: / 10 ⭐
+move-right: 8
+role: $fpm.type.copy-relaxed
+text-align: left
+align: left
+margin-bottom: $fpm.space.space-5
+
+
+--- container: ftd.main
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.blockquote
+text-align: left
+align: left
+style: bold
+margin-bottom: $fpm.space.space-2
+
+
+--- container: ftd.main
+
+
+
+--- ftd.row:
+align: left
+
+
+--- ftd.text:
+text: $description
+role: $fpm.type.blockquote
+text-align: left
+align: left
 margin-bottom: $fpm.space.space-2
 
 
@@ -427,24 +487,345 @@ align: left
 
 
 --- ftd.text:
-text: $review
-role: $fpm.type.blockquote
+text: \\___________________________________________________________________________________________________________________________________
 text-align: left
 align: left
+
+
+-- review-print:
+$loop$: $reviews as $r
+title: $r.title
+rating: $r.rating
+description: $r.description
+reviewer_name: $r.reviewer_name
+
+--- container: ftd.main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+-- card:  ;;;;;only for checking if any input is being taken
+
+-- string input_reviewer: Nil
+
+-- ftd.text: $input_reviewer
+color: $white
+
+-- string input_title: Nil
+
+-- ftd.text: $input_title
+color: $white
+move-down: 600
+
+-- string input_description: Nil
+
+-- ftd.text: $input_description
+color: $white
+
+-- string input_rating: Nil
+
+-- ftd.text: $input_rating
+color: $white
+
+-- ftd.text: $query.id
+color: $white
+
+
+
+-- record Label_Type:
+caption name:
+boolean reviewer: false
+boolean movie: false
+boolean description: false
+boolean rating: false
+
+
+
+-- Label_Type list left-fields:
+-- Label_Type list right-fields:
+
+
+-- string label_1: Reviewer-Name
+-- string label_2: Title
+-- string label_3: Description
+-- string label_4: Rating
+-- string asterisk: \*
+
+
+-- left-fields: $label_1
+reviewer: true
+
+
+-- left-fields: $label_3
+description: true
+
+
+-- right-fields: $label_2
+movie: true
+
+
+-- right-fields: $label_4
+rating: true
+
+-- ftd.column:
+ftd.image-src src: $assets.files.background.png
+background-image: $src
+min-width: percent 50
+background-repeat: false
+padding-vertical: $fpm.space.space-4
+padding-horizontal:  $fpm.space.space-4
+width: percent 85
+height: 600
+align: center
+move-left: 50
+move-up: 40
+
+
+-- ftd.column card:
+optional caption title:
+optional string label:
+
+
+-- ftd.column:
+align: left
+margin-left: 60
+
+
+
+--- ftd.text: WRITE A REVIEW
 margin-bottom: $fpm.space.space-6
-
-
---- container: ftd.main
-
-
---- ftd.row:
-align: left
-
-
---- ftd.text:
-text: $line
+role: $fpm.type.heading-large
 text-align: left
+style: bold
+margin-top: $fpm.space.space-8
+
+
+
+;; we can make the placeText optional as well
+;; ROW [ [TITLE]* [INPUT-BOX] ]
+
+
+-- ftd.row getting_input:
+id: outer_row
+caption title:
+boolean movie:
+boolean reviewer:
+boolean description:
+boolean rating:
+padding-left: $fpm.space.space-7
+width: fill
+height: 150
 align: left
 
 
---- container: ftd.main
+--- ftd.text: $title
+padding-left: $fpm.space.space-7
+role: $fpm.type.copy-large
+align: left
+text-align: right
+style: bold
+width: 200
+
+
+--- ftd.text: $asterisk
+move-up: 8
+padding-right: $fpm.space.space-7
+color: $fpm.color.main.error.text
+role: $fpm.type.heading-small
+style: bold
+width: 20
+
+
+;; CASE 1 input field
+--- ftd.input:
+if: $reviewer
+placeholder: Your name
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_reviewer=$VALUE
+
+
+;; CASE 2 input field
+--- ftd.input:
+if: $movie
+placeholder: description title
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_title=$VALUE
+
+
+;; CASE 3 input field
+--- ftd.input:
+if: $description
+multiline: true
+placeholder: Description of the movie
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 150
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_description=$VALUE
+
+
+;; CASE 4 input field
+--- ftd.input:
+if: $rating
+placeholder: out of 10
+padding-horizontal: 16
+padding-vertical: 8
+width: 400
+height: 40
+border-width: 2
+border-color: $fpm.color.main.border
+border-radius: 8
+$on-input$: $input_rating=$VALUE
+
+
+
+
+
+
+
+
+
+
+-- ftd.column left-column-fields:
+optional caption name:
+optional string label:
+padding-vertical: $fpm.space.space-8
+move-left: 30
+width percent: fill
+min-height: 400
+align: left
+
+
+--- getting_input: $obj.name
+$loop$: $left-fields as $obj
+reviewer: $obj.reviewer
+movie: $obj.movie
+description: $obj.description
+rating: $obj.rating
+
+
+
+
+
+-- ftd.column right-column-fields:
+optional caption name:
+optional string label:
+padding-vertical: $fpm.space.space-8
+width: percent 100
+min-height: 400
+align: right
+move-left: 110
+
+
+--- getting_input: $obj.name
+$loop$: $right-fields as $obj
+reviewer: $obj.reviewer
+movie: $obj.movie
+description: $obj.description
+rating: $obj.rating
+
+
+
+-- ftd.row:
+ftd.image-src src: $assets.files.background.png
+margin-bottom: $fpm.space.space-6
+width: percent 85
+background-image: $src
+height: 450
+
+-- ftd.row:
+width: fill
+
+
+--- left-column-fields:
+
+--- right-column-fields:
+
+
+-- ftd.row black-button:
+caption button-text:
+border-width: 2
+border-radius: 10
+border-color: $transparent
+background-color: $black
+height: 60
+width: 120
+align: center
+
+
+--- ftd.text: $button-text
+role: $fpm.type.heading-small
+color: $fpm.color.main.custom.two
+style: bold
+width: fill
+text-align: center
+align: center
+
+
+-- ftd.row:
+align: center
+move-down: 200
+move-left: 500
+
+
+
+--- black-button: POST
+$on-click$: message-host $add-review-api
+
+
+-- object add-review-api:
+function: http
+method: post
+url: /api/add-review/
+reviewer: $input_reviewer
+title: $input_title
+description: $input_description
+rating: $input_rating
+id: $query.id
