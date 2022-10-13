@@ -17,8 +17,9 @@ def list_movie(req: django.http.HttpRequest):
     order by: release_date, rating, updated_on
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
-    page_number = req.GET.get("p_no", 1)
-    items = req.GET.get("items", 8)
+    number_of_items = 8
+    page_number = int(req.GET.get("p_no", 1))
+    items = int(req.GET.get("items", number_of_items))
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -36,14 +37,18 @@ def list_movie(req: django.http.HttpRequest):
     return django.http.JsonResponse(
         {
             "p_no": page_number,
-            # TODO: Next And Previous both are optional
-            "next": "/movies/p_no=1&items=10",
-            "previous": "/movies/p_no=1&items=10",
+            "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
+            "previous": "api/movies/?p_no="+str(page_number - 1)+"&items="+str(items),
             "items": items,
             "movies": json.loads(serializers.serialize("json", movies)),
         },
         status=200,
     )
+
+
+"""
+curl -X GET http://127.0.0.1:8000/api/movies/p_no=1&items=8
+"""
 
 
 @csrf_exempt
