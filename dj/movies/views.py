@@ -5,11 +5,90 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 
 # Create your views here.
+
+@csrf_exempt
+def list_movie(req: django.http.HttpRequest):
+    # Request
+
+    """
+    optional page_number: default 0
+    optional count: default 5
+    order by: release_date, rating, updated_on
+    optional domain: <domain is for uniquely identify user, constant unique token>
+    """
+
+    items = int(req.GET.get("items", 8))
+    total_movies = 0
+    page_number = req.GET.get("p_no", 1)
+    p_number = int(page_number)
+    """
+    Pagination Logic
+    E.g.: 10 items at every page
+    1: 1 10
+    2: 11 20
+    3: 21 30
+    
+    st = (pno - 1) * items + 1 to
+    end = pno * items
+    """
+    all_movies = Movie.objects.all()
+    for i in all_movies:
+        total_movies += 1
+
+    last_pno = math.ceil(total_movies/8)
+
+
+
+
+    # order_by = req.GET.get("p_no", 0)
+    # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
+    movies = Movie.objects.all()
+    p = Paginator(Movie.objects.all(), items)
+
+    movie_list = p.get_page(page_number)
+    list_of_top_movies = []
+    list_of_bottom_movies = []
+    index = 0
+    for movie in movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        list_of_top_movies.append(item)
+
+    if p_number - 1 > 0:
+        previous_page_number = p_number - 1
+    else:
+        previous_page_number = 1
+    return django.http.JsonResponse(
+        {
+            "p_no": p_number,
+            # TODO: Next And Previous both are optional
+            # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
+            # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
+            "next": f"http://127.0.0.1:8001/api/movies/?p_no={p_number+1}&items={items}",
+            "previous": f"http://127.0.0.1:8001/api/movies/?p_no={previous_page_number}&items={items}",
+            "movies": list_of_top_movies,
+
+        },
+        status=200,
+        safe=False,
+    )
+
+
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
     # if req.method == "GET":
@@ -33,93 +112,6 @@ def search_movie(req: django.http.HttpRequest):
     print(f"Hello found movie id = {target_movie_id}")
 
     return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
-
-
-
-
-
-
-
-@csrf_exempt
-def list_movie(req: django.http.HttpRequest):
-    # Request
-
-    """
-    optional page_number: default 0
-    optional count: default 5
-    order by: release_date, rating, updated_on
-    optional domain: <domain is for uniquely identify user, constant unique token>
-    """
-    total_movies = 0
-    page_number = int(req.GET.get("p_no",1))
-    items = 8
-    """
-    Pagination Logic
-    E.g.: 10 items at every page
-    1: 1 10
-    2: 11 20
-    3: 21 30
-    
-    st = (pno - 1) * items + 1 to
-    end = pno * items
-    """
-    all_movies = Movie.objects.all()
-    for i in all_movies:
-        total_movies += 1
-
-    last_pno = math.ceil(total_movies/8)
-
-
-
-
-    # order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items + 1]
-    list_of_top_movies = []
-    list_of_bottom_movies = []
-    index = 0
-    for movie in movies:
-        rating = give_rating(movie.id)
-        item = {
-            "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
-            "average": str(rating[0]),
-            "total_reviews": str(rating[1]),
-            "release_date": str(movie.release_date),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
-            "director": movie.director,
-            "description": movie.description,
-        }
-        if 0 <= index <= 3:
-            list_of_top_movies.append(item)
-        if 4 <= index <= 7:
-            list_of_bottom_movies.append(item)
-
-
-        index = index + 1
-
-
-
-
-    next_page_number = page_number + 1
-    previous_page_number = page_number - 1 if page_number - 1 > 0 else 1
-    return django.http.JsonResponse(
-        {
-            "p_no": page_number,
-            # TODO: Next And Previous both are optional
-            # "next": "/movies/p_no=1&items=10",
-            # "previous": "/movies/p_no=1&items=10",
-            # "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
-            # "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
-            "next": "http://127.0.0.1:8001/api/movies/?p_no=" + str(next_page_number),
-            "previous": "http://127.0.0.1:8001/api/movies/?p_no=" + str(previous_page_number),
-            "movies": list_of_top_movies,
-            "movies1": list_of_bottom_movies,
-
-        },
-        status=200,
-        safe=False,
-    )
-
 
 
 
