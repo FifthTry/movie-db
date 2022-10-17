@@ -79,8 +79,8 @@ def list_movie(req: django.http.HttpRequest):
             # TODO: Next And Previous both are optional
             # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
-            "next": f"http://127.0.0.1:8001/api/movies/?p_no={p_number+1}&items={items}",
-            "previous": f"http://127.0.0.1:8001/api/movies/?p_no={previous_page_number}&items={items}",
+            "next": f"api/movies/?p_no={p_number+1}&items={items}",
+            "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
 
         },
@@ -97,19 +97,19 @@ def search_movie(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     target_movie_id = None
     target_movie_name = body['movie']
-    print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
+    # print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
 
     all_movies = Movie.objects.all()
     for movie in all_movies:
-        print(movie.title.lower())
+        # print(movie.title.lower())
 
         if movie.title.lower() == target_movie_name.lower():
-            print("Found matching movie")
-            print(movie.id)
+            # print("Found matching movie")
+            # print(movie.id)
             target_movie_id = movie.id
             break
 
-    print(f"Hello found movie id = {target_movie_id}")
+    # print(f"Hello found movie id = {target_movie_id}")
 
     return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
 
