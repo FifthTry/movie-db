@@ -10,6 +10,35 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 # Create your views here.
+@csrf_exempt
+def search_movie(req: django.http.HttpRequest):
+    # if req.method == "GET":
+    #     return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    body = json.loads(req.body.decode("utf-8"))
+    target_movie_id = None
+    target_movie_name = body['movie']
+    print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
+
+    all_movies = Movie.objects.all()
+    for movie in all_movies:
+        print(movie.title.lower())
+
+        if movie.title.lower() == target_movie_name.lower():
+            print("Found matching movie")
+            print(movie.id)
+            target_movie_id = movie.id
+            break
+
+    print(f"Hello found movie id = {target_movie_id}")
+
+    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
+
+
+
+
+
+
 
 @csrf_exempt
 def list_movie(req: django.http.HttpRequest):
@@ -91,23 +120,6 @@ def list_movie(req: django.http.HttpRequest):
         safe=False,
     )
 
-
-def search_movie(req: django.http.HttpRequest):
-    movie_id = req.GET.get("id")
-    try:
-        # movie = Movie.objects.filter(movie__pk=movie_id)
-        movie = Movie.objects.get(id=movie_id)
-
-        return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
-
-    except Exception as err:
-        print("movie not found in database")
-        return django.http.JsonResponse(
-            {
-                "message": err,
-            },
-            status=404,
-        )
 
 
 

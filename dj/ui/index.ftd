@@ -27,8 +27,6 @@ dark: black
 --- ftd.integer:
 value: $curr_pno
 
-
-
 -- record movie-info:
 string title:
 string average:
@@ -156,13 +154,11 @@ padding-top: 5
 $on-click$: message-host $search-movie
 
 
-
-
 -- object search-movie:
 function: http
-method: get
+method: post
 url: /api/search/
-id: $input_title
+movie: $input_title
 
 
 --- container: ftd.main
@@ -177,7 +173,7 @@ id: $input_title
 
 
 -- component-2: All Movies
-$on-click$: message-host $movie-list
+/$on-click$: message-host $movie-list
 
 
 
