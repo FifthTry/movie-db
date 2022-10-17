@@ -21,11 +21,12 @@ light: black
 dark: black
 
 
-
 -- integer curr_pno: 1
 
 --- ftd.integer:
 value: $curr_pno
+
+
 
 -- record movie-info:
 string title:
@@ -41,7 +42,6 @@ integer p_no:
 string next:
 string previous:
 movie-info list movies:
-movie-info list movies1:
 
 
 
@@ -129,6 +129,8 @@ border-color: $fpm.color.main.background.step-2
 border-radius: 8
 $on-input$: $input_title=$VALUE
 
+/--- ftd.text: $input_title
+
 
 --- ftd.row:
 padding-bottom: 8
@@ -173,7 +175,7 @@ movie: $input_title
 
 
 -- component-2: All Movies
-/$on-click$: message-host $movie-list
+$on-click$: message-host $movie-list
 
 
 
@@ -258,11 +260,11 @@ spacing: 50
 
 --- row1:
 
---- row2:
-
 
 
 -- ftd.row row1:
+wrap: true
+spacing: 24
 
 --- movie-box:
 $loop$: $l_movie.movies as $obj
@@ -275,15 +277,7 @@ url: $obj.url
 
 
 
--- ftd.row row2:
 
---- movie-box:
-$loop$: $l_movie.movies1 as $obj
-title: $obj.title
-average: $obj.average
-total_reviews: $obj.total_reviews
-poster: $obj.poster
-url: $obj.url
 
 
 ;;ROW-1 COLUMN-1 Image Setup
@@ -396,7 +390,7 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: decrement $curr_pno clamp 1 8
+$on-click$: decrement $curr_pno by 1 clamp 1 8
 link: $l_movie.previous
 /$on-click$: message-host $previous
 
@@ -419,6 +413,8 @@ height: fill
 text-align: center
 move-right: 600
 
+/-- integer next_pno: 2
+
 -- ftd.text: NEXT
 align: right
 role: $fpm.type.heading-small
@@ -428,12 +424,13 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: increment $curr_pno clamp 1 8
+$on-click$: increment $curr_pno by 1 clamp 1 8
+;$on-click$: message-host $next-api
 link: $l_movie.next
 move-right: 1200
 
-/-- object next:
+/-- object next-api:
 function: http
+url: http://127.0.0.1:8001/api/movies/
 method: get
-url: $l_movie.next
-/page_number: $page_number
+p_no: $curr_pno
