@@ -26,7 +26,7 @@ def list_movie(req: django.http.HttpRequest):
     items = int(req.GET.get("items", 8))
     total_movies = 0
     page_number = req.GET.get("p_no", 1)
-    p_number = int(page_number)
+    # p_number = int(page_number)
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -46,10 +46,10 @@ def list_movie(req: django.http.HttpRequest):
 
 
 
-    # order_by = req.GET.get("p_no", 0)
+    # order_by = req.GET.get("p_no", 1)
     # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
     movies = Movie.objects.all()
-    p = Paginator(Movie.objects.all(), items)
+    p = Paginator(Movie.objects.all().order_by("id"), items)
 
     movie_list = p.get_page(page_number)
     list_of_top_movies = []
@@ -79,15 +79,20 @@ def list_movie(req: django.http.HttpRequest):
     else:
         next_page_number = {movie_list.paginator.num_pages}
 
+    last_page_number = {movie_list.paginator.num_pages}
+
 
     return django.http.JsonResponse(
         {
-            "p_no": p_number,
+            "p_no": movie_list.number,
             # TODO: Next And Previous both are optional
             # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
-            "next": f"http://127.0.0.1:8001/api/movies/?p_no={next_page_number}&items={items}",
-            "previous": f"http://127.0.0.1:8001/api/movies/?p_no={previous_page_number}&items={items}",
+            "next": f"api/movies/?p_no={next_page_number}&items={items}",
+            "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
+            "first": f"api/movies/?p_no={1}&items={items}",
+            "last": f"api/movies/?p_no={last_page_number}&items={items}",
+
             "movies": list_of_top_movies,
 
         },
