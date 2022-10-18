@@ -5,6 +5,7 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -21,9 +22,11 @@ def list_movie(req: django.http.HttpRequest):
     order by: release_date, rating, updated_on
     optional domain: <domain is for uniquely identify user, constant unique token>
     """
+
+    items = int(req.GET.get("items", 8))
     total_movies = 0
-    page_number = int(req.GET.get("p_no",1))
-    items = 8
+    page_number = req.GET.get("p_no", 1)
+    p_number = int(page_number)
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -39,17 +42,19 @@ def list_movie(req: django.http.HttpRequest):
         total_movies += 1
 
     last_pno = math.ceil(total_movies/8)
-    print(last_pno)
 
 
 
 
     # order_by = req.GET.get("p_no", 0)
-    movies = Movie.objects.all()[(page_number - 1) * items + 1: page_number * items + 1]
+    # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
+    movies = Movie.objects.all()
+    p = Paginator(Movie.objects.all(), items)
+
+    movie_list = p.get_page(page_number)
     list_of_top_movies = []
-    list_of_bottom_movies = []
-    index = 0
-    for movie in movies:
+
+    for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
@@ -61,43 +66,60 @@ def list_movie(req: django.http.HttpRequest):
             "director": movie.director,
             "description": movie.description,
         }
-        # print(rating[0])
-        # print(rating[1])
-        if 0 <= index <= 3:
-            list_of_top_movies.append(item)
-        if 4 <= index <= 7:
-            list_of_bottom_movies.append(item)
+        list_of_top_movies.append(item)
+
+    if movie_list.has_previous():
+        previous_page_number = {movie_list.previous_page_number()}
+        # previous_page_number = p_number - 1
+    else:
+        previous_page_number = 1
+
+    if movie_list.has_next():
+        next_page_number = {movie_list.next_page_number}
+    else:
+        next_page_number = {movie_list.paginator.num_pages}
 
 
-        index = index + 1
-
-    # print("list of top movies")
-    # print(list_of_top_movies)
-    # print("list of bot movies")
-    # print(list_of_bottom_movies)
-
-
-
-
-    next_page_number = page_number + 1
-    previous_page_number = page_number - 1 if page_number - 1 > 0 else 1
     return django.http.JsonResponse(
         {
-            "p_no": page_number,
+            "p_no": p_number,
             # TODO: Next And Previous both are optional
-            # "next": "/movies/p_no=1&items=10",
-            # "previous": "/movies/p_no=1&items=10",
-            # "next": f"http://127.0.0.1:8001/api/movies/p_no={next_page_number}",
-            # "previous": f"http://127.0.0.1:8001/api/movies/p_no={previous_page_number}",
-            "next": "http://127.0.0.1:8001/api/movies/?p_no=" + str(next_page_number),
-            "previous": "http://127.0.0.1:8001/api/movies/?p_no=" + str(previous_page_number),
+            # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
+            # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
+            "next": f"http://127.0.0.1:8001/api/movies/?p_no={next_page_number}&items={items}",
+            "previous": f"http://127.0.0.1:8001/api/movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
-            "movies1": list_of_bottom_movies,
 
         },
         status=200,
         safe=False,
     )
+
+
+@csrf_exempt
+def search_movie(req: django.http.HttpRequest):
+    # if req.method == "GET":
+    #     return django.http.HttpResponse("Wrong Method GET", status=405)
+
+    body = json.loads(req.body.decode("utf-8"))
+    target_movie_id = None
+    target_movie_name = body['movie']
+    # print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
+
+    all_movies = Movie.objects.all()
+    for movie in all_movies:
+        # print(movie.title.lower())
+
+        if movie.title.lower() == target_movie_name.lower():
+            # print("Found matching movie")
+            # print(movie.id)
+            target_movie_id = movie.id
+            break
+
+    # print(f"Hello found movie id = {target_movie_id}")
+
+    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
+
 
 
 @csrf_exempt
