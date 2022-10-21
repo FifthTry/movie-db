@@ -26,7 +26,7 @@ def list_movie(req: django.http.HttpRequest):
     items = int(req.GET.get("items", 8))
     total_movies = 0
     page_number = req.GET.get("p_no", 1)
-    # p_number = int(page_number)
+    p_number = int(page_number)
     """
     Pagination Logic
     E.g.: 10 items at every page
@@ -46,14 +46,15 @@ def list_movie(req: django.http.HttpRequest):
 
 
 
-    # order_by = req.GET.get("p_no", 1)
+    # order_by = req.GET.get("p_no", 0)
     # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
     movies = Movie.objects.all()
-    p = Paginator(Movie.objects.all().order_by("id"), items)
+    p = Paginator(Movie.objects.all(), items)
 
     movie_list = p.get_page(page_number)
     list_of_top_movies = []
-
+    list_of_bottom_movies = []
+    index = 0
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
@@ -68,31 +69,18 @@ def list_movie(req: django.http.HttpRequest):
         }
         list_of_top_movies.append(item)
 
-    if movie_list.has_previous():
-        previous_page_number = {movie_list.previous_page_number()}
-        # previous_page_number = p_number - 1
+    if p_number - 1 > 0:
+        previous_page_number = p_number - 1
     else:
         previous_page_number = 1
-
-    if movie_list.has_next():
-        next_page_number = {movie_list.next_page_number}
-    else:
-        next_page_number = {movie_list.paginator.num_pages}
-
-    last_page_number = {movie_list.paginator.num_pages}
-
-
     return django.http.JsonResponse(
         {
-            "p_no": movie_list.number,
+            "p_no": p_number,
             # TODO: Next And Previous both are optional
             # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
-            "next": f"api/movies/?p_no={next_page_number}&items={items}",
+            "next": f"api/movies/?p_no={p_number+1}&items={items}",
             "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
-            "first": f"api/movies/?p_no={1}&items={items}",
-            "last": f"api/movies/?p_no={last_page_number}&items={items}",
-
             "movies": list_of_top_movies,
 
         },
