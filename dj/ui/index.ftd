@@ -254,9 +254,11 @@ spacing: 40
 move-down: 20
 padding-horizontal: 50
 padding-vertical: 12
+padding-bottom: 50
 
 -- ftd.column:
-spacing: 50
+
+
 
 --- row1:
 
@@ -264,7 +266,8 @@ spacing: 50
 
 -- ftd.row row1:
 wrap: true
-spacing: 24
+
+
 
 --- movie-box:
 $loop$: $l_movie.movies as $obj
@@ -297,6 +300,7 @@ max-width: 460
 height: 540
 padding-vertical: $fpm.space.space-4
 padding-horizontal: $fpm.space.space-4
+margin-top: 30
 margin-left: 24
 
 --- ftd.image:
@@ -325,6 +329,7 @@ padding-vertical: $fpm.space.space-2
 --- ftd.text: $title
 role: $fpm.type.copy-tight
 color: $black
+style: bold
 width: fill
 
 
