@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 
 
+
 # Create your views here.
 
 # Create your views here.
@@ -42,8 +43,6 @@ def list_movie(req: django.http.HttpRequest):
         total_movies += 1
 
     last_pno = math.ceil(total_movies/8)
-
-
 
 
     # order_by = req.GET.get("p_no", 0)
@@ -81,12 +80,17 @@ def list_movie(req: django.http.HttpRequest):
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
             "next": f"api/movies/?p_no={p_number+1}&items={items}",
             "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
+            #"movies": json.loads(serializers.serialize("json", movies)),
             "movies": list_of_top_movies,
-
         },
         status=200,
         safe=False,
     )
+
+
+"""
+curl -X GET http://127.0.0.1:8000/api/movies/p_no=1&items=8
+"""
 
 
 @csrf_exempt
@@ -296,6 +300,18 @@ def get_ratings(req: django.http.HttpRequest):
         return django.http.JsonResponse(
             {
                 "average": str(average_rating),
+            if (review.rating<=10 or review.rating>=0):
+                count_reviews += 1
+                total += review.rating
+
+        if count_reviews==0:
+            average = 0
+        else:
+            average = round(total/count_reviews,2)
+
+        return django.http.JsonResponse(
+            {
+                "average": str(average),
                 "count_reviews": str(count_reviews)
 
             },
@@ -346,7 +362,6 @@ def get_review(req: django.http.HttpRequest):
             },
             status=404,
         )
-
 
 # Movie list should come from Database
 
