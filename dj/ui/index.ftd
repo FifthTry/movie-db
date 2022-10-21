@@ -251,7 +251,6 @@ padding-vertical: 12
 -- ftd.row component-3:
 width: fill
 spacing: 40
-move-down: 20
 padding-horizontal: 50
 padding-vertical: 12
 padding-bottom: 50
@@ -300,7 +299,7 @@ max-width: 460
 height: 540
 padding-vertical: $fpm.space.space-4
 padding-horizontal: $fpm.space.space-4
-margin-top: 30
+margin-top: 40
 margin-left: 24
 
 --- ftd.image:
