@@ -23,8 +23,8 @@ dark: black
 
 -- integer curr_pno: 1
 
---- ftd.integer:
-value: $curr_pno
+-- integer no_items: 8
+
 
 
 
@@ -50,6 +50,7 @@ $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
 p_no: $curr_pno
+items: $no_items
 
 
 
