@@ -8,7 +8,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 
 
-
 # Create your views here.
 
 # Create your views here.
@@ -26,7 +25,7 @@ def list_movie(req: django.http.HttpRequest):
 
     items = int(req.GET.get("items", 8))
     total_movies = 0
-    page_number = req.GET.get("p_no", 1)
+    page_number = req.GET.get("p_no", 2)
     p_number = int(page_number)
     """
     Pagination Logic
@@ -42,7 +41,19 @@ def list_movie(req: django.http.HttpRequest):
     for i in all_movies:
         total_movies += 1
 
-    last_pno = math.ceil(total_movies/8)
+    last_page_number = math.ceil(total_movies/8)
+
+    if p_number - 1 > 0:
+        previous_page_number = p_number - 1
+    else:
+        previous_page_number = 1
+
+    if p_number + 1 == last_page_number:
+        next_page_number = last_page_number
+    else:
+        next_page_number = p_number + 1
+
+
 
 
     # order_by = req.GET.get("p_no", 0)
@@ -51,9 +62,15 @@ def list_movie(req: django.http.HttpRequest):
     p = Paginator(Movie.objects.all(), items)
 
     movie_list = p.get_page(page_number)
-    list_of_top_movies = []
-    list_of_bottom_movies = []
-    index = 0
+    previous_movie_list = p.get_page(previous_page_number)
+    next_movie_list = p.get_page(next_page_number)
+    last_movie_list = p.get_page(last_page_number)
+
+    list_curr_movies = []
+    list_next_movies = []
+    list_previous_movies = []
+    list_last_movies = []
+
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
@@ -66,12 +83,50 @@ def list_movie(req: django.http.HttpRequest):
             "director": movie.director,
             "description": movie.description,
         }
-        list_of_top_movies.append(item)
+        list_curr_movies.append(item)
 
-    if p_number - 1 > 0:
-        previous_page_number = p_number - 1
-    else:
-        previous_page_number = 1
+    for movie in next_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        list_next_movies.append(item)
+
+    for movie in previous_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        list_previous_movies.append(item)
+
+    for movie in previous_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        list_last_movies.append(item)
+
     return django.http.JsonResponse(
         {
             "p_no": p_number,
@@ -80,17 +135,15 @@ def list_movie(req: django.http.HttpRequest):
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
             "next": f"api/movies/?p_no={p_number+1}&items={items}",
             "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
-            #"movies": json.loads(serializers.serialize("json", movies)),
-            "movies": list_of_top_movies,
+            "movies": list_curr_movies,
+            "next_movies": list_next_movies,
+            "previous_movies": list_previous_movies,
+            "last_movies": list_last_movies,
+
         },
         status=200,
         safe=False,
     )
-
-
-"""
-curl -X GET http://127.0.0.1:8000/api/movies/p_no=1&items=8
-"""
 
 
 @csrf_exempt
@@ -300,18 +353,6 @@ def get_ratings(req: django.http.HttpRequest):
         return django.http.JsonResponse(
             {
                 "average": str(average_rating),
-            if (review.rating<=10 or review.rating>=0):
-                count_reviews += 1
-                total += review.rating
-
-        if count_reviews==0:
-            average = 0
-        else:
-            average = round(total/count_reviews,2)
-
-        return django.http.JsonResponse(
-            {
-                "average": str(average),
                 "count_reviews": str(count_reviews)
 
             },
@@ -362,6 +403,7 @@ def get_review(req: django.http.HttpRequest):
             },
             status=404,
         )
+
 
 # Movie list should come from Database
 
