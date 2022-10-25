@@ -47,10 +47,9 @@ movie-info list movies:
 
 -- movie-data-api l_movie:
 $processor$: http
-method: get
 url: http://127.0.0.1:8001/api/search-page/
+method: get
 movie: $query.search_movie
-
 
 
 
