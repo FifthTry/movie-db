@@ -100,20 +100,23 @@ def search_movie(req: django.http.HttpRequest):
     print(req.body)
     print(f"Searching for {target_movie_name}")
 
-    return django.http.JsonResponse({"data": {"url": "http://127.0.0.1:8000/api/search/?search_movie=" + str(target_movie_name)}}, status=200)
+    return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
 
 @csrf_exempt
 def search_page(req: django.http.HttpRequest):
 
-    body = json.loads(req.body.decode("utf-8"))
+    # body = json.loads(req.body.decode("utf-8"))
     # target_movie_id = None
-    target_movie_name = body['movie']
-    print(f"2 Searching for {target_movie_name}")
-    # search_for = req.GET.get("searched_movie", "p")
-    searched_movie_list = Movie.objects.filter(tracker=Movie.id).file(title_starts_with=target_movie_name).order_by("-updated_on")
+    # target_movie_name = body['movie']
 
-    print(searched_movie_list)
+    target_movie_name = req.GET.get("search_movie", "default")
+    print(f"2 Searching for {target_movie_name}")
+    search_for = req.GET.get("movie", "p")
+    print(f"Searching for {search_for}")
+    searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
+
+    print(f"searched list = {searched_movie_list}")
     # string title:
     # string average:
     # string total_reviews:
@@ -128,17 +131,14 @@ def search_page(req: django.http.HttpRequest):
             "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
-            "release_date": str(movie.release_date),
             "poster": {'light': movie.poster, 'dark': movie.poster},
-            "director": movie.director,
-            "description": movie.description,
         }
         list_of_searched_movies.append(item)
 
-    print(list_of_searched_movies)
+    print(f"Final list = {list_of_searched_movies}")
     return django.http.JsonResponse(
         {
-            "movies": list_of_searched_movies,
+            list_of_searched_movies,
         },
         status=200,
         safe=False,
