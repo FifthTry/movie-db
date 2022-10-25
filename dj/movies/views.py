@@ -47,7 +47,7 @@ def list_movie(req: django.http.HttpRequest):
 
 
     # order_by = req.GET.get("p_no", 0)
-    movie_list = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
+    movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
     # movies = Movie.objects.all()
     # p = Paginator(Movie.objects.all(), items)
 
@@ -137,9 +137,7 @@ def search_page(req: django.http.HttpRequest):
 
     print(f"Final list = {list_of_searched_movies}")
     return django.http.JsonResponse(
-        {
-            list_of_searched_movies,
-        },
+        list_of_searched_movies,
         status=200,
         safe=False,
     )
