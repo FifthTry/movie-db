@@ -5,7 +5,7 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
+# from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -47,11 +47,11 @@ def list_movie(req: django.http.HttpRequest):
 
 
     # order_by = req.GET.get("p_no", 0)
-    # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
-    movies = Movie.objects.all()
-    p = Paginator(Movie.objects.all(), items)
+    movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
+#     movies = Movie.objects.all()
+#     p = Paginator(Movie.objects.all(), items)
 
-    movie_list = p.get_page(page_number)
+#     movie_list = p.get_page(page_number)
     list_of_top_movies = []
     list_of_bottom_movies = []
     index = 0
