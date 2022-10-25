@@ -5,7 +5,6 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -107,7 +106,8 @@ def search_page(req: django.http.HttpRequest):
 
     target_movie_name = req.GET.get("search_movie", "default")
 
-    search_for = req.GET.get("movie")
+    search_for = req.GET.get("movie", None)
+    # print(f"searching for {search_for}")
 
     searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
 
@@ -125,14 +125,24 @@ def search_page(req: django.http.HttpRequest):
         list_of_searched_movies.append(item)
 
     # print(f"Final list = {list_of_searched_movies}")
+    try:
+        return django.http.JsonResponse(
+            {
+                "movies": list_of_searched_movies,
+            },
+            status=200,
+            safe=False,
+        )
 
-    return django.http.JsonResponse(
-        {
-            "movies": list_of_searched_movies,
-        },
-        status=200,
-        safe=False,
-    )
+    except Exception as err:
+        print(err)
+        return django.http.JsonResponse(
+            {
+                "message": f"Movie with {search_for} not found",
+            },
+            status=404,
+        )
+
 
 
 
