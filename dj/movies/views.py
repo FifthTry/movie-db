@@ -25,7 +25,7 @@ def list_movie(req: django.http.HttpRequest):
 
     items = int(req.GET.get("items", 8))
     total_movies = 0
-    page_number = req.GET.get("p_no", 2)
+    page_number = req.GET.get("p_no", 1)
     p_number = int(page_number)
     """
     Pagination Logic
@@ -41,17 +41,7 @@ def list_movie(req: django.http.HttpRequest):
     for i in all_movies:
         total_movies += 1
 
-    last_page_number = math.ceil(total_movies/8)
-
-    if p_number - 1 > 0:
-        previous_page_number = p_number - 1
-    else:
-        previous_page_number = 1
-
-    if p_number + 1 == last_page_number:
-        next_page_number = last_page_number
-    else:
-        next_page_number = p_number + 1
+    last_pno = math.ceil(total_movies/8)
 
 
 
@@ -62,15 +52,9 @@ def list_movie(req: django.http.HttpRequest):
     p = Paginator(Movie.objects.all(), items)
 
     movie_list = p.get_page(page_number)
-    previous_movie_list = p.get_page(previous_page_number)
-    next_movie_list = p.get_page(next_page_number)
-    last_movie_list = p.get_page(last_page_number)
-
-    list_curr_movies = []
-    list_next_movies = []
-    list_previous_movies = []
-    list_last_movies = []
-
+    list_of_top_movies = []
+    list_of_bottom_movies = []
+    index = 0
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
@@ -83,50 +67,12 @@ def list_movie(req: django.http.HttpRequest):
             "director": movie.director,
             "description": movie.description,
         }
-        list_curr_movies.append(item)
+        list_of_top_movies.append(item)
 
-    for movie in next_movie_list:
-        rating = give_rating(movie.id)
-        item = {
-            "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
-            "average": str(rating[0]),
-            "total_reviews": str(rating[1]),
-            "release_date": str(movie.release_date),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
-            "director": movie.director,
-            "description": movie.description,
-        }
-        list_next_movies.append(item)
-
-    for movie in previous_movie_list:
-        rating = give_rating(movie.id)
-        item = {
-            "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
-            "average": str(rating[0]),
-            "total_reviews": str(rating[1]),
-            "release_date": str(movie.release_date),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
-            "director": movie.director,
-            "description": movie.description,
-        }
-        list_previous_movies.append(item)
-
-    for movie in previous_movie_list:
-        rating = give_rating(movie.id)
-        item = {
-            "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
-            "average": str(rating[0]),
-            "total_reviews": str(rating[1]),
-            "release_date": str(movie.release_date),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
-            "director": movie.director,
-            "description": movie.description,
-        }
-        list_last_movies.append(item)
-
+    if p_number - 1 > 0:
+        previous_page_number = p_number - 1
+    else:
+        previous_page_number = 1
     return django.http.JsonResponse(
         {
             "p_no": p_number,
@@ -135,10 +81,7 @@ def list_movie(req: django.http.HttpRequest):
             # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
             "next": f"api/movies/?p_no={p_number+1}&items={items}",
             "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
-            "movies": list_curr_movies,
-            "next_movies": list_next_movies,
-            "previous_movies": list_previous_movies,
-            "last_movies": list_last_movies,
+            "movies": list_of_top_movies,
 
         },
         status=200,
@@ -156,6 +99,7 @@ def search_movie(req: django.http.HttpRequest):
     target_movie_name = body['movie']
     # print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
 
+    # searched_movies = Movie.objects.filter(tracker=Movie.id).file(title_starts_with="p").order_by("-updated_on")
     all_movies = Movie.objects.all()
     for movie in all_movies:
         # print(movie.title.lower())
@@ -168,7 +112,43 @@ def search_movie(req: django.http.HttpRequest):
 
     # print(f"Hello found movie id = {target_movie_id}")
 
-    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
+    return django.http.JsonResponse({"data": {"url": "/search/?id=" + str(target_movie_name)}}, status=200)
+
+
+@csrf_exempt
+def search_page(req: django.http.HttpRequest):
+
+    body = json.loads(req.body.decode("utf-8"))
+    target_movie_id = None
+    target_movie_name = body['movie']
+    search_for = req.GET.get("searched_movie", "p")
+    searched_movie_list = Movie.objects.filter(tracker=Movie.id).file(title_starts_with=target_movie_name).order_by("-updated_on")
+
+
+    list_of_searched_movies = []
+    for movie in searched_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "release_date": str(movie.release_date),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "director": movie.director,
+            "description": movie.description,
+        }
+        list_of_searched_movies.append(item)
+
+    return django.http.JsonResponse(
+        {
+            "searched_movies": list_of_searched_movies,
+        },
+        status=200,
+        safe=False,
+    )
+
+
 
 
 
