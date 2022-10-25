@@ -131,8 +131,6 @@ border-color: $fpm.color.main.background.step-2
 border-radius: 8
 $on-input$: $input_title=$VALUE
 
---- ftd.text: $input_title
-
 
 --- ftd.row:
 padding-bottom: 8
