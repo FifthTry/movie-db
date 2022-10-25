@@ -95,10 +95,8 @@ def search_movie(req: django.http.HttpRequest):
     #     return django.http.HttpResponse("Wrong Method GET", status=405)
 
     body = json.loads(req.body.decode("utf-8"))
-    # print(body)
+
     target_movie_name = body['movie']
-    print(req.body)
-    print(f"Searching for {target_movie_name}")
 
     return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
@@ -106,22 +104,13 @@ def search_movie(req: django.http.HttpRequest):
 @csrf_exempt
 def search_page(req: django.http.HttpRequest):
 
-    # body = json.loads(req.body.decode("utf-8"))
-    # target_movie_id = None
-    # target_movie_name = body['movie']
 
     target_movie_name = req.GET.get("search_movie", "default")
-    print(f"2 Searching for {target_movie_name}")
-    search_for = req.GET.get("movie", "p")
-    print(f"Searching for {search_for}")
+
+    search_for = req.GET.get("movie")
+
     searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
 
-    print(f"searched list = {searched_movie_list}")
-    # string title:
-    # string average:
-    # string total_reviews:
-    # ftd.image-src poster:
-    # string url:
 
     list_of_searched_movies = []
     for movie in searched_movie_list:
@@ -135,7 +124,8 @@ def search_page(req: django.http.HttpRequest):
         }
         list_of_searched_movies.append(item)
 
-    print(f"Final list = {list_of_searched_movies}")
+    # print(f"Final list = {list_of_searched_movies}")
+
     return django.http.JsonResponse(
         {
             "movies": list_of_searched_movies,
