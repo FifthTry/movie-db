@@ -137,7 +137,9 @@ def search_page(req: django.http.HttpRequest):
 
     print(f"Final list = {list_of_searched_movies}")
     return django.http.JsonResponse(
-        list_of_searched_movies,
+        {
+            "movies": list_of_searched_movies,
+        },
         status=200,
         safe=False,
     )
