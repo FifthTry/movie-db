@@ -42,6 +42,8 @@ integer p_no:
 string next:
 string previous:
 movie-info list movies:
+;movie-info list next_movies:
+;movie-info list previous_movies:
 
 
 
@@ -49,7 +51,6 @@ movie-info list movies:
 $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
-p_no: $curr_pno
 items: $no_items
 
 
@@ -130,7 +131,7 @@ border-color: $fpm.color.main.background.step-2
 border-radius: 8
 $on-input$: $input_title=$VALUE
 
-/--- ftd.text: $input_title
+--- ftd.text: $input_title
 
 
 --- ftd.row:
@@ -396,7 +397,7 @@ width: fill
 height: fill
 text-align: center
 $on-click$: decrement $curr_pno by 1 clamp 1 8
-link: $l_movie.previous
+link: /previous
 /$on-click$: message-host $previous
 
 /-- object previous:
@@ -431,7 +432,7 @@ height: fill
 text-align: center
 $on-click$: increment $curr_pno by 1 clamp 1 8
 ;$on-click$: message-host $next-api
-link: $l_movie.next
+link: /next
 move-right: 1200
 
 /-- object next-api:
