@@ -20,12 +20,18 @@ dark: rgba(255,255,255,0)
 light: black
 dark: black
 
+-- record page-details:
+integer curr_pno:
+integer no_items:
 
--- integer curr_pno: 1
+-- page-details p:
+$processor$: http
+url: http://127.0.0.1:8001/api/page-details/
+method: get
 
--- integer no_items: 8
+-- integer curr_pno: $p.curr_pno
 
-
+-- integer no_items: $p.no_items
 
 
 -- record movie-info:
@@ -42,17 +48,12 @@ integer p_no:
 string next:
 string previous:
 movie-info list movies:
-;movie-info list next_movies:
-;movie-info list previous_movies:
-
-
 
 -- movie-data-api l_movie:
 $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
-items: $no_items
-
+p_no: $p.curr_pno
 
 
 
@@ -395,15 +396,13 @@ width: fill
 height: fill
 text-align: center
 $on-click$: decrement $curr_pno by 1 clamp 1 8
-link: /previous
-/$on-click$: message-host $previous
+$on-click$: message-host $previous-api
 
-/-- object previous:
+-- object previous-api:
 function: http
-method: get
-url: $l_movie.previous
-/page_number: $page_number
-/items: $items
+url: /api/change-page/
+method: post
+mode: previous
 
 
 -- ftd.integer: $curr_pno
@@ -429,12 +428,11 @@ width: fill
 height: fill
 text-align: center
 $on-click$: increment $curr_pno by 1 clamp 1 8
-;$on-click$: message-host $next-api
-link: /next
+$on-click$: message-host $next-api
 move-right: 1200
 
-/-- object next-api:
+-- object next-api:
 function: http
-url: http://127.0.0.1:8001/api/movies/
-method: get
-p_no: $curr_pno
+url: /api/change-page/
+method: post
+mode: next

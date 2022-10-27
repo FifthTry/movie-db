@@ -7,14 +7,17 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 
+current_page_number = 1
+items_per_page = 8
 
-# Create your views here.
 
 # Create your views here.
 
 @csrf_exempt
 def list_movie(req: django.http.HttpRequest):
     # Request
+    global current_page_number
+    print(f"Displaying page: {current_page_number}")
 
     """
     optional page_number: default 0
@@ -25,7 +28,7 @@ def list_movie(req: django.http.HttpRequest):
 
     items = int(req.GET.get("items", 8))
     total_movies = 0
-    page_number = req.GET.get("p_no", 1)
+    page_number = req.GET.get("p_no", current_page_number)
     p_number = int(page_number)
     """
     Pagination Logic
@@ -41,10 +44,7 @@ def list_movie(req: django.http.HttpRequest):
     for i in all_movies:
         total_movies += 1
 
-    last_pno = math.ceil(total_movies/8)
-
-
-
+    last_pno = math.ceil(total_movies / 8)
 
     # order_by = req.GET.get("p_no", 0)
     movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
@@ -69,15 +69,16 @@ def list_movie(req: django.http.HttpRequest):
         previous_page_number = p_number - 1
     else:
         previous_page_number = 1
-    return django.http.JsonResponse(
-        {
-            "p_no": p_number,
-            # TODO: Next And Previous both are optional
-            "next": f"api/movies/?p_no={p_number+1}&items={items}",
-            "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
-            "movies": list_of_top_movies,
 
-        },
+    final_page_data = {
+        "p_no": p_number,
+        "next": f"api/movies/?p_no={p_number + 1}&items={items}",
+        "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
+        "movies": list_of_top_movies,
+    }
+
+    return django.http.JsonResponse(
+        final_page_data,
         status=200,
         safe=False,
     )
@@ -85,7 +86,6 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
-
     body = json.loads(req.body.decode("utf-8"))
     target_movie_name = body['movie']
     print(req.body)
@@ -96,8 +96,7 @@ def search_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_page(req: django.http.HttpRequest):
-
-    search_for = req.GET.get("movie",None)
+    search_for = req.GET.get("movie", None)
     searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
 
     list_of_searched_movies = []
@@ -121,7 +120,65 @@ def search_page(req: django.http.HttpRequest):
     )
 
 
+@csrf_exempt
+def change_page(req: django.http.HttpRequest):
+    # Request
+    global current_page_number
+    """
+    optional page_number: default 0
+    optional count: default 5
+    order by: release_date, rating, updated_on
+    optional domain: <domain is for uniquely identify user, constant unique token>
+    """
+    total_movies = 0
+    all_movies = Movie.objects.all()
+    for i in all_movies:
+        total_movies += 1
 
+    last_pno = math.ceil(total_movies / 8)
+    body = json.loads(req.body.decode("utf-8"))
+    print(f"req body: {req.body}")
+    print(f"req GET: {req.GET}")
+    items = int(req.GET.get("items", 8))
+    total_movies = 0
+    page_number = req.GET.get("p_no", current_page_number)
+    p_number = int(page_number)
+    mode = body.get("mode", "next")
+
+    print(f"Mode received: {mode}")
+    change_to_next = True if mode == "next" else False
+
+    current_page_number = p_number
+    if change_to_next:
+        current_page_number = current_page_number + 1
+
+        if current_page_number > last_pno:
+            current_page_number = last_pno
+    else:
+        current_page_number = current_page_number - 1 if current_page_number - 1 > 0 else 1
+
+    print(f"Page number after change: {current_page_number}, mode: {change_to_next}")
+
+    return django.http.JsonResponse(
+        {
+            "data": {"reload": True}
+
+        },
+        status=200,
+        safe=False,
+    )
+
+
+@csrf_exempt
+def page_details(req: django.http.HttpRequest):
+    return django.http.JsonResponse(
+        {
+            "curr_pno": current_page_number,
+            "no_items": items_per_page
+        },
+        status=200,
+        safe=False,
+    )
 
 
 @csrf_exempt
@@ -233,7 +290,6 @@ def add_review(req: django.http.HttpRequest):
 
     # TODO: restrict invalid ratings
 
-
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {
@@ -259,7 +315,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 
 
 def give_rating(id):
-    count_reviews= 0
+    count_reviews = 0
     total = 0
     try:
         reviews = Review.objects.filter(movie__pk=id)
@@ -271,7 +327,7 @@ def give_rating(id):
         if count_reviews == 0:
             average_rating = 0
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
 
     except Exception as err:
         print(err)
@@ -283,7 +339,6 @@ def give_rating(id):
         )
 
     return (average_rating, count_reviews)
-
 
 
 def get_ratings(req: django.http.HttpRequest):
@@ -300,7 +355,7 @@ def get_ratings(req: django.http.HttpRequest):
         if count_reviews == 0:
             average_rating = 0
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
 
         return django.http.JsonResponse(
             {
@@ -320,8 +375,6 @@ def get_ratings(req: django.http.HttpRequest):
             },
             status=404,
         )
-
-
 
 
 @csrf_exempt
