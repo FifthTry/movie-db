@@ -5,6 +5,7 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -47,18 +48,14 @@ def list_movie(req: django.http.HttpRequest):
 
     # order_by = req.GET.get("p_no", 0)
     movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
-    # movies = Movie.objects.all()
-    # p = Paginator(Movie.objects.all(), items)
 
-    # movie_list = p.get_page(page_number)
     list_of_top_movies = []
-    list_of_bottom_movies = []
-    index = 0
+
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "url": "movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
@@ -76,8 +73,6 @@ def list_movie(req: django.http.HttpRequest):
         {
             "p_no": p_number,
             # TODO: Next And Previous both are optional
-            # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
-            # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
             "next": f"api/movies/?p_no={p_number+1}&items={items}",
             "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
@@ -90,12 +85,11 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
-    # if req.method == "GET":
-    #     return django.http.HttpResponse("Wrong Method GET", status=405)
 
     body = json.loads(req.body.decode("utf-8"))
-
     target_movie_name = body['movie']
+    print(req.body)
+    print(f"Searching for {target_movie_name}")
 
     return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
@@ -103,46 +97,28 @@ def search_movie(req: django.http.HttpRequest):
 @csrf_exempt
 def search_page(req: django.http.HttpRequest):
 
-
-    target_movie_name = req.GET.get("search_movie", "default")
-
-    search_for = req.GET.get("movie", None)
-    # print(f"searching for {search_for}")
-
+    search_for = req.GET.get("movie",None)
     searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
-
 
     list_of_searched_movies = []
     for movie in searched_movie_list:
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "url": "movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "poster": {'light': movie.poster, 'dark': movie.poster},
         }
         list_of_searched_movies.append(item)
 
-    # print(f"Final list = {list_of_searched_movies}")
-    try:
-        return django.http.JsonResponse(
-            {
-                "movies": list_of_searched_movies,
-            },
-            status=200,
-            safe=False,
-        )
-
-    except Exception as err:
-        print(err)
-        return django.http.JsonResponse(
-            {
-                "message": f"Movie with {search_for} not found",
-            },
-            status=404,
-        )
-
+    return django.http.JsonResponse(
+        {
+            "movies": list_of_searched_movies,
+        },
+        status=200,
+        safe=False,
+    )
 
 
 
