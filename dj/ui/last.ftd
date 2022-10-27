@@ -20,21 +20,12 @@ dark: rgba(255,255,255,0)
 light: black
 dark: black
 
--- record page-details:
-integer curr_pno:
-integer no_items:
-integer last_pno:
 
--- page-details p:
-$processor$: http
-url: http://127.0.0.1:8001/api/page-details/
-method: get
+-- integer curr_pno: 1
 
--- integer curr_pno: $p.curr_pno
+-- integer no_items: 8
 
--- integer no_items: $p.no_items
 
--- integer last_pno: $p.last_pno
 
 
 -- record movie-info:
@@ -50,13 +41,16 @@ string url:
 integer p_no:
 string next:
 string previous:
-movie-info list movies:
+movie-info list last_movies:
+
+
 
 -- movie-data-api l_movie:
 $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
-p_no: $p.curr_pno
+items: $no_items
+
 
 
 
@@ -134,6 +128,8 @@ border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
 $on-input$: $input_title=$VALUE
+
+/--- ftd.text: $input_title
 
 
 --- ftd.row:
@@ -273,7 +269,7 @@ wrap: true
 
 
 --- movie-box:
-$loop$: $l_movie.movies as $obj
+$loop$: $l_movie.last_movies as $obj
 title: $obj.title
 average: $obj.average
 total_reviews: $obj.total_reviews
@@ -398,17 +394,19 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: decrement $p.curr_pno by 1 clamp 1 $p.last_pno
-$on-click$: message-host $previous-api
+$on-click$: decrement $curr_pno by 1 clamp 1 8
+link: /previous
+/$on-click$: message-host $previous
 
--- object previous-api:
+/-- object previous:
 function: http
-url: /api/change-page/
-method: post
-mode: previous
+method: get
+url: $l_movie.previous
+/page_number: $page_number
+/items: $items
 
 
--- ftd.integer: $p.curr_pno
+-- ftd.integer: $curr_pno
 align: center
 role: $fpm.type.heading-small
 color: $fpm.color.main.background.step-1
@@ -430,12 +428,32 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: increment $p.curr_pno by 1 clamp 1 $p.last_pno
-$on-click$: message-host $next-api
+$on-click$: increment $curr_pno by 1 clamp 1 8
+;$on-click$: message-host $next-api
+link: /next
 move-right: 1200
 
--- object next-api:
+/-- object next-api:
 function: http
-url: /api/change-page/
-method: post
-mode: next
+url: http://127.0.0.1:8001/api/movies/
+method: get
+p_no: $curr_pno
+
+/-- ftd.row:
+align: left
+margin-top: $fpm.space.space-2
+padding-right: 10
+margin-left: 40
+
+/-- ftd.text: Last
+align: left
+role: $fpm.type.heading-small
+color: $fpm.color.main.background.step-1
+padding-top: 5
+style: bold
+width: fill
+height: fill
+text-align: center
+$on-click$: decrement $curr_pno by 1 clamp 1 8
+link: /last
+/$on-click$: message-host $previous

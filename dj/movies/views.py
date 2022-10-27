@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 
 current_page_number = 1
 items_per_page = 8
+last_pno = 3
 
 
 # Create your views here.
@@ -17,7 +18,6 @@ items_per_page = 8
 def list_movie(req: django.http.HttpRequest):
     # Request
     global current_page_number
-    print(f"Displaying page: {current_page_number}")
 
     """
     optional page_number: default 0
@@ -88,8 +88,6 @@ def list_movie(req: django.http.HttpRequest):
 def search_movie(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     target_movie_name = body['movie']
-    print(req.body)
-    print(f"Searching for {target_movie_name}")
 
     return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
@@ -137,15 +135,15 @@ def change_page(req: django.http.HttpRequest):
 
     last_pno = math.ceil(total_movies / 8)
     body = json.loads(req.body.decode("utf-8"))
-    print(f"req body: {req.body}")
-    print(f"req GET: {req.GET}")
     items = int(req.GET.get("items", 8))
+
     total_movies = 0
+
     page_number = req.GET.get("p_no", current_page_number)
     p_number = int(page_number)
+
     mode = body.get("mode", "next")
 
-    print(f"Mode received: {mode}")
     change_to_next = True if mode == "next" else False
 
     current_page_number = p_number
@@ -156,8 +154,6 @@ def change_page(req: django.http.HttpRequest):
             current_page_number = last_pno
     else:
         current_page_number = current_page_number - 1 if current_page_number - 1 > 0 else 1
-
-    print(f"Page number after change: {current_page_number}, mode: {change_to_next}")
 
     return django.http.JsonResponse(
         {
@@ -174,7 +170,8 @@ def page_details(req: django.http.HttpRequest):
     return django.http.JsonResponse(
         {
             "curr_pno": current_page_number,
-            "no_items": items_per_page
+            "no_items": items_per_page,
+            "last_pno": last_pno
         },
         status=200,
         safe=False,
@@ -219,7 +216,7 @@ def get_movie(req: django.http.HttpRequest):
     movie_id = req.GET.get("id")
     try:
         movie = Movie.objects.get(id=movie_id)
-        # print("Movie details", movie)
+
         return django.http.JsonResponse(
             {
                 "title": movie.title,
@@ -269,13 +266,24 @@ def add_review(req: django.http.HttpRequest):
         # TODO: Redirect to error page with 404 error
         return django.http.HttpResponse("redirect to movie page", status=404)
 
+    norm_rating = int(body["rating"])
+
+    if norm_rating > 10:
+        norm_rating = 10
+
+    elif norm_rating < 0:
+        norm_rating = 0
+
     review = Review.objects.create(
         movie=movie,
         title=body["title"],
         description=body.get("description"),
         reviewer=body["reviewer"],
-        rating=body["rating"],
+        rating=norm_rating,
     )
+
+
+
 
     # TODO: Checking one review per reviewer
     # reviews = Review.objects.filter(movie__pk=movie_id)
@@ -325,9 +333,16 @@ def give_rating(id):
                 total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            average_rating = "Nil"
+            count_reviews = "No"
         else:
             average_rating = round(total / count_reviews, 2)
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
+
+
 
     except Exception as err:
         print(err)
@@ -348,14 +363,20 @@ def get_ratings(req: django.http.HttpRequest):
     try:
         reviews = Review.objects.filter(movie__pk=movie_id)
         for review in reviews:
-            if review.rating <= 10 or review.rating >= 0:
-                count_reviews += 1
-                total += review.rating
+            count_reviews += 1
+            total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            count_reviews = "No "
+            average_rating = "Nil"
         else:
             average_rating = round(total / count_reviews, 2)
+
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
+
 
         return django.http.JsonResponse(
             {
@@ -421,7 +442,7 @@ def get_list(req: django.http.HttpRequest):
     try:
         movie = Movie.objects.all()
         movie_list = []
-        # print("Movie details", movie)
+
         for movie in Movie:
             print(movie)
             item = {

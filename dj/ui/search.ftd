@@ -21,9 +21,6 @@ light: black
 dark: black
 
 
--- integer curr_pno: 1
-
--- integer no_items: 8
 
 -- record query-data:
 string search_movie:
@@ -66,7 +63,6 @@ link-style: bold
 toc: $empty-toc
 
 
--- integer items: 8
 
 
 -- optional string input_title:
@@ -85,7 +81,29 @@ padding-vertical: 12
 
 
 
+-- component-7: All Movies
+$on-click$: message-host $movie-list
 
+
+
+
+
+-- ftd.row component-7:
+caption title:
+align: left
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-small
+text-align: left
+align: left
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 28
+link: /
 
 
 
