@@ -184,7 +184,6 @@ movie: $input_title
 
 
 -- component-2: All Movies
-$on-click$: message-host $movie-list
 
 
 
@@ -205,6 +204,7 @@ align: left
 style: bold
 margin-top: $fpm.space.space-10
 padding-left: 28
+link: /
 
 
 --- ftd.row:
@@ -378,15 +378,6 @@ color: $black
 
 
 -- container: ftd.main
-
-
-
--- object movie-list:
-function: http
-method: get
-url: http://127.0.0.1:8000/api/movies/
-p_no: 1
-items: 8
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; NEXT AND PREVIOUS

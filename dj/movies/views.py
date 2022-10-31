@@ -51,7 +51,6 @@ def list_movie(req: django.http.HttpRequest):
 
     list_of_top_movies = []
 
-    index = 0
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
@@ -76,11 +75,9 @@ def list_movie(req: django.http.HttpRequest):
     return django.http.JsonResponse(
         {
             "p_no": p_number,
-            # TODO: Next And Previous both are optional
-            # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
-            # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
             "next_pno": p_number+1,
             "previous_pno": previous_page_number,
+            "last_pno": last_pno,
             "first": f"?p_no={1}&items={items}",
             "next": f"movies/?p_no={p_number+1}&items={items}",
             "previous": f"movies/?p_no={previous_page_number}&items={items}",
@@ -94,8 +91,6 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
-    # if req.method == "GET":
-    #     return django.http.HttpResponse("Wrong Method GET", status=405)
 
     body = json.loads(req.body.decode("utf-8"))
     target_movie_id = None
@@ -104,15 +99,12 @@ def search_movie(req: django.http.HttpRequest):
 
     all_movies = Movie.objects.all()
     for movie in all_movies:
-        # print(movie.title.lower())
 
         if movie.title.lower() == target_movie_name.lower():
-            # print("Found matching movie")
-            # print(movie.id)
+
             target_movie_id = movie.id
             break
 
-    # print(f"Hello found movie id = {target_movie_id}")
 
     return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
 
@@ -355,37 +347,5 @@ def get_review(req: django.http.HttpRequest):
 
 # There will be an extra parameter in query `domain` based on filter the movies
 # for a user
-
-
-@csrf_exempt
-def get_list(req: django.http.HttpRequest):
-    try:
-        movie = Movie.objects.all()
-        movie_list = []
-        # print("Movie details", movie)
-        for movie in Movie:
-            print(movie)
-            item = {
-                "title": movie.title,
-                "release_date": movie.release_date,
-                "poster": movie.poster,
-                "director": movie.director,
-                "description": movie.description,
-            }
-            movie_list.append(item)
-
-        return django.http.JsonResponse(
-            movie_list,
-            status=200,
-            safe=False
-        )
-    except Exception as err:
-        print(err)
-        return django.http.JsonResponse(
-            {
-                "message": "Movies not found",
-            },
-            status=404,
-        )
 
 # Optional Query. Sort: [release-date, rating, updated_on]
