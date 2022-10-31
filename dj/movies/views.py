@@ -106,8 +106,16 @@ def search_movie(req: django.http.HttpRequest):
     # )
 
     target_movie_name = body['movie']
+    if len(target_movie_name) == 0:
+        return django.http.JsonResponse(
+            {
+                "message": "Enter valid movie name",
+            },
+            status=404,
+        )
 
-    return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
+    else:
+        return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
 
 @csrf_exempt
