@@ -117,9 +117,9 @@ padding-vertical: $fpm.space.space-6
 align: center
 spacing: 20
 
--- form.input-box: Search for
+--- form.input-box: Search for
 $value: $movie
-$error: $movie-error
+$error: This field is mandatory
 placeholder:
 align: center
 width: 600

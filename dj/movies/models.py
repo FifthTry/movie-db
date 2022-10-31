@@ -24,3 +24,6 @@ class Review(models.Model):
     # This null because user may not give rating
     rating = models.IntegerField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
+
+class Search(models.Model):
+    movie = models.CharField(max_length=1024)
