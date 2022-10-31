@@ -91,22 +91,36 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
-
     body = json.loads(req.body.decode("utf-8"))
-    target_movie_id = None
     target_movie_name = body['movie']
-    # print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
 
-    all_movies = Movie.objects.all()
-    for movie in all_movies:
-
-        if movie.title.lower() == target_movie_name.lower():
-
-            target_movie_id = movie.id
-            break
+    return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
 
 
-    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
+@csrf_exempt
+def search_page(req: django.http.HttpRequest):
+    search_for = req.GET.get("movie", None)
+    searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
+
+    list_of_searched_movies = []
+    for movie in searched_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+        }
+        list_of_searched_movies.append(item)
+
+    return django.http.JsonResponse(
+        {
+            "movies": list_of_searched_movies,
+        },
+        status=200,
+        safe=False,
+    )
 
 
 

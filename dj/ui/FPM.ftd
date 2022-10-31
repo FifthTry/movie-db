@@ -21,3 +21,4 @@ endpoint: http://127.0.0.1:8001
 - Review Movie: /add-review/
 - Movie: /movie/
 - Movies: /movies/
+- Search: /search/

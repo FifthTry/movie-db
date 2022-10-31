@@ -1,0 +1,282 @@
+-- import: fpm
+-- import: movie-db/assets
+
+
+-- fpm.toc-item list empty-toc:
+
+-- fpm.toc-item list toc-top-right:
+$processor$: toc
+
+
+- about us:/about-us/
+
+
+-- ftd.color transparent:
+light: rgba(255,255,255,0)
+dark: rgba(255,255,255,0)
+
+
+-- ftd.color black:
+light: black
+dark: black
+
+
+
+-- record query-data:
+string search_movie:
+
+-- query-data query:
+$processor$: request-data
+
+-- record movie-info:
+string title:
+string average:
+string total_reviews:
+ftd.image-src poster:
+string url:
+
+
+
+-- record movie-data-api:
+movie-info list movies:
+
+
+
+-- movie-data-api l_movie:
+$processor$: http
+url: http://127.0.0.1:8001/api/search-page/
+method: get
+movie: $query.search_movie
+
+
+
+
+
+-- h.header:
+logo-height: 40
+logo-width: 80
+site-logo: $assets.files.logo.png
+site-url: /
+site-name:
+current-url: /
+link-style: bold
+toc: $empty-toc
+
+
+
+
+-- optional string input_title:
+$always-include$: true
+
+
+;;to check if the input is working
+/-- ftd.text: $input_title
+padding-horizontal: 10
+padding-vertical: 12
+
+
+
+
+--- container: ftd.main
+
+
+
+-- component-7: All Movies
+
+
+
+
+
+-- ftd.row component-7:
+caption title:
+align: left
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-small
+text-align: left
+align: left
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 28
+link: /
+
+
+
+
+
+
+-- component-2: Search Results
+
+
+
+
+
+-- ftd.row component-2:
+caption title:
+align: left
+padding-vertical: $fpm.space.space-2
+padding-horizontal: $fpm.space.space-2
+
+
+--- ftd.text:
+text: $title
+role: $fpm.type.heading-small
+text-align: left
+align: left
+style: bold
+margin-top: $fpm.space.space-10
+padding-left: 28
+
+
+--- ftd.row:
+align: right
+margin-top: $fpm.space.space-10
+padding-right: 10
+padding-left: 1000
+margin-left: 40
+
+
+
+--- container: ftd.main
+padding-horizontal: 10
+padding-vertical: 12
+
+
+
+
+
+
+
+
+
+
+-- component-3:
+
+
+
+
+-- ftd.row component-3:
+width: fill
+spacing: 40
+padding-horizontal: 50
+padding-vertical: 12
+padding-bottom: 50
+
+-- ftd.column:
+
+
+
+--- row1:
+
+
+
+-- ftd.row row1:
+wrap: true
+
+
+
+--- movie-box:
+$loop$: $l_movie.movies as $obj
+title: $obj.title
+average: $obj.average
+total_reviews: $obj.total_reviews
+poster: $obj.poster
+url: $obj.url
+
+
+
+
+
+
+
+;;ROW-1 COLUMN-1 Image Setup
+
+
+
+-- ftd.column movie-box:
+string title:
+string average:
+string total_reviews:
+ftd.image-src poster:
+string url:
+border-width:2
+border-color: $black
+width: 320
+max-width: 460
+height: 540
+padding-vertical: $fpm.space.space-4
+padding-horizontal: $fpm.space.space-4
+margin-top: 40
+margin-left: 24
+
+--- ftd.image:
+src: $poster
+width: 280
+height: 440
+cursor: pointer
+link: $url
+
+--- bot2: $title
+
+$average
+
+--- bot:
+
+$total_reviews
+
+--- container: ftd.main
+
+-- ftd.row bot2:
+caption title:
+body average:
+width: fill
+padding-vertical: $fpm.space.space-2
+
+--- ftd.text: $title
+role: $fpm.type.copy-tight
+color: $black
+style: bold
+width: fill
+
+
+
+
+--- ftd.text: ⭐
+role: $fpm.type.copy-tight
+color: $black
+
+--- ftd.text: $average
+role: $fpm.type.copy-tight
+color: $black
+
+
+--- ftd.text: /10
+role: $fpm.type.copy-tight
+color: $black
+
+-- ftd.row bot:
+body total_reviews: $total_reviews
+
+--- ftd.text: $total_reviews
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+
+
+--- ftd.text: Reviews
+padding-top: $fpm.space.space-2
+padding-right: $fpm.space.space-6
+role: $fpm.type.copy-tight
+color: $black
+
+
+
+
+
+
+-- container: ftd.main
