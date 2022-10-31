@@ -13,6 +13,9 @@ endpoint: http://127.0.0.1:8001
 -- fpm.auto-import: ds
 -- fpm.auto-import: fifthtry.github.io/header/assets as assets
 -- fpm.auto-import: fifthtry.github.io/header as h
+-- fpm.dependency: fifthtry.github.io/form as form
+
+-- fpm.auto-import: form
 
 -- fpm.sitemap:
 

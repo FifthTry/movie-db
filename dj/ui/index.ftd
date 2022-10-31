@@ -73,14 +73,11 @@ toc: $empty-toc
 -- integer items: 8
 
 
--- optional string input_title:
+-- optional string movie:
 $always-include$: true
 
-
-;;to check if the input is working
-/-- ftd.text: $input_title
-padding-horizontal: 10
-padding-vertical: 12
+-- optional string movie-error:
+$always-include$: true
 
 
 -- component-1: aditi movie app
@@ -120,9 +117,15 @@ padding-vertical: $fpm.space.space-6
 align: center
 spacing: 20
 
+-- form.input-box: Search for
+$value: $movie
+$error: $movie-error
+placeholder:
+align: center
+width: 600
+height: 50
 
-
---- ftd.input:
+/--- ftd.input:
 placeholder: Search here
 padding-horizontal: 16
 padding-vertical: 8
@@ -131,9 +134,8 @@ height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
-$on-input$: $input_title=$VALUE
+$on-input$: $movie=$VALUE
 
-/--- ftd.text: $input_title
 
 
 --- ftd.row:
@@ -164,7 +166,8 @@ $on-click$: message-host $search-movie
 function: http
 method: post
 url: /api/search/
-movie: $input_title
+movie: $movie
+movie-error: $movie-error
 
 
 --- container: ftd.main
