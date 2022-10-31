@@ -259,7 +259,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 
 
 def give_rating(id):
-    count_reviews= 0
+    count_reviews = 0
     total = 0
     try:
         reviews = Review.objects.filter(movie__pk=id)
@@ -269,9 +269,14 @@ def give_rating(id):
                 total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            average_rating = "Nil"
+            count_reviews = "No"
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
 
     except Exception as err:
         print(err)
@@ -293,14 +298,20 @@ def get_ratings(req: django.http.HttpRequest):
     try:
         reviews = Review.objects.filter(movie__pk=movie_id)
         for review in reviews:
-            if review.rating <= 10 or review.rating >= 0:
-                count_reviews += 1
-                total += review.rating
+            count_reviews += 1
+            total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            count_reviews = "No "
+            average_rating = "Nil"
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
+
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
+
 
         return django.http.JsonResponse(
             {
@@ -320,7 +331,6 @@ def get_ratings(req: django.http.HttpRequest):
             },
             status=404,
         )
-
 
 
 
