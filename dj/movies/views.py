@@ -92,10 +92,15 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
+
     body = json.loads(req.body.decode("utf-8"))
     print("after body")
+    target_movie_name = body['title']
+    print(target_movie_name)
+
     form = SearchForm(json.loads(req.body.decode("utf-8")))
     print(f"after form, form = {form}")
+
     if not form.is_valid():
         print("invalid form")
         # TODO: with helper this would look like: `return ftd_django.form_error(form)`
@@ -106,21 +111,12 @@ def search_movie(req: django.http.HttpRequest):
         return django.http.JsonResponse({"errors": form.errors})
 
     Search.objects.create(
-        movie=form.cleaned_data["title"],
+        title=form.cleaned_data["title"],
     )
-    print(Search.movie)
+    for x in Search.objects.all():
+        print(x)
 
-    target_movie_name = body['title']
-    if len(target_movie_name) == 0:
-        return django.http.JsonResponse(
-            {
-                "message": "Enter valid movie name",
-            },
-            status=404,
-        )
-
-    else:
-        return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
+    return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
 
 
 @csrf_exempt

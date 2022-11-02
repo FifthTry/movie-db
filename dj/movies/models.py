@@ -25,5 +25,6 @@ class Review(models.Model):
     rating = models.IntegerField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
+
 class Search(models.Model):
     title = models.CharField(max_length=1024)

@@ -73,10 +73,10 @@ toc: $empty-toc
 -- integer items: 8
 
 
--- optional string title:
+-- optional string search-title:
 $always-include$: true
 
--- optional string title-error:
+-- optional string search-title-error:
 $always-include$: true
 
 
@@ -118,12 +118,13 @@ align: center
 spacing: 20
 
 --- form.input-box: Search for
-$value: $title
-$error: $title-error
+$value: $search-title
+$error: $search-title-error
 placeholder:
 align: center
 width: 600
 height: 50
+
 
 /--- ftd.input:
 placeholder: Search here
@@ -134,7 +135,7 @@ height: 50
 border-width: 3
 border-color: $fpm.color.main.background.step-2
 border-radius: 8
-$on-input$: $movie=$VALUE
+$on-input$: $title=$VALUE
 
 
 
@@ -166,8 +167,8 @@ $on-click$: message-host $search-movie
 function: http
 method: post
 url: /api/search/
-title: $title
-$title-error: $title-error
+title: $search-title
+$title-error: $search-title-error
 
 
 --- container: ftd.main
