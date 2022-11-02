@@ -1,7 +1,7 @@
 import math
 
 import django.http
-from .models import Movie, Review, Search
+from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -110,11 +110,6 @@ def search_movie(req: django.http.HttpRequest):
         print(form.errors)
         return django.http.JsonResponse({"errors": form.errors})
 
-    Search.objects.create(
-        title=form.cleaned_data["title"],
-    )
-    for x in Search.objects.all():
-        print(x)
 
     return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
 
@@ -259,8 +254,7 @@ def add_review(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {
-            "data": {"success": True,
-                     "reload": True},
+            "redirect": "/movie/?id=" + str(movie.id),
             "other": {"review": review.id, "movie": movie.id}
         },
         status=200,
