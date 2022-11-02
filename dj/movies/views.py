@@ -94,7 +94,8 @@ def search_movie(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     target_movie_name = body['movie']
 
-    return django.http.JsonResponse({"data": {"url": "/search/?search_movie=" + str(target_movie_name)}}, status=200)
+    return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
+
 
 
 @csrf_exempt
