@@ -508,56 +508,35 @@ reviewer_name: $r.reviewer_name
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 -- card:  ;;;;;only for checking if any input is being taken
 
--- string input_reviewer: Nil
 
--- ftd.text: $input_reviewer
-color: $white
+-- optional string i_reviewer:
+$always-include$: true
 
--- string input_title: Nil
+-- optional string i_reviewer-error:
+$always-include$: true
 
--- ftd.text: $input_title
-color: $white
-move-down: 600
+-- optional string input_title:
+$always-include$: true
 
--- string input_description: Nil
+-- optional string input_title-error:
+$always-include$: true
 
--- ftd.text: $input_description
-color: $white
+-- optional string input_description:
+$always-include$: true
 
--- string input_rating: Nil
+-- optional string input_description-error:
+$always-include$: true
 
--- ftd.text: $input_rating
-color: $white
+-- optional string input_rating:
+$always-include$: true
+
+-- optional string input_rating-error:
+$always-include$: true
 
 -- ftd.text: $query.id
 color: $white
@@ -637,12 +616,18 @@ margin-top: $fpm.space.space-8
 ;; ROW [ [TITLE]* [INPUT-BOX] ]
 
 
--- ftd.row getting_input:
-id: outer_row
+-- ftd.row getting_input-left:
 caption title:
-boolean movie:
 boolean reviewer:
 boolean description:
+padding-left: $fpm.space.space-7
+width: fill
+height: 150
+align: left
+
+-- ftd.row getting_input-right:
+caption title:
+boolean movie:
 boolean rating:
 padding-left: $fpm.space.space-7
 width: fill
@@ -669,60 +654,41 @@ width: 20
 
 
 ;; CASE 1 input field
---- ftd.input:
-if: $reviewer
+--- form.input-box: .
+$value: $i_reviewer
+$error: $i_reviewer-error
 placeholder: Your name
-padding-horizontal: 16
-padding-vertical: 8
 width: 400
 height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_reviewer=$VALUE
+
 
 
 ;; CASE 2 input field
---- ftd.input:
-if: $movie
+--- form.input-box: .
+$value: $input_title
+$error: $input_title-error
 placeholder: description title
-padding-horizontal: 16
-padding-vertical: 8
 width: 400
 height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_title=$VALUE
 
 
 ;; CASE 3 input field
---- ftd.input:
-if: $description
+--- form.input-box: Description *
+$value: $input_description
+$error: $input_description-error
 multiline: true
 placeholder: Description of the movie
-padding-horizontal: 16
-padding-vertical: 8
 width: 400
 height: 150
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_description=$VALUE
 
 
 ;; CASE 4 input field
---- ftd.input:
-if: $rating
+--- form.input-box: Rating *
+$value: $input_rating
+$error: $input_rating-error
 placeholder: out of 10
-padding-horizontal: 16
-padding-vertical: 8
 width: 400
 height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_rating=$VALUE
 
 
 
@@ -743,12 +709,10 @@ min-height: 400
 align: left
 
 
---- getting_input: $obj.name
+--- getting_input-left: $obj.name
 $loop$: $left-fields as $obj
 reviewer: $obj.reviewer
-movie: $obj.movie
 description: $obj.description
-rating: $obj.rating
 
 
 
@@ -764,11 +728,9 @@ align: right
 move-left: 110
 
 
---- getting_input: $obj.name
+--- getting_input-right: $obj.name
 $loop$: $right-fields as $obj
-reviewer: $obj.reviewer
 movie: $obj.movie
-description: $obj.description
 rating: $obj.rating
 
 
@@ -824,8 +786,12 @@ $on-click$: message-host $add-review-api
 function: http
 method: post
 url: /api/add-review/
-reviewer: $input_reviewer
+reviewer: $i_reviewer
+$reviewer-error: $i_reviewer-error
 title: $input_title
+$title-error: $input_title-error
 description: $input_description
+$description-error: $input_description-error
 rating: $input_rating
+$rating-error: $input_rating-error
 id: $query.id

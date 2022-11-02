@@ -5,7 +5,7 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-from .forms import SearchForm
+from .forms import SearchForm, ReviewForm
 # from django.core.paginator import Paginator
 
 
@@ -208,6 +208,15 @@ curl -X GET http://127.0.0.1:8001/movie/
 def add_review(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     movie_id = body["id"]
+    form = ReviewForm(json.loads(req.body.decode("utf-8")))
+
+    if not form.is_valid():
+        # TODO: with helper this would look like: `return ftd_django.form_error(form)`
+        # Note: we are returning status 200 because if we return say 400, browser
+        #       will show a popup saying "Failed to load resource". This is not
+        #       what we want.
+        return django.http.JsonResponse({"errors": form.errors})
+
     name_set = set()
     # Request
     """
