@@ -22,6 +22,5 @@ class Review(models.Model):
     description = models.TextField()
     reviewer = models.CharField(max_length=1024)
     # This null because user may not give rating
-    rating = models.IntegerField(validators=[MinValueValidator(1),
-                                             MaxValueValidator(10)])
+    rating = models.IntegerField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
