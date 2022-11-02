@@ -106,7 +106,6 @@ dark: $movie.poster
 
 -- ftd.column component-1:
 optional caption title:
-optional string label:
 optional string movie-name:
 background-color: $fpm.color.main.custom.two
 padding-vertical: $fpm.space.space-6
@@ -188,7 +187,6 @@ height: auto
 
 -- ftd.column component-2:
 optional caption title:
-optional string label:
 optional string review-count:
 optional string average_rating:
 ;optional string line:
@@ -371,7 +369,6 @@ align: left
 
 -- ftd.column component-3:
 optional caption title:
-optional string label:
 align: left
 margin-bottom: $fpm.space.space-6
 padding-right: 10
@@ -578,6 +575,7 @@ movie: true
 -- right-fields: $label_4
 rating: true
 
+
 -- ftd.column:
 ftd.image-src src: $assets.files.background.png
 background-image: $src
@@ -594,8 +592,6 @@ move-up: 40
 
 -- ftd.column card:
 optional caption title:
-optional string label:
-
 
 -- ftd.column:
 align: left
@@ -635,26 +631,8 @@ height: 150
 align: left
 
 
---- ftd.text: $title
-padding-left: $fpm.space.space-7
-role: $fpm.type.copy-large
-align: left
-text-align: right
-style: bold
-width: 200
-
-
---- ftd.text: $asterisk
-move-up: 8
-padding-right: $fpm.space.space-7
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width: 20
-
-
 ;; CASE 1 input field
---- form.input-box: .
+--- form.input-box: Reviewer-Name*
 $value: $i_reviewer
 $error: $i_reviewer-error
 placeholder: Your name
@@ -664,7 +642,7 @@ height: 40
 
 
 ;; CASE 2 input field
---- form.input-box: .
+--- form.input-box: Title*
 $value: $input_title
 $error: $input_title-error
 placeholder: description title
@@ -673,7 +651,7 @@ height: 40
 
 
 ;; CASE 3 input field
---- form.input-box: Description *
+--- form.input-box: Description*
 $value: $input_description
 $error: $input_description-error
 multiline: true
@@ -683,7 +661,7 @@ height: 150
 
 
 ;; CASE 4 input field
---- form.input-box: Rating *
+--- form.input-box: Rating*
 $value: $input_rating
 $error: $input_rating-error
 placeholder: out of 10
@@ -701,7 +679,6 @@ height: 40
 
 -- ftd.column left-column-fields:
 optional caption name:
-optional string label:
 padding-vertical: $fpm.space.space-8
 move-left: 30
 width percent: fill
@@ -720,7 +697,6 @@ description: $obj.description
 
 -- ftd.column right-column-fields:
 optional caption name:
-optional string label:
 padding-vertical: $fpm.space.space-8
 width: percent 100
 min-height: 400
@@ -746,7 +722,7 @@ height: 450
 width: fill
 
 
---- left-column-fields:
+/--- left-column-fields:
 
 --- right-column-fields:
 
