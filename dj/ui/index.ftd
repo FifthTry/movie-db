@@ -117,25 +117,13 @@ padding-vertical: $fpm.space.space-6
 align: center
 spacing: 20
 
---- form.input-box: Search for
+--- form.input-box: .
 $value: $search-title
 $error: $search-title-error
-placeholder:
+placeholder: Search here
 align: center
 width: 600
 height: 50
-
-
-/--- ftd.input:
-placeholder: Search here
-padding-horizontal: 16
-padding-vertical: 8
-width: 600
-height: 50
-border-width: 3
-border-color: $fpm.color.main.background.step-2
-border-radius: 8
-$on-input$: $title=$VALUE
 
 
 
