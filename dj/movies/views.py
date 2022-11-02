@@ -154,7 +154,7 @@ def add_movie(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     # from django.shortcuts import redirect
     # return redirect("/", permanent=True)
-    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
+    return django.http.JsonResponse({"redirect": "/movie/?id=" + str(movie.id)}, status=200)
 
 
 """

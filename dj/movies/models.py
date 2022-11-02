@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 
@@ -22,5 +22,6 @@ class Review(models.Model):
     description = models.TextField()
     reviewer = models.CharField(max_length=1024)
     # This null because user may not give rating
-    rating = models.IntegerField(null=True)
+    rating = models.IntegerField(validators=[MinValueValidator(1),
+                                             MaxValueValidator(10)])
     created_on = models.DateTimeField(auto_now_add=True)
