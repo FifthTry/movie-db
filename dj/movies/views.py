@@ -94,20 +94,15 @@ def list_movie(req: django.http.HttpRequest):
 def search_movie(req: django.http.HttpRequest):
 
     body = json.loads(req.body.decode("utf-8"))
-    print("after body")
     target_movie_name = body['title']
-    print(target_movie_name)
 
     form = SearchForm(json.loads(req.body.decode("utf-8")))
-    print(f"after form, form = {form}")
 
     if not form.is_valid():
-        print("invalid form")
         # TODO: with helper this would look like: `return ftd_django.form_error(form)`
         # Note: we are returning status 200 because if we return say 400, browser
         #       will show a popup saying "Failed to load resource". This is not
         #       what we want.
-        print(form.errors)
         return django.http.JsonResponse({"errors": form.errors})
 
 
