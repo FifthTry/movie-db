@@ -93,19 +93,24 @@ def list_movie(req: django.http.HttpRequest):
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
-    # form = SearchForm(json.loads(req.body.decode("utf-8")))
-    # if not form.is_valid():
-    #     # TODO: with helper this would look like: `return ftd_django.form_error(form)`
-    #     # Note: we are returning status 200 because if we return say 400, browser
-    #     #       will show a popup saying "Failed to load resource". This is not
-    #     #       what we want.
-    #     return django.http.JsonResponse({"errors": form.errors})
-    #
-    # Search.objects.create(
-    #     movie=form.cleaned_data["movie"],
-    # )
+    print("after body")
+    form = SearchForm(json.loads(req.body.decode("utf-8")))
+    print(f"after form, form = {form}")
+    if not form.is_valid():
+        print("invalid form")
+        # TODO: with helper this would look like: `return ftd_django.form_error(form)`
+        # Note: we are returning status 200 because if we return say 400, browser
+        #       will show a popup saying "Failed to load resource". This is not
+        #       what we want.
+        print(form.errors)
+        return django.http.JsonResponse({"errors": form.errors})
 
-    target_movie_name = body['movie']
+    Search.objects.create(
+        movie=form.cleaned_data["title"],
+    )
+    print(Search.movie)
+
+    target_movie_name = body['title']
     if len(target_movie_name) == 0:
         return django.http.JsonResponse(
             {

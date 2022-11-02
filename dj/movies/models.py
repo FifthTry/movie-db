@@ -26,4 +26,4 @@ class Review(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
 class Search(models.Model):
-    movie = models.CharField(max_length=1024)
+    title = models.CharField(max_length=1024)

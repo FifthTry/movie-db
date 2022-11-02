@@ -73,10 +73,10 @@ toc: $empty-toc
 -- integer items: 8
 
 
--- optional string movie:
+-- optional string title:
 $always-include$: true
 
--- optional string movie-error:
+-- optional string title-error:
 $always-include$: true
 
 
@@ -100,7 +100,7 @@ height: 250
 
 
 --- ftd.text:
-text: $title
+text: aditi movie app
 role: $fpm.type.heading-large
 text-align: center
 align: center
@@ -118,8 +118,8 @@ align: center
 spacing: 20
 
 --- form.input-box: Search for
-$value: $movie
-$error: This field is mandatory
+$value: $title
+$error: $title-error
 placeholder:
 align: center
 width: 600
@@ -166,8 +166,8 @@ $on-click$: message-host $search-movie
 function: http
 method: post
 url: /api/search/
-movie: $movie
-movie-error: $movie-error
+title: $title
+$title-error: $title-error
 
 
 --- container: ftd.main
