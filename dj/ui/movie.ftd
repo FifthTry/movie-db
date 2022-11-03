@@ -580,12 +580,11 @@ rating: true
 -- ftd.column:
 ftd.image-src src: $assets.files.background.png
 background-image: $src
-min-width: percent 50
 background-repeat: false
 padding-vertical: $fpm.space.space-4
 padding-horizontal:  $fpm.space.space-4
-width: percent 85
-height: 600
+width: percent 90
+height: 620
 align: center
 move-left: 50
 
@@ -617,10 +616,8 @@ margin-top: $fpm.space.space-8
 caption title:
 boolean reviewer:
 boolean description:
-padding-left: $fpm.space.space-7
-width: fill
-height: 150
-align: left
+padding-left: $fpm.space.space-2
+
 
 
 
@@ -630,10 +627,6 @@ align: left
 caption title:
 boolean movie:
 boolean rating:
-padding-left: $fpm.space.space-7
-width: fill
-height: 150
-align: left
 
 
 
@@ -648,15 +641,7 @@ align: left
 
 -- ftd.column left-column-fields:
 optional caption name:
-padding-vertical: $fpm.space.space-8
-move-left: 30
-width percent: fill
-min-height: 400
-align: left
 padding-left: $fpm.space.space-7
-width: fill
-height: 150
-
 
 
 --- getting_input-left: $obj.name
@@ -679,8 +664,9 @@ $value: $input_description
 $error: $input_description-error
 multiline: true
 placeholder: Description of the movie
-width: 400
 height: 150
+move-down: 150
+move-left: 500
 
 
 
@@ -688,13 +674,6 @@ height: 150
 
 -- ftd.column right-column-fields:
 optional caption name:
-padding-vertical: $fpm.space.space-8
-min-height: 400
-align: right
-move-left: 110
-padding-left: $fpm.space.space-7
-width: fill
-height: 150
 
 
 --- getting_input-right: $obj.name
@@ -709,6 +688,7 @@ $error: $input_title-error
 placeholder: description title
 width: 400
 height: 40
+move-left: 500
 
 
 
@@ -720,13 +700,12 @@ $error: $input_rating-error
 placeholder: out of 10
 width: 400
 height: 40
+move-down: 150
+move-left: 1030
 
 
 -- ftd.row:
-ftd.image-src src: $assets.files.background.png
-margin-bottom: $fpm.space.space-6
 width: percent 85
-background-image: $src
 height: 450
 
 -- ftd.row:
@@ -746,6 +725,7 @@ border-color: $transparent
 background-color: $black
 height: 60
 width: 120
+move-left: 700
 align: center
 
 
