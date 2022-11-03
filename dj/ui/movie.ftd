@@ -583,10 +583,11 @@ background-image: $src
 background-repeat: false
 padding-vertical: $fpm.space.space-4
 padding-horizontal:  $fpm.space.space-4
-width: percent 90
+width: percent 55
 height: 620
-align: center
-move-left: 50
+align: left
+margin-top: $fpm.space.space-8
+margin-bottom: $fpm.space.space-8
 
 
 
@@ -741,7 +742,7 @@ align: center
 -- ftd.row:
 align: center
 move-down: 200
-move-left: 500
+move-right: 150
 
 
 
