@@ -512,14 +512,25 @@ reviewer_name: $r.reviewer_name
 
 
 
+-- optional string input_reviewer:
+$always-include$: true
 
 -- optional string input_reviewer-error:
+$always-include$: true
+
+-- optional string input_title:
 $always-include$: true
 
 -- optional string input_title-error:
 $always-include$: true
 
+-- optional string input_description:
+$always-include$: true
+
 -- optional string input_description-error:
+$always-include$: true
+
+-- optional string input_rating:
 $always-include$: true
 
 -- optional string input_rating-error:
@@ -603,6 +614,9 @@ margin-top: $fpm.space.space-8
 
 
 -- ftd.row getting_input-left:
+caption title:
+boolean reviewer:
+boolean description:
 padding-left: $fpm.space.space-7
 width: fill
 height: 150
@@ -613,6 +627,9 @@ align: left
 
 
 -- ftd.row getting_input-right:
+caption title:
+boolean movie:
+boolean rating:
 padding-left: $fpm.space.space-7
 width: fill
 height: 150
@@ -642,10 +659,14 @@ height: 150
 
 
 
-/--- getting_input-left:
+--- getting_input-left: $obj.name
+$loop$: $left-fields as $obj
+reviewer: $obj.reviewer
+description: $obj.description
 
 ;; CASE 1 input field
 --- form.input-box: Reviewer-Name*
+$value: $input_reviewer
 $error: $input_reviewer-error
 placeholder: Your name
 width: 400
@@ -654,6 +675,7 @@ height: 40
 
 ;; CASE 3 input field
 --- form.input-box: Description*
+$value: $input_description
 $error: $input_description-error
 multiline: true
 placeholder: Description of the movie
@@ -675,10 +697,14 @@ width: fill
 height: 150
 
 
-/--- getting_input-right:
+--- getting_input-right: $obj.name
+$loop$: $right-fields as $obj
+movie: $obj.movie
+rating: $obj.rating
 
 ;; CASE 2 input field
 --- form.input-box: Title*
+$value: $input_title
 $error: $input_title-error
 placeholder: description title
 width: 400
@@ -689,6 +715,7 @@ height: 40
 
 ;; CASE 4 input field
 --- form.input-box: Rating*
+$value: $input_rating
 $error: $input_rating-error
 placeholder: out of 10
 width: 400
@@ -746,8 +773,12 @@ $on-click$: message-host $add-review-api
 function: http
 method: post
 url: /api/add-review/
+reviewer: $input_reviewer
 $reviewer-error: $input_reviewer-error
+title: $input_title
 $title-error: $input_title-error
+description: $input_description
 $description-error: $input_description-error
+rating: $input_rating
 $rating-error: $input_rating-error
 id: $query.id
