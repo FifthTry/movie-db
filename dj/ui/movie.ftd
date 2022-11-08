@@ -78,7 +78,7 @@ string description:
 
 -- review-data list reviews:
 $processor$: http
-url: http://127.0.0.1:8001/api/review/
+url: -/movie-db/api/review/
 method: get
 id: $query.id
 
@@ -91,7 +91,7 @@ string count_reviews:
 
 -- rating-data rating:
 $processor$: http
-url: http://127.0.0.1:8001/api/rating/
+url: -/movie-db/api/rating/
 method: get
 id: $query.id
 
@@ -763,3 +763,9 @@ $description-error: $input_description-error
 rating: $input_rating
 $rating-error: $input_rating-error
 id: $query.id
+
+-- ftd.text: query =
+
+-- ftd.text: $query.id
+
+
