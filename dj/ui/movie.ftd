@@ -536,9 +536,6 @@ $always-include$: true
 -- optional string input_rating-error:
 $always-include$: true
 
-/-- ftd.text: $query.id
-color: $white
-
 
 
 -- record Label_Type:
@@ -763,9 +760,5 @@ $description-error: $input_description-error
 rating: $input_rating
 $rating-error: $input_rating-error
 id: $query.id
-
--- ftd.text: query =
-
--- ftd.text: $query.id
 
 

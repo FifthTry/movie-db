@@ -62,6 +62,7 @@ def list_movie(req: django.http.HttpRequest):
         }
         list_of_top_movies.append(item)
 
+    # clamping the first and last pages in circle
     if p_number - 1 > 0:
         previous_page_number = p_number - 1
     else:
@@ -69,7 +70,6 @@ def list_movie(req: django.http.HttpRequest):
 
     if p_number + 1 > last_pno:
         next_page_number = 1
-
     else:
         next_page_number = p_number+1
 
@@ -170,6 +170,8 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 def get_movie(req: django.http.HttpRequest):
     movie_get_id = req.GET.get("id")
     movie_id = int(movie_get_id.rstrip("/"))
+    print(f"movie ka id = {movie_get_id}")
+    print(f"movie id = {movie_id}")
     try:
         movie = Movie.objects.get(id=movie_id)
         return django.http.JsonResponse(
@@ -202,6 +204,8 @@ def add_review(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     movie_get_id = body["id"]
     movie_id = int(movie_get_id.rstrip("/"))
+    print(f"add review movie ka id = {movie_get_id}")
+    print(f"add revieww movie id = {movie_id}")
 
     form = ReviewForm(json.loads(req.body.decode("utf-8")))
 
@@ -237,7 +241,7 @@ def add_review(req: django.http.HttpRequest):
     )
 
     # TODO: restrict invalid ratings
-    return django.http.HttpResponseRedirect("/movie/?id=" + str(movie_id))
+    return django.http.HttpResponseRedirect("/movie/?id=" + str(movie.id))
     # TODO: redirect to movie page
     # return django.http.JsonResponse(
     #     {
