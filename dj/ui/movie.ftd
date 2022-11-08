@@ -106,7 +106,6 @@ dark: $movie.poster
 
 -- ftd.column component-1:
 optional caption title:
-optional string label:
 optional string movie-name:
 background-color: $fpm.color.main.custom.two
 padding-vertical: $fpm.space.space-6
@@ -188,7 +187,6 @@ height: auto
 
 -- ftd.column component-2:
 optional caption title:
-optional string label:
 optional string review-count:
 optional string average_rating:
 ;optional string line:
@@ -371,7 +369,6 @@ align: left
 
 -- ftd.column component-3:
 optional caption title:
-optional string label:
 align: left
 margin-bottom: $fpm.space.space-6
 padding-right: 10
@@ -508,58 +505,38 @@ reviewer_name: $r.reviewer_name
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;; WRITE REVIEW;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 -- card:  ;;;;;only for checking if any input is being taken
 
--- string input_reviewer: Nil
 
--- ftd.text: $input_reviewer
-color: $white
 
--- string input_title: Nil
+-- optional string input_reviewer:
+$always-include$: true
 
--- ftd.text: $input_title
-color: $white
-move-down: 600
+-- optional string input_reviewer-error:
+$always-include$: true
 
--- string input_description: Nil
+-- optional string input_title:
+$always-include$: true
 
--- ftd.text: $input_description
-color: $white
+-- optional string input_title-error:
+$always-include$: true
 
--- string input_rating: Nil
+-- optional string input_description:
+$always-include$: true
 
--- ftd.text: $input_rating
-color: $white
+-- optional string input_description-error:
+$always-include$: true
 
--- ftd.text: $query.id
+-- optional string input_rating:
+$always-include$: true
+
+-- optional string input_rating-error:
+$always-include$: true
+
+/-- ftd.text: $query.id
 color: $white
 
 
@@ -599,24 +576,23 @@ movie: true
 -- right-fields: $label_4
 rating: true
 
+
 -- ftd.column:
 ftd.image-src src: $assets.files.background.png
 background-image: $src
-min-width: percent 50
 background-repeat: false
 padding-vertical: $fpm.space.space-4
 padding-horizontal:  $fpm.space.space-4
-width: percent 85
-height: 600
-align: center
-move-left: 50
-move-up: 40
+width: percent 55
+height: 620
+align: left
+margin-top: $fpm.space.space-8
+margin-bottom: $fpm.space.space-8
+
 
 
 -- ftd.column card:
 optional caption title:
-optional string label:
-
 
 -- ftd.column:
 align: left
@@ -637,92 +613,23 @@ margin-top: $fpm.space.space-8
 ;; ROW [ [TITLE]* [INPUT-BOX] ]
 
 
--- ftd.row getting_input:
-id: outer_row
+-- ftd.row getting_input-left:
 caption title:
-boolean movie:
 boolean reviewer:
 boolean description:
+padding-left: $fpm.space.space-2
+
+
+
+
+
+
+-- ftd.row getting_input-right:
+caption title:
+boolean movie:
 boolean rating:
-padding-left: $fpm.space.space-7
-width: fill
-height: 150
-align: left
 
 
---- ftd.text: $title
-padding-left: $fpm.space.space-7
-role: $fpm.type.copy-large
-align: left
-text-align: right
-style: bold
-width: 200
-
-
---- ftd.text: $asterisk
-move-up: 8
-padding-right: $fpm.space.space-7
-color: $fpm.color.main.error.text
-role: $fpm.type.heading-small
-style: bold
-width: 20
-
-
-;; CASE 1 input field
---- ftd.input:
-if: $reviewer
-placeholder: Your name
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_reviewer=$VALUE
-
-
-;; CASE 2 input field
---- ftd.input:
-if: $movie
-placeholder: description title
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_title=$VALUE
-
-
-;; CASE 3 input field
---- ftd.input:
-if: $description
-multiline: true
-placeholder: Description of the movie
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 150
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_description=$VALUE
-
-
-;; CASE 4 input field
---- ftd.input:
-if: $rating
-placeholder: out of 10
-padding-horizontal: 16
-padding-vertical: 8
-width: 400
-height: 40
-border-width: 2
-border-color: $fpm.color.main.border
-border-radius: 8
-$on-input$: $input_rating=$VALUE
 
 
 
@@ -735,20 +642,32 @@ $on-input$: $input_rating=$VALUE
 
 -- ftd.column left-column-fields:
 optional caption name:
-optional string label:
-padding-vertical: $fpm.space.space-8
-move-left: 30
-width percent: fill
-min-height: 400
-align: left
+padding-left: $fpm.space.space-7
 
 
---- getting_input: $obj.name
+--- getting_input-left: $obj.name
 $loop$: $left-fields as $obj
 reviewer: $obj.reviewer
-movie: $obj.movie
 description: $obj.description
-rating: $obj.rating
+
+;; CASE 1 input field
+--- form.input-box: Reviewer-Name*
+$value: $input_reviewer
+$error: $input_reviewer-error
+placeholder: Your name
+width: 400
+height: 40
+
+
+;; CASE 3 input field
+--- form.input-box: Description*
+$value: $input_description
+$error: $input_description-error
+multiline: true
+placeholder: Description of the movie
+height: 150
+move-down: 150
+move-left: 500
 
 
 
@@ -756,28 +675,38 @@ rating: $obj.rating
 
 -- ftd.column right-column-fields:
 optional caption name:
-optional string label:
-padding-vertical: $fpm.space.space-8
-width: percent 100
-min-height: 400
-align: right
-move-left: 110
 
 
---- getting_input: $obj.name
+--- getting_input-right: $obj.name
 $loop$: $right-fields as $obj
-reviewer: $obj.reviewer
 movie: $obj.movie
-description: $obj.description
 rating: $obj.rating
 
+;; CASE 2 input field
+--- form.input-box: Title*
+$value: $input_title
+$error: $input_title-error
+placeholder: description title
+width: 400
+height: 40
+move-left: 500
+
+
+
+
+;; CASE 4 input field
+--- form.input-box: Rating*
+$value: $input_rating
+$error: $input_rating-error
+placeholder: out of 10
+width: 400
+height: 40
+move-down: 150
+move-left: 1030
 
 
 -- ftd.row:
-ftd.image-src src: $assets.files.background.png
-margin-bottom: $fpm.space.space-6
 width: percent 85
-background-image: $src
 height: 450
 
 -- ftd.row:
@@ -797,6 +726,7 @@ border-color: $transparent
 background-color: $black
 height: 60
 width: 120
+move-left: 700
 align: center
 
 
@@ -812,7 +742,7 @@ align: center
 -- ftd.row:
 align: center
 move-down: 200
-move-left: 500
+move-right: 150
 
 
 
@@ -825,7 +755,11 @@ function: http
 method: post
 url: /api/add-review/
 reviewer: $input_reviewer
+$reviewer-error: $input_reviewer-error
 title: $input_title
+$title-error: $input_title-error
 description: $input_description
+$description-error: $input_description-error
 rating: $input_rating
+$rating-error: $input_rating-error
 id: $query.id

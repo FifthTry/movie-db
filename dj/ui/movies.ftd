@@ -22,7 +22,12 @@ dark: black
 
 ;;;;;;;;;;;;;;;;;;;;;; READING Page number
 
--- integer p_no: 1
+-- record query-data:
+string p_no:
+
+-- query-data query:
+$processor$: request-data
+
 
 -- integer no_items: 8
 
@@ -42,7 +47,6 @@ string url:
 integer p_no:
 integer next_pno:
 integer previous_pno:
-integer last_pno:
 string next:
 string previous:
 movie-info list movies:
@@ -53,6 +57,7 @@ movie-info list movies:
 $processor$: http
 url: http://127.0.0.1:8001/api/movies/
 method: get
+p_no: $query.p_no
 items: $no_items
 
 
@@ -80,6 +85,12 @@ $always-include$: true
 $always-include$: true
 
 
+;;to check if the input is working
+/-- ftd.text: $input_title
+padding-horizontal: 10
+padding-vertical: 12
+
+
 -- component-1: aditi movie app
 
 
@@ -100,7 +111,7 @@ height: 250
 
 
 --- ftd.text:
-text: aditi movie app
+text: $title
 role: $fpm.type.heading-large
 text-align: center
 align: center
@@ -116,6 +127,8 @@ margin-right: $fpm.space.space-4
 padding-vertical: $fpm.space.space-6
 align: center
 spacing: 20
+
+
 
 --- form.input-box: .
 $value: $search-title
@@ -171,7 +184,6 @@ $title-error: $search-title-error
 
 
 -- component-2: All Movies
-
 
 
 
@@ -368,7 +380,6 @@ color: $black
 -- container: ftd.main
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; NEXT AND PREVIOUS
 -- ftd.row:
 align: left
@@ -385,8 +396,15 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: decrement $l_movie.p_no by 1 clamp 1 $l_movie.last_pno
+$on-click$: decrement $l_movie.p_no by 1 clamp 1 8
 link: $l_movie.previous
+/$on-click$: message-host $previous
+
+-- object previous-api:
+function: http
+url: http://127.0.0.1:8001/api/movies/
+method: post
+p_no: $l_movie.previous_pno
 
 
 -- ftd.integer: $l_movie.p_no
@@ -400,6 +418,7 @@ height: fill
 text-align: center
 move-right: 600
 
+/-- integer next_pno: 2
 
 -- ftd.text: NEXT
 align: right
@@ -410,6 +429,13 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: increment $l_movie.p_no by 1 clamp 1 $l_movie.last_pno
+$on-click$: increment $l_movie.p_no by 1 clamp 1 8
+;$on-click$: message-host $next-api
 link: $l_movie.next
 move-right: 1200
+
+/-- object next-api:
+function: http
+url: http://127.0.0.1:8001/api/movies/
+method: get
+p_no: $l_movie.next_pno

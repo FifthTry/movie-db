@@ -5,7 +5,8 @@ from .models import Movie, Review
 import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
+from .forms import SearchForm, ReviewForm
+# from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -47,14 +48,10 @@ def list_movie(req: django.http.HttpRequest):
 
 
     # order_by = req.GET.get("p_no", 0)
-    # movies = Movie.objects.all()[(p_number - 1) * items + 1: p_number * items + 1]
-    movies = Movie.objects.all()
-    p = Paginator(Movie.objects.all(), items)
+    movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
 
-    movie_list = p.get_page(page_number)
     list_of_top_movies = []
-    list_of_bottom_movies = []
-    index = 0
+
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
@@ -73,14 +70,18 @@ def list_movie(req: django.http.HttpRequest):
         previous_page_number = p_number - 1
     else:
         previous_page_number = 1
+
+
+
     return django.http.JsonResponse(
         {
             "p_no": p_number,
-            # TODO: Next And Previous both are optional
-            # "next": "api/movies/?p_no="+str(page_number + 1)+"&items="+str(items),
-            # "previous": "api/movies/?p_no="+str(previous_page_number)+"&items="+str(items),
-            "next": f"api/movies/?p_no={p_number+1}&items={items}",
-            "previous": f"api/movies/?p_no={previous_page_number}&items={items}",
+            "next_pno": p_number+1,
+            "previous_pno": previous_page_number,
+            "last_pno": last_pno,
+            "first": f"?p_no={1}&items={items}",
+            "next": f"movies/?p_no={p_number+1}&items={items}",
+            "previous": f"movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
 
         },
@@ -91,27 +92,47 @@ def list_movie(req: django.http.HttpRequest):
 
 @csrf_exempt
 def search_movie(req: django.http.HttpRequest):
-    # if req.method == "GET":
-    #     return django.http.HttpResponse("Wrong Method GET", status=405)
 
     body = json.loads(req.body.decode("utf-8"))
-    target_movie_id = None
-    target_movie_name = body['movie']
-    # print(f"you are searching for this movie (lowercase) -> {target_movie_name.lower()}")
+    target_movie_name = body['title']
 
-    all_movies = Movie.objects.all()
-    for movie in all_movies:
-        # print(movie.title.lower())
+    form = SearchForm(json.loads(req.body.decode("utf-8")))
 
-        if movie.title.lower() == target_movie_name.lower():
-            # print("Found matching movie")
-            # print(movie.id)
-            target_movie_id = movie.id
-            break
+    if not form.is_valid():
+        # TODO: with helper this would look like: `return ftd_django.form_error(form)`
+        # Note: we are returning status 200 because if we return say 400, browser
+        #       will show a popup saying "Failed to load resource". This is not
+        #       what we want.
+        return django.http.JsonResponse({"errors": form.errors})
 
-    # print(f"Hello found movie id = {target_movie_id}")
 
-    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(target_movie_id)}}, status=200)
+    return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
+
+
+@csrf_exempt
+def search_page(req: django.http.HttpRequest):
+    search_for = req.GET.get("movie", None)
+    searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
+
+    list_of_searched_movies = []
+    for movie in searched_movie_list:
+        rating = give_rating(movie.id)
+        item = {
+            "title": movie.title,
+            "url": "movie/?id=" + str(movie.id),
+            "average": str(rating[0]),
+            "total_reviews": str(rating[1]),
+            "poster": {'light': movie.poster, 'dark': movie.poster},
+        }
+        list_of_searched_movies.append(item)
+
+    return django.http.JsonResponse(
+        {
+            "movies": list_of_searched_movies,
+        },
+        status=200,
+        safe=False,
+    )
 
 
 
@@ -133,7 +154,7 @@ def add_movie(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     # from django.shortcuts import redirect
     # return redirect("/", permanent=True)
-    return django.http.JsonResponse({"data": {"url": "/movie/?id=" + str(movie.id)}}, status=200)
+    return django.http.JsonResponse({"redirect": "/movie/?id=" + str(movie.id)}, status=200)
 
 
 """
@@ -187,6 +208,15 @@ curl -X GET http://127.0.0.1:8001/movie/
 def add_review(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
     movie_id = body["id"]
+    form = ReviewForm(json.loads(req.body.decode("utf-8")))
+
+    if not form.is_valid():
+        # TODO: with helper this would look like: `return ftd_django.form_error(form)`
+        # Note: we are returning status 200 because if we return say 400, browser
+        #       will show a popup saying "Failed to load resource". This is not
+        #       what we want.
+        return django.http.JsonResponse({"errors": form.errors})
+
     name_set = set()
     # Request
     """
@@ -228,8 +258,7 @@ def add_review(req: django.http.HttpRequest):
     # TODO: redirect to movie page
     return django.http.JsonResponse(
         {
-            "data": {"success": True,
-                     "reload": True},
+            "redirect": "/movie/?id=" + str(movie.id),
             "other": {"review": review.id, "movie": movie.id}
         },
         status=200,
@@ -250,7 +279,7 @@ curl -X POST http://127.0.0.1:8001/add-review/ \
 
 
 def give_rating(id):
-    count_reviews= 0
+    count_reviews = 0
     total = 0
     try:
         reviews = Review.objects.filter(movie__pk=id)
@@ -260,9 +289,14 @@ def give_rating(id):
                 total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            average_rating = "Nil"
+            count_reviews = "No"
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
 
     except Exception as err:
         print(err)
@@ -284,14 +318,20 @@ def get_ratings(req: django.http.HttpRequest):
     try:
         reviews = Review.objects.filter(movie__pk=movie_id)
         for review in reviews:
-            if review.rating <= 10 or review.rating >= 0:
-                count_reviews += 1
-                total += review.rating
+            count_reviews += 1
+            total += review.rating
 
         if count_reviews == 0:
-            average_rating = 0
+            count_reviews = "No "
+            average_rating = "Nil"
         else:
-            average_rating = round(total/count_reviews, 2)
+            average_rating = round(total / count_reviews, 2)
+
+            if average_rating > 10:
+                average_rating = 10
+            elif average_rating < 0:
+                average_rating = 0
+
 
         return django.http.JsonResponse(
             {
@@ -311,7 +351,6 @@ def get_ratings(req: django.http.HttpRequest):
             },
             status=404,
         )
-
 
 
 
@@ -352,37 +391,5 @@ def get_review(req: django.http.HttpRequest):
 
 # There will be an extra parameter in query `domain` based on filter the movies
 # for a user
-
-
-@csrf_exempt
-def get_list(req: django.http.HttpRequest):
-    try:
-        movie = Movie.objects.all()
-        movie_list = []
-        # print("Movie details", movie)
-        for movie in Movie:
-            print(movie)
-            item = {
-                "title": movie.title,
-                "release_date": movie.release_date,
-                "poster": movie.poster,
-                "director": movie.director,
-                "description": movie.description,
-            }
-            movie_list.append(item)
-
-        return django.http.JsonResponse(
-            movie_list,
-            status=200,
-            safe=False
-        )
-    except Exception as err:
-        print(err)
-        return django.http.JsonResponse(
-            {
-                "message": "Movies not found",
-            },
-            status=404,
-        )
 
 # Optional Query. Sort: [release-date, rating, updated_on]
