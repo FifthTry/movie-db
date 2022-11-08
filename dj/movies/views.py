@@ -43,20 +43,14 @@ def list_movie(req: django.http.HttpRequest):
         total_movies += 1
 
     last_pno = math.ceil(total_movies/8)
-
-
-
-
-    # order_by = req.GET.get("p_no", 0)
     movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
-
     list_of_top_movies = []
 
     for movie in movie_list:
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "url": "http://127.0.0.1:8000/movie/?id=" + str(movie.id),
+            "url": "/-/movie-db/movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
@@ -71,8 +65,6 @@ def list_movie(req: django.http.HttpRequest):
     else:
         previous_page_number = 1
 
-
-
     return django.http.JsonResponse(
         {
             "p_no": p_number,
@@ -83,7 +75,6 @@ def list_movie(req: django.http.HttpRequest):
             "next": f"movies/?p_no={p_number+1}&items={items}",
             "previous": f"movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
-
         },
         status=200,
         safe=False,
@@ -150,11 +141,7 @@ def add_movie(req: django.http.HttpRequest):
         description=body.get("description"),
     )
 
-    # print(movie)
-    # TODO: redirect to movie page
-    # from django.shortcuts import redirect
-    # return redirect("/", permanent=True)
-    return django.http.JsonResponse({"redirect": "/movie/?id=" + str(movie.id)}, status=200)
+    return django.http.HttpResponseRedirect("/movie/?id=" + str(movie.id))
 
 
 """
@@ -174,7 +161,6 @@ def get_movie(req: django.http.HttpRequest):
     movie_id = req.GET.get("id")
     try:
         movie = Movie.objects.get(id=movie_id)
-        # print("Movie details", movie)
         return django.http.JsonResponse(
             {
                 "title": movie.title,
@@ -193,10 +179,6 @@ def get_movie(req: django.http.HttpRequest):
             },
             status=404,
         )
-
-    # from django.shortcuts import redirect
-
-    # return redirect("https://www.google.com", permanent=True)
 
 
 """
@@ -233,7 +215,7 @@ def add_review(req: django.http.HttpRequest):
         # TODO: Redirect to error page with 404 error
         return django.http.HttpResponse("redirect to movie page", status=404)
 
-    review = Review.objects.create(
+    Review.objects.create(
         movie=movie,
         title=body["title"],
         description=body.get("description"),
@@ -241,28 +223,16 @@ def add_review(req: django.http.HttpRequest):
         rating=body["rating"],
     )
 
-    # TODO: Checking one review per reviewer
-    # reviews = Review.objects.filter(movie__pk=movie_id)
-    # name_set = set()
-    # for review in reviews:
-    #     if (body["rating"]>10 or body["rating"]<0):
-    #         return django.http.HttpResponse("Invalid rating, nigga", status=404)
-    #     if review.reviewer not in name_set:
-    #         name_set.add(review.reviewer)
-    #     else:
-    #         return django.http.HttpResponse("You have already reviewed the movie!", status=404)
-
     # TODO: restrict invalid ratings
-
-
+    return django.http.HttpResponseRedirect("/movie/?id=" + str(movie.id))
     # TODO: redirect to movie page
-    return django.http.JsonResponse(
-        {
-            "redirect": "/movie/?id=" + str(movie.id),
-            "other": {"review": review.id, "movie": movie.id}
-        },
-        status=200,
-    )
+    # return django.http.JsonResponse(
+    #     {
+    #         "redirect": ,
+    #         "other": {"review": review.id, "movie": movie.id}
+    #     },
+    #     status=200,
+    # )
 
 
 """

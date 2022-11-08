@@ -66,7 +66,7 @@ string description:
 
 -- movie-data movie:
 $processor$: http
-url: http://127.0.0.1:8001/api/movie/
+url: /-/movie-db/api/movie/
 method: get
 id: $query.id
 
@@ -753,7 +753,7 @@ $on-click$: message-host $add-review-api
 -- object add-review-api:
 function: http
 method: post
-url: /api/add-review/
+url: /-/movie-db/api/add-review/
 reviewer: $input_reviewer
 $reviewer-error: $input_reviewer-error
 title: $input_title
