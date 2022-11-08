@@ -6,12 +6,14 @@ import json
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from .forms import SearchForm, ReviewForm
+
 # from django.core.paginator import Paginator
 
 
 # Create your views here.
 
 # Create your views here.
+
 
 @csrf_exempt
 def list_movie(req: django.http.HttpRequest):
@@ -42,8 +44,8 @@ def list_movie(req: django.http.HttpRequest):
     for i in all_movies:
         total_movies += 1
 
-    last_pno = math.ceil(total_movies/8)
-    movie_list = Movie.objects.all()[(p_number - 1) * items: p_number * items]
+    last_pno = math.ceil(total_movies / 8)
+    movie_list = Movie.objects.all()[(p_number - 1) * items : p_number * items]
     list_of_top_movies = []
 
     for movie in movie_list:
@@ -54,7 +56,7 @@ def list_movie(req: django.http.HttpRequest):
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "poster": {"light": movie.poster, "dark": movie.poster},
             "director": movie.director,
             "description": movie.description,
         }
@@ -68,12 +70,12 @@ def list_movie(req: django.http.HttpRequest):
     return django.http.JsonResponse(
         {
             "p_no": p_number,
-            "next_pno": p_number+1,
+            "next_pno": p_number + 1,
             "previous_pno": previous_page_number,
             "last_pno": last_pno,
-            "first": f"?p_no={1}&items={items}",
-            "next": f"movies/?p_no={p_number+1}&items={items}",
-            "previous": f"movies/?p_no={previous_page_number}&items={items}",
+            "first": f"/-/movie-db/?p_no={1}&items={items}",
+            "next": f"/-/movie-db/movies/?p_no={p_number+1}&items={items}",
+            "previous": f"/-/movie-db/movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
         },
         status=200,
@@ -85,7 +87,7 @@ def list_movie(req: django.http.HttpRequest):
 def search_movie(req: django.http.HttpRequest):
 
     body = json.loads(req.body.decode("utf-8"))
-    target_movie_name = body['title']
+    target_movie_name = body["title"]
 
     form = SearchForm(json.loads(req.body.decode("utf-8")))
 
@@ -96,14 +98,17 @@ def search_movie(req: django.http.HttpRequest):
         #       what we want.
         return django.http.JsonResponse({"errors": form.errors})
 
-
-    return django.http.JsonResponse({"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200)
+    return django.http.JsonResponse(
+        {"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200
+    )
 
 
 @csrf_exempt
 def search_page(req: django.http.HttpRequest):
     search_for = req.GET.get("movie", None)
-    searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by("-updated_on")
+    searched_movie_list = Movie.objects.filter(title__startswith=search_for).order_by(
+        "-updated_on"
+    )
 
     list_of_searched_movies = []
     for movie in searched_movie_list:
@@ -113,7 +118,7 @@ def search_page(req: django.http.HttpRequest):
             "url": "movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
-            "poster": {'light': movie.poster, 'dark': movie.poster},
+            "poster": {"light": movie.poster, "dark": movie.poster},
         }
         list_of_searched_movies.append(item)
 
@@ -124,7 +129,6 @@ def search_page(req: django.http.HttpRequest):
         status=200,
         safe=False,
     )
-
 
 
 @csrf_exempt
@@ -280,7 +284,6 @@ def give_rating(id):
     return (average_rating, count_reviews)
 
 
-
 def get_ratings(req: django.http.HttpRequest):
     movie_id = req.GET.get("id")
     count_reviews = 0
@@ -302,15 +305,10 @@ def get_ratings(req: django.http.HttpRequest):
             elif average_rating < 0:
                 average_rating = 0
 
-
         return django.http.JsonResponse(
-            {
-                "average": str(average_rating),
-                "count_reviews": str(count_reviews)
-
-            },
+            {"average": str(average_rating), "count_reviews": str(count_reviews)},
             status=200,
-            safe=False
+            safe=False,
         )
 
     except Exception as err:
@@ -321,7 +319,6 @@ def get_ratings(req: django.http.HttpRequest):
             },
             status=404,
         )
-
 
 
 @csrf_exempt
@@ -335,17 +332,15 @@ def get_review(req: django.http.HttpRequest):
         name_set = set()
         filtered_reviews = []
         for review in reviews:
-            item = {"title": review.title,
-                    "reviewer_name": review.reviewer,
-                    "rating": str(review.rating),
-                    "description": review.description}
+            item = {
+                "title": review.title,
+                "reviewer_name": review.reviewer,
+                "rating": str(review.rating),
+                "description": review.description,
+            }
             filtered_reviews.append(item)
 
-        return django.http.JsonResponse(
-            filtered_reviews,
-            status=200,
-            safe=False
-        )
+        return django.http.JsonResponse(filtered_reviews, status=200, safe=False)
 
     except Exception as err:
         print(err)
