@@ -99,7 +99,7 @@ def search_movie(req: django.http.HttpRequest):
         return django.http.JsonResponse({"errors": form.errors})
 
     return django.http.JsonResponse(
-        {"redirect": "/search/?search_movie=" + str(target_movie_name)}, status=200
+        {"redirect": "/-/movie-db/search/?search_movie=" + str(target_movie_name)}, status=200
     )
 
 
@@ -115,7 +115,7 @@ def search_page(req: django.http.HttpRequest):
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "url": "movie/?id=" + str(movie.id),
+            "url": "/-/movie-db/movie/?id=" + str(movie.id),
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "poster": {"light": movie.poster, "dark": movie.poster},
@@ -203,7 +203,6 @@ def add_review(req: django.http.HttpRequest):
         #       what we want.
         return django.http.JsonResponse({"errors": form.errors})
 
-    name_set = set()
     # Request
     """
     movie_id, title, optional description, reviewer: token, optional rating
@@ -219,13 +218,14 @@ def add_review(req: django.http.HttpRequest):
         # TODO: Redirect to error page with 404 error
         return django.http.HttpResponse("redirect to movie page", status=404)
 
-    Review.objects.create(
+    review = Review.objects.create(
         movie=movie,
         title=body["title"],
         description=body.get("description"),
         reviewer=body["reviewer"],
         rating=body["rating"],
     )
+    print(review)
 
     # TODO: restrict invalid ratings
     return django.http.HttpResponseRedirect("/movie/?id=" + str(movie.id))

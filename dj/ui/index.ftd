@@ -154,7 +154,7 @@ $on-click$: message-host $search-movie
 -- object search-movie:
 function: http
 method: post
-url: /api/search/
+url: /-/movie-db/api/search/
 title: $search-title
 $title-error: $search-title-error
 
