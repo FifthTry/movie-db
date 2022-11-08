@@ -51,7 +51,7 @@ movie-info list movies:
 
 -- movie-data-api l_movie:
 $processor$: http
-url: http://127.0.0.1:8001/api/movies/
+url: /-/movie-db/api/movies/
 method: get
 items: $no_items
 
@@ -385,7 +385,7 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: decrement $l_movie.p_no by 1 clamp 1 $l_movie.last_pno
+$on-click$: decrement $l_movie.p_no by 1
 link: $l_movie.previous
 
 
@@ -410,6 +410,6 @@ style: bold
 width: fill
 height: fill
 text-align: center
-$on-click$: increment $l_movie.p_no by 1 clamp 1 $l_movie.last_pno
+$on-click$: increment $l_movie.p_no by 1
 link: $l_movie.next
 move-right: 1200

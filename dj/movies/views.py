@@ -52,7 +52,7 @@ def list_movie(req: django.http.HttpRequest):
         rating = give_rating(movie.id)
         item = {
             "title": movie.title,
-            "url": "/-/movie-db/movie/?id=" + str(movie.id),
+            "url": f"-/movie-db/movie/?id={movie.id}",
             "average": str(rating[0]),
             "total_reviews": str(rating[1]),
             "release_date": str(movie.release_date),
@@ -62,10 +62,16 @@ def list_movie(req: django.http.HttpRequest):
         }
         list_of_top_movies.append(item)
 
+    # clamping the first and last pages in circle
     if p_number - 1 > 0:
         previous_page_number = p_number - 1
     else:
-        previous_page_number = 1
+        previous_page_number = last_pno
+
+    if p_number + 1 > last_pno:
+        next_page_number = 1
+    else:
+        next_page_number = p_number+1
 
     return django.http.JsonResponse(
         {
@@ -74,7 +80,7 @@ def list_movie(req: django.http.HttpRequest):
             "previous_pno": previous_page_number,
             "last_pno": last_pno,
             "first": f"/-/movie-db/?p_no={1}&items={items}",
-            "next": f"/-/movie-db/movies/?p_no={p_number+1}&items={items}",
+            "next": f"/-/movie-db/movies/?p_no={next_page_number}&items={items}",
             "previous": f"/-/movie-db/movies/?p_no={previous_page_number}&items={items}",
             "movies": list_of_top_movies,
         },
@@ -162,7 +168,10 @@ curl -X POST http://127.0.0.1:8000/add-movie/ \
 
 @csrf_exempt
 def get_movie(req: django.http.HttpRequest):
-    movie_id = req.GET.get("id")
+    movie_get_id = req.GET.get("id")
+    movie_id = int(movie_get_id.rstrip("/"))
+    print(f"movie ka id = {movie_get_id}")
+    print(f"movie id = {movie_id}")
     try:
         movie = Movie.objects.get(id=movie_id)
         return django.http.JsonResponse(
@@ -193,7 +202,11 @@ curl -X GET http://127.0.0.1:8001/movie/
 @csrf_exempt
 def add_review(req: django.http.HttpRequest):
     body = json.loads(req.body.decode("utf-8"))
-    movie_id = body["id"]
+    movie_get_id = body["id"]
+    movie_id = int(movie_get_id.rstrip("/"))
+    print(f"add review movie ka id = {movie_get_id}")
+    print(f"add revieww movie id = {movie_id}")
+
     form = ReviewForm(json.loads(req.body.decode("utf-8")))
 
     if not form.is_valid():
@@ -285,7 +298,8 @@ def give_rating(id):
 
 
 def get_ratings(req: django.http.HttpRequest):
-    movie_id = req.GET.get("id")
+    movie_get_id = req.GET.get("id")
+    movie_id = int(movie_get_id.rstrip("/"))
     count_reviews = 0
     total = 0
     try:
@@ -323,7 +337,9 @@ def get_ratings(req: django.http.HttpRequest):
 
 @csrf_exempt
 def get_review(req: django.http.HttpRequest):
-    movie_id = req.GET.get("id")
+    movie_get_id = req.GET.get("id")
+    movie_id = int(movie_get_id.rstrip("/"))
+    print(f"insdie getting the actual review {movie_id}")
     global average
     global count_reviews
     total = 0
